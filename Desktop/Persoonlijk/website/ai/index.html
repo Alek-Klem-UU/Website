@@ -7,16 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #07090f;
-    --bg2:       #0d1018;
-    --bg3:       #12151f;
-    --border:    rgba(255,255,255,0.06);
-    --text:      #cfd8e3;
-    --muted:     #4e5e73;
-    --dim:       #7e95ac;
-    --accent:    #6ba3cc;
-    --accent2:   #b8784a;
-    --white:     #e8edf2;
+    --bg:        #0e0b08;
+    --bg2:       #141009;
+    --bg3:       #1a150e;
+    --border:    rgba(255,240,220,0.07);
+    --text:      #d4c9b8;
+    --muted:     #6b5e4e;
+    --dim:       #9a8a76;
+    --accent:    #c4935a;
+    --accent2:   #8fad82;
+    --white:     #ede5d8;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -170,8 +170,9 @@
 
   h1 em {
     font-style: normal;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--accent);
+    color: var(--accent);
+    font-weight: 400;
+    opacity: 0.85;
   }
 
   .hero-desc {
@@ -228,7 +229,7 @@
   }
 
   .btn-ghost:hover {
-    border-color: rgba(107,163,204,0.35);
+    border-color: rgba(196,147,90,0.3);
     color: var(--accent);
   }
 
@@ -358,7 +359,7 @@
   }
 
   .fact-row:hover::before { width: 2px; }
-  .fact-row:hover { background: rgba(107,163,204,0.025); }
+  .fact-row:hover { background: rgba(196,147,90,0.02); }
 
   .fact-row:last-child { border-bottom: none; }
 
@@ -491,7 +492,7 @@
   }
 
   .exp-card:hover::before { height: 100%; }
-  .exp-card:hover { border-color: rgba(107,163,204,0.12); }
+  .exp-card:hover { border-color: rgba(196,147,90,0.1); }
 
   .exp-period {
     font-family: 'Newsreader', serif;
@@ -553,7 +554,7 @@
     transition: border-color 0.4s;
   }
 
-  .project-featured:hover { border-color: rgba(107,163,204,0.18); }
+  .project-featured:hover { border-color: rgba(196,147,90,0.15); }
 
   .project-info {
     padding: 52px 48px;
@@ -1115,7 +1116,7 @@
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = `rgba(107,163,204,${(1 - dist/140) * 0.16})`;
+          ctx.strokeStyle = `rgba(196,147,90,${(1 - dist/140) * 0.14})`;
           ctx.lineWidth = 0.4;
           ctx.stroke();
         }
@@ -1125,7 +1126,7 @@
     nodes.forEach(n => {
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(107,163,204,0.35)';
+      ctx.fillStyle = 'rgba(196,147,90,0.3)';
       ctx.fill();
 
       n.x += n.vx;
@@ -1159,10 +1160,10 @@
 
     const cx = W / 2, cy = H / 2;
     const layers = [
-      { r: 22, color: '#6ba3cc', nodes: 4 },
-      { r: 52, color: '#8fb8d8', nodes: 6 },
-      { r: 82, color: '#8fb8d8', nodes: 6 },
-      { r: 112, color: '#b8784a', nodes: 3 },
+      { r: 22, color: '#c4935a', nodes: 4 },
+      { r: 52, color: '#a07a4e', nodes: 6 },
+      { r: 82, color: '#a07a4e', nodes: 6 },
+      { r: 112, color: '#8fad82', nodes: 3 },
     ];
 
     for (let li = 0; li < layers.length - 1; li++) {
@@ -1174,7 +1175,7 @@
           ctx.beginPath();
           ctx.moveTo(cx + Math.cos(a1) * l1.r, cy + Math.sin(a1) * l1.r);
           ctx.lineTo(cx + Math.cos(a2) * l2.r, cy + Math.sin(a2) * l2.r);
-          ctx.strokeStyle = `rgba(107,163,204,0.04)`;
+          ctx.strokeStyle = `rgba(196,147,90,0.04)`;
           ctx.lineWidth = 0.6;
           ctx.stroke();
         }
