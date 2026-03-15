@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Horeca - Alek Klem</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #2d2d2d;
+            background: #f0f0f0;
+            line-height: 1.5;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background: #fff;
+            display: grid;
+            grid-template-columns: 72mm 1fr;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        @page { margin: 0; }
+
+        @media print {
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; min-height: 100vh; }
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            background: #1a3a2a;
+            color: #f0f8f2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-container {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .sidebar-content {
+            padding: 20px 22px 30px;
+            flex: 1;
+        }
+
+        .sidebar h2 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #7ec89a;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(126, 200, 154, 0.25);
+        }
+
+        .sidebar-section { margin-bottom: 24px; }
+
+        .contact-item {
+            font-size: 9.5px;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .contact-icon {
+            width: 14px;
+            text-align: center;
+            flex-shrink: 0;
+            font-size: 11px;
+        }
+
+        .contact-text { word-break: break-all; }
+
+        .skill-item {
+            font-size: 9.5px;
+            margin-bottom: 5px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .skill-item::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #7ec89a;
+            font-weight: 700;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            margin-bottom: 6px;
+        }
+
+        .language-level { color: #7ec89a; font-weight: 500; }
+
+        .hobby-item {
+            font-size: 9.5px;
+            margin-bottom: 5px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .hobby-item::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #7ec89a;
+            font-weight: 700;
+        }
+
+        /* ── Hoofdinhoud ── */
+        .main { padding: 32px 30px 30px 28px; }
+
+        .header { margin-bottom: 6px; }
+
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a3a2a;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            font-weight: 400;
+            color: #3a7a5a;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 3px;
+            background: #1a3a2a;
+            margin: 16px 0;
+        }
+
+        .profile-text {
+            font-size: 10px;
+            color: #1e1e1e;
+            line-height: 1.65;
+            margin-bottom: 24px;
+        }
+
+        .section { margin-bottom: 22px; }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1a3a2a;
+            margin-bottom: 14px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #1a3a2a;
+        }
+
+        .entry {
+            margin-bottom: 16px;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .entry::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 6px;
+            height: 6px;
+            background: #7ec89a;
+            border-radius: 50%;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .entry-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #1a3a2a;
+        }
+
+        .entry-date {
+            font-size: 9px;
+            color: #8a8a8a;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .entry-subtitle {
+            font-size: 9.5px;
+            color: #3a7a5a;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        .entry-details { margin-top: 5px; }
+
+        .entry-details li {
+            font-size: 9.5px;
+            color: #1e1e1e;
+            margin-bottom: 3px;
+            list-style: none;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .entry-details li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: #7ec89a;
+        }
+
+        .soft-skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 20px;
+        }
+
+        .soft-skill {
+            font-size: 9.5px;
+            color: #1e1e1e;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .soft-skill::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: #7ec89a;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Zijbalk -->
+        <div class="sidebar">
+            <div class="photo-container">
+                <img src="afbeeldingen/main.JPG" alt="Foto Alek Klem">
+            </div>
+            <div class="sidebar-content">
+
+                <div class="sidebar-section">
+                    <h2>Contact</h2>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9993;</span>
+                        <span class="contact-text">alekklem@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9742;</span>
+                        <span class="contact-text">+31 6 37172826</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9873;</span>
+                        <span class="contact-text">Rotterdam</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h2>Persoonlijk</h2>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9734;</span>
+                        <span class="contact-text">14 april 2004</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h2>Horeca vaardigheden</h2>
+                    <div class="skill-item">Klantcontact &amp; bediening</div>
+                    <div class="skill-item">Kassa &amp; betalingen</div>
+                    <div class="skill-item">Keukenervaring</div>
+                    <div class="skill-item">Werken in teamverband</div>
+                    <div class="skill-item">Stressbestendig</div>
+                    <div class="skill-item">Snel aanpassen</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h2>Talen</h2>
+                    <div class="language-item">
+                        <span>Nederlands</span>
+                        <span class="language-level">Moedertaal</span>
+                    </div>
+                    <div class="language-item">
+                        <span>Engels</span>
+                        <span class="language-level">Vloeiend</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h2>Interesses</h2>
+                    <div class="hobby-item">Boulderen</div>
+                    <div class="hobby-item">Tekenen</div>
+                    <div class="hobby-item">Muziek</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Hoofdinhoud -->
+        <div class="main">
+            <div class="header">
+                <div class="name">Alek Klem</div>
+                <div class="subtitle">Allround Horecamedewerker</div>
+            </div>
+            <div class="divider"></div>
+
+            <p class="profile-text">
+                Enthousiaste en betrouwbare horecamedewerker met ervaring in zowel de bediening als de keuken.
+                Ik werk graag in een dynamische omgeving, ben stressbestendig en pak taken proactief op.
+                Snel inzetbaar, flexibel beschikbaar in de avonden en weekenden, en altijd bereid een stapje extra te zetten voor het team.
+            </p>
+
+            <!-- Werkervaring -->
+            <div class="section">
+                <div class="section-title">Werkervaring</div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Allround horecamedewerker</span>
+                        <span class="entry-date">Sep 2024 – heden</span>
+                    </div>
+                    <div class="entry-subtitle">Jordy's Bakery, Rotterdam</div>
+                    <ul class="entry-details">
+                        <li>Klanten te woord staan, bestellingen opnemen en afhandelen</li>
+                        <li>Kassa en betalingen verwerken</li>
+                        <li>Samenwerken in een druk team onder tijdsdruk</li>
+                        <li>Professioneel gedrag en flexibele inzetbaarheid</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Keukenmedewerker</span>
+                        <span class="entry-date">Sep 2025 – Dec 2025</span>
+                    </div>
+                    <div class="entry-subtitle">Boudewijn Keuken, Rotterdam</div>
+                    <ul class="entry-details">
+                        <li>Avondwerk in een professionele keukenomgeving</li>
+                        <li>Werken onder druk en overzicht bewaren tijdens service</li>
+                        <li>Samenwerken met een ervaren keukenteam</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Bijlesdocent wiskunde &amp; natuurkunde</span>
+                        <span class="entry-date">Sep 2021 – Jul 2022</span>
+                    </div>
+                    <div class="entry-subtitle">After's Cool</div>
+                    <ul class="entry-details">
+                        <li>Bijlessen gegeven aan middelbare scholieren</li>
+                        <li>Duidelijk uitleggen en geduldig omgaan met verschillende leerstijlen</li>
+                        <li>Betrouwbaarheid en verantwoordelijkheidsgevoel opgebouwd</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Opleiding -->
+            <div class="section">
+                <div class="section-title">Opleiding</div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">BSc Kunstmatige Intelligentie</span>
+                        <span class="entry-date">Sep 2023 – heden</span>
+                    </div>
+                    <div class="entry-subtitle">Universiteit Utrecht</div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Gymnasiumdiploma</span>
+                        <span class="entry-date">Sep 2016 – Jul 2022</span>
+                    </div>
+                    <div class="entry-subtitle">Erasmiaans Gymnasium, Rotterdam</div>
+                </div>
+            </div>
+
+            <!-- Competenties -->
+            <div class="section">
+                <div class="section-title">Competenties</div>
+                <div class="soft-skills-grid">
+                    <div class="soft-skill">Teamwork &amp; samenwerking</div>
+                    <div class="soft-skill">Klantgerichtheid</div>
+                    <div class="soft-skill">Stressbestendig</div>
+                    <div class="soft-skill">Flexibel &amp; proactief</div>
+                    <div class="soft-skill">Verantwoordelijkheid</div>
+                    <div class="soft-skill">Snel leren</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

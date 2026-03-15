@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Alek, 21 - Op zoek naar werk</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root, [data-theme="dark"] {
+    --bg: #111;
+    --card-bg: #1a1a1a;
+    --text: #e8e8e8;
+    --text-dim: #bbb;
+    --text-muted: #777;
+    --pill-bg: rgba(255,255,255,0.06);
+    --pill-border: rgba(255,255,255,0.1);
+    --pill-text: #aaa;
+    --border: rgba(255,255,255,0.08);
+    --action-bg: #1a1a1a;
+    --tooltip-bg: #444;
+    --shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 8px 40px rgba(0,0,0,0.6);
+    --ctrl-bg: rgba(0,0,0,0.6);
+    --ctrl-border: rgba(255,255,255,0.15);
+    --ctrl-text: rgba(255,255,255,0.5);
+  }
+
+  [data-theme="light"] {
+    --bg: #f0ebe3;
+    --card-bg: #fff;
+    --text: #2d2d2d;
+    --text-dim: #555;
+    --text-muted: #999;
+    --pill-bg: #f5f0ea;
+    --pill-border: #e0d8cc;
+    --pill-text: #666;
+    --border: #eae4db;
+    --action-bg: #fff;
+    --tooltip-bg: #555;
+    --shadow: 0 8px 40px rgba(0,0,0,0.12);
+    --ctrl-bg: rgba(255,255,255,0.85);
+    --ctrl-border: rgba(0,0,0,0.1);
+    --ctrl-text: #999;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    opacity: 0.82;
+    z-index: 0;
+    pointer-events: none;
+    transition: background 0.3s;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    background-image: url(afbeeldingen/collage_bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .tinder-wrapper {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Photo Section */
+  .photo-section {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    max-height: 600px;
+    overflow: hidden;
+  }
+
+  .photo-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .photo-slide.active { opacity: 1; }
+
+  .photo-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .tap-left, .tap-right {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .tap-left { left: 0; }
+  .tap-right { right: 0; }
+
+  .photo-indicators {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 4px;
+    z-index: 20;
+  }
+
+  .photo-indicators .bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 3px;
+    transition: background 0.3s;
+  }
+
+  .photo-indicators .bar.active { background: #fff; }
+  .photo-indicators .bar.seen { background: rgba(255,255,255,0.65); }
+
+  .photo-gradient {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .name-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 15;
+    pointer-events: none;
+    color: #fff;
+  }
+
+  .name-overlay h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .name-overlay h1 .age {
+    font-weight: 400;
+    font-size: 1.6rem;
+  }
+
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #2ee67a;
+    border-radius: 50%;
+    margin-left: 6px;
+    font-size: 14px;
+  }
+
+  .name-overlay .quick-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 6px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  .name-overlay .quick-info svg {
+    width: 16px;
+    height: 16px;
+    fill: white;
+    flex-shrink: 0;
+  }
+
+  /* Info Section */
+  .info-section {
+    background: var(--card-bg);
+    padding: 0 20px 100px;
+    transition: background 0.3s;
+  }
+
+  .bio {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bio p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-dim);
+  }
+
+  .essentials {
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .essential-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    color: var(--pill-text);
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+  }
+
+  .essential-pill .pill-icon { font-size: 0.95rem; }
+
+  .passions-section, .looking-for-section, .experience-section {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .passions-section h3, .looking-for-section h3, .experience-section h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+
+  .passions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .passion-tag {
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #2ee67a;
+    color: #2ee67a;
+    cursor: default;
+    transition: all 0.2s;
+  }
+
+  .passion-tag:hover {
+    background: #2ee67a;
+    color: #111;
+  }
+
+  .looking-for-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .looking-for-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .lf-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Experience timeline */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .exp-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 14px;
+    border-left: 2px solid #2ee67a;
+  }
+
+  .exp-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .exp-period {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .exp-desc {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* Action Bar */
+  .action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 20px 28px;
+    background: linear-gradient(transparent, var(--card-bg) 30%);
+    z-index: 50;
+  }
+
+  .action-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--action-bg);
+    font-size: 1.4rem;
+    position: relative;
+  }
+
+  .action-btn:hover { transform: scale(1.12); }
+  .action-btn.nope { border-color: #fd5068; color: #fd5068; width: 52px; height: 52px; font-size: 1.2rem; }
+  .action-btn.superlike { border-color: #2fc0ff; color: #2fc0ff; width: 52px; height: 52px; font-size: 1.2rem; }
+  .action-btn.like { border-color: #2ee67a; color: #2ee67a; }
+
+  .action-btn.cv-btn {
+    border-color: #aaa;
+    color: #aaa;
+    width: 52px;
+    height: 52px;
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  .action-btn.cv-btn:hover { border-color: #fff; color: #fff; }
+
+  .action-btn.contact-action {
+    border: none;
+    background: linear-gradient(135deg, #2ee67a, #1bc45a);
+    color: white;
+    width: 64px;
+    height: 64px;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 20px rgba(46,230,122,0.4);
+  }
+  .action-btn.contact-action:hover { box-shadow: 0 6px 30px rgba(46,230,122,0.6); }
+
+  .tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: var(--tooltip-bg);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s;
+  }
+  .action-btn:hover .tooltip { opacity: 1; transform: translateX(-50%) scale(1); }
+
+  /* Swipe stamps */
+  .swipe-stamp {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg) scale(0);
+    font-size: 4rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    border-radius: 12px;
+    border: 5px solid;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0;
+    letter-spacing: 4px;
+  }
+  .swipe-stamp.like-stamp { color: #2ee67a; border-color: #2ee67a; }
+  .swipe-stamp.nope-stamp { color: #fd5068; border-color: #fd5068; transform: translate(-50%, -50%) rotate(25deg) scale(0); }
+  .swipe-stamp.super-stamp { color: #2fc0ff; border-color: #2fc0ff; transform: translate(-50%, -50%) rotate(0deg) scale(0); }
+
+  .swipe-stamp.show { animation: stampIn 0.6s ease forwards; }
+
+  @keyframes stampIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rot, -25deg)) scale(2); }
+    50% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rot, -25deg)) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rot, -25deg)) scale(1); }
+  }
+
+  /* Match modal */
+  .match-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 300;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+  .match-modal.show { display: flex; animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .match-modal .match-text {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2ee67a, #2fc0ff, #ffc057);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    animation: matchPop 0.6s ease;
+  }
+  @keyframes matchPop { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+  .match-modal .match-sub { color: #ccc; font-size: 1rem; margin-bottom: 2rem; max-width: 300px; line-height: 1.5; }
+  .match-modal .match-buttons { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }
+
+  .match-btn {
+    display: block;
+    padding: 14px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.2s;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+  }
+  .match-btn.gradient { background: linear-gradient(135deg, #2ee67a, #1bc45a); color: white; }
+  .match-btn.gradient:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(46,230,122,0.4); }
+  .match-btn.outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.4); }
+  .match-btn.outline:hover { border-color: white; }
+
+  /* Top controls */
+  .top-controls {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 60;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .dark-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--ctrl-border);
+    background: var(--ctrl-bg);
+    backdrop-filter: blur(10px);
+    color: var(--text);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .dark-toggle:hover { transform: scale(1.1); }
+
+  .lang-toggle {
+    display: flex;
+    background: var(--ctrl-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 100px;
+    overflow: hidden;
+    border: 1px solid var(--ctrl-border);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .lang-btn {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--ctrl-text);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .lang-btn.active { background: #2ee67a; color: #111; }
+
+  /* Confetti */
+  .confetti { position: fixed; pointer-events: none; z-index: 250; font-size: 1.5rem; }
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(80vh) rotate(720deg); }
+  }
+
+  /* Entry animations */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .photo-section { animation: scaleIn 0.6s ease both; }
+  .name-overlay h1 { animation: slideUp 0.5s ease both 0.3s; }
+  .name-overlay .quick-info { animation: slideUp 0.5s ease both 0.45s; }
+
+  .scroll-anim {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .scroll-anim.visible { opacity: 1; transform: translateY(0); }
+
+  .top-controls { animation: slideUp 0.4s ease both 0.6s; }
+
+  .action-bar { animation: actionSlideUp 0.4s ease both 0.7s; }
+  @keyframes actionSlideUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* Tilt effect */
+  .photo-section {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* Q&A section */
+  .qa-section {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .qa-section h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+
+  .qa-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .qa-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .qa-q {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .qa-a { font-size: 0.95rem; color: var(--text); }
+
+  /* Responsive */
+  @media (min-width: 431px) {
+    .tinder-wrapper {
+      margin-top: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: var(--card-bg);
+    }
+    .photo-section { border-radius: 16px 16px 0 0; }
+    body { padding: 10px 0; }
+  }
+
+  .tinder-wrapper { z-index: 3; position: relative; }
+
+</style>
+</head>
+<body>
+
+<div class="top-controls">
+  <button class="dark-toggle" id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode">&#9728;</button>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="nl" onclick="setLang('nl')">NL</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="swipe-stamp like-stamp" id="like-stamp" style="--rot: -25deg" data-nl="AANNEMEN!" data-en="HIRE!">AANNEMEN!</div>
+<div class="swipe-stamp nope-stamp" id="nope-stamp" style="--rot: 25deg" data-nl="NOPE" data-en="NOPE">NOPE</div>
+
+<div class="match-modal" id="cv-modal">
+  <div class="match-text" style="font-size:2rem">&#128196;</div>
+  <p class="match-sub" data-nl="Bekijk mijn CV in de browser of download hem als PDF." data-en="View my CV in the browser or download it as a PDF.">Bekijk mijn CV in de browser of download hem als PDF.</p>
+  <div class="match-buttons">
+    <a href="cv-horeca.html" class="match-btn outline" target="_blank" data-nl="&#128196; Bekijken in browser" data-en="&#128196; View in browser">&#128196; Bekijken in browser</a>
+    <a href="cv-horeca.pdf" class="match-btn gradient" download data-nl="&#11015; PDF downloaden" data-en="&#11015; Download PDF">&#11015; PDF downloaden</a>
+    <button class="match-btn outline" onclick="document.getElementById('cv-modal').classList.remove('show')" data-nl="Sluiten" data-en="Close">Sluiten</button>
+  </div>
+</div>
+
+<div class="match-modal" id="nope-modal">
+  <div class="match-text" style="font-size:2rem">&#128075;</div>
+  <p class="match-sub" data-nl="Geen probleem, bedankt voor het bekijken!" data-en="No worries, thanks for taking a look!">Geen probleem, bedankt voor het bekijken!</p>
+  <div class="match-buttons">
+    <button class="match-btn outline" onclick="document.getElementById('nope-modal').classList.remove('show')" data-nl="Sluiten" data-en="Close">Sluiten</button>
+  </div>
+</div>
+
+<div class="match-modal" id="match-modal">
+  <div class="match-text" data-nl="&#127881; Super!" data-en="&#127881; Great!">&#127881; Super!</div>
+  <p class="match-sub" data-nl="Neem gerust contact op, ik reageer snel!" data-en="Feel free to reach out, I'll respond quickly!">Neem gerust contact op, ik reageer snel!</p>
+  <div class="match-buttons">
+    <a href="mailto:alekklem@gmail.com" class="match-btn gradient" data-nl="&#128140; Mail sturen" data-en="&#128140; Send email">&#128140; Mail sturen</a>
+    <a href="https://wa.me/31637172826" class="match-btn outline" target="_blank" data-nl="&#128241; WhatsApp" data-en="&#128241; WhatsApp">&#128241; WhatsApp</a>
+    <button class="match-btn outline" onclick="document.getElementById('match-modal').classList.remove('show')" data-nl="Verder kijken" data-en="Keep browsing">Verder kijken</button>
+  </div>
+</div>
+
+<div class="tinder-wrapper">
+  <div class="photo-section" id="photo-section">
+    <div class="photo-indicators" id="indicators"></div>
+    <div class="tap-left" onclick="prevPhoto()"></div>
+    <div class="tap-right" onclick="nextPhoto()"></div>
+
+    <div class="photo-slide active" data-idx="0">
+      <img src="afbeeldingen/main.JPG" alt="Alek">
+    </div>
+    <div class="photo-slide" data-idx="1">
+      <img src="afbeeldingen/0.jpg" alt="">
+    </div>
+    <div class="photo-slide" data-idx="2">
+      <img src="afbeeldingen/2.jpg" alt="">
+    </div>
+
+    <div class="photo-gradient"></div>
+    <div class="name-overlay">
+      <h1>Alek <span class="age">21</span> <span class="verified-badge">&#10003;</span></h1>
+      <div class="quick-info">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span>Rotterdam</span> &bull;
+        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+        <span data-nl="Op zoek naar horecawerk" data-en="Looking for hospitality work">Op zoek naar horecawerk</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <div class="bio scroll-anim">
+      <p data-nl="Hey, ik ben Alek! Ik werk al een tijdje in de horeca &mdash; bij Jordy's Bakery als allround medewerker en als keukenmedewerker bij Boudewijn Keuken. Ik vind het leuk om in een drukke omgeving te werken, hou van contact met mensen en ben iemand die zich snel aanpast. Ik ben betrouwbaar, kom mijn afspraken na en vind het fijn als het gezellig is op de werkvloer."
+         data-en="Hey, I'm Alek! I've been working in hospitality for a while &mdash; as an all-around staff member at Jordy's Bakery and as kitchen staff at Boudewijn Keuken. I enjoy working in a busy environment, like contact with people and adapt quickly. I'm reliable, keep my commitments and enjoy a fun workplace.">Hey, ik ben Alek! Ik werk al een tijdje in de horeca &mdash; bij Jordy's Bakery als allround medewerker en als keukenmedewerker bij Boudewijn Keuken. Ik vind het leuk om in een drukke omgeving te werken, hou van contact met mensen en ben iemand die zich snel aanpast. Ik ben betrouwbaar, kom mijn afspraken na en vind het fijn als het gezellig is op de werkvloer.</p>
+    </div>
+
+    <div class="essentials scroll-anim">
+      <span class="essential-pill"><span class="pill-icon">&#127860;</span> <span data-nl="Horeca ervaring" data-en="Hospitality experience">Horeca ervaring</span></span>
+      <span class="essential-pill"><span class="pill-icon">&#128205;</span> Rotterdam</span>
+      <span class="essential-pill"><span class="pill-icon">&#128197;</span> <span data-nl="Flexibel inzetbaar" data-en="Flexible availability">Flexibel inzetbaar</span></span>
+    </div>
+
+    <div class="experience-section scroll-anim">
+      <h3 data-nl="Werkervaring" data-en="Work experience">Werkervaring</h3>
+      <div class="exp-list">
+        <div class="exp-item">
+          <span class="exp-title">Jordy's Bakery</span>
+          <span class="exp-period" data-nl="Allround horeca &bull; Sep 2024 &ndash; heden" data-en="All-around hospitality &bull; Sep 2024 &ndash; present">Allround horeca &bull; Sep 2024 &ndash; heden</span>
+          <span class="exp-desc" data-nl="Teamwork, omgaan met stress, professioneel gedrag, flexibiliteit en verantwoordelijkheid." data-en="Teamwork, stress management, professional behaviour, flexibility and responsibility.">Teamwork, omgaan met stress, professioneel gedrag, flexibiliteit en verantwoordelijkheid.</span>
+        </div>
+        <div class="exp-item">
+          <span class="exp-title">Boudewijn Keuken</span>
+          <span class="exp-period" data-nl="Keukenmedewerker &bull; Sep 2025 &ndash; Dec 2025" data-en="Kitchen staff &bull; Sep 2025 &ndash; Dec 2025">Keukenmedewerker &bull; Sep 2025 &ndash; Dec 2025</span>
+          <span class="exp-desc" data-nl="Avondwerk, omgaan met druk, overzicht houden en werken naast professionals." data-en="Evening work, handling pressure, maintaining overview and working alongside professionals.">Avondwerk, omgaan met druk, overzicht houden en werken naast professionals.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="passions-section scroll-anim">
+      <h3 data-nl="Vaardigheden" data-en="Skills">Vaardigheden</h3>
+      <div class="passions-grid">
+        <span class="passion-tag" data-nl="Teamwork" data-en="Teamwork">Teamwork</span>
+        <span class="passion-tag" data-nl="Stress-bestendig" data-en="Stress-resistant">Stress-bestendig</span>
+        <span class="passion-tag" data-nl="Flexibel" data-en="Flexible">Flexibel</span>
+        <span class="passion-tag" data-nl="Klantgericht" data-en="Customer-oriented">Klantgericht</span>
+        <span class="passion-tag" data-nl="Verantwoordelijk" data-en="Responsible">Verantwoordelijk</span>
+        <span class="passion-tag" data-nl="Snel leren" data-en="Quick learner">Snel leren</span>
+        <span class="passion-tag" data-nl="Proactief" data-en="Proactive">Proactief</span>
+        <span class="passion-tag" data-nl="Sociaal" data-en="Social">Sociaal</span>
+      </div>
+    </div>
+
+    <div class="qa-section scroll-anim">
+      <h3>Q&amp;A</h3>
+      <div class="qa-list">
+        <div class="qa-item">
+          <span class="qa-q" data-nl="Wanneer ben je beschikbaar?" data-en="When are you available?">Wanneer ben je beschikbaar?</span>
+          <span class="qa-a" data-nl="Avonden en weekenden, flexibel in te plannen" data-en="Evenings and weekends, flexible scheduling">Avonden en weekenden, flexibel in te plannen</span>
+        </div>
+        <div class="qa-item">
+          <span class="qa-q" data-nl="Ervaring met bediening?" data-en="Experience with front-of-house?">Ervaring met bediening?</span>
+          <span class="qa-a" data-nl="Ja, allround bij Jordy's Bakery &mdash; klanten helpen, kassa en bestellingen verwerken" data-en="Yes, all-around at Jordy's Bakery &mdash; serving customers, till and processing orders">Ja, allround bij Jordy's Bakery &mdash; klanten helpen, kassa en bestellingen verwerken</span>
+        </div>
+        <div class="qa-item">
+          <span class="qa-q" data-nl="Wat spreekt je aan in de horeca?" data-en="What attracts you to hospitality?">Wat spreekt je aan in de horeca?</span>
+          <span class="qa-a" data-nl="De dynamische omgeving, contact met mensen en teamgevoel" data-en="The dynamic environment, contact with people and team spirit">De dynamische omgeving, contact met mensen en teamgevoel</span>
+        </div>
+        <div class="qa-item">
+          <span class="qa-q" data-nl="Talen?" data-en="Languages?">Talen?</span>
+          <span class="qa-a" data-nl="Nederlands en Engels, beide vloeiend" data-en="Dutch and English, both fluent">Nederlands en Engels, beide vloeiend</span>
+        </div>
+        <div class="qa-item">
+          <span class="qa-q" data-nl="Wat doe je buiten werktijd?" data-en="What do you do outside work?">Wat doe je buiten werktijd?</span>
+          <span class="qa-a" data-nl="Boulderen, afspreken met vrienden, muziek en tekenen" data-en="Bouldering, hanging out with friends, music and drawing">Boulderen, afspreken met vrienden, muziek en tekenen</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="looking-for-section scroll-anim">
+      <h3 data-nl="Op zoek naar" data-en="Looking for">Op zoek naar</h3>
+      <ul class="looking-for-list">
+        <li><span class="lf-icon">&#127867;</span> <span data-nl="Een gezellige bar, caf&eacute; of restaurant" data-en="A fun bar, caf&eacute; or restaurant">Een gezellige bar, caf&eacute; of restaurant</span></li>
+        <li><span class="lf-icon">&#128101;</span> <span data-nl="Een fijn team om mee samen te werken" data-en="A great team to work with">Een fijn team om mee samen te werken</span></li>
+        <li><span class="lf-icon">&#127757;</span> <span data-nl="Avonden en/of weekenden (flexibel)" data-en="Evenings and/or weekends (flexible)">Avonden en/of weekenden (flexibel)</span></li>
+        <li><span class="lf-icon">&#128205;</span> <span data-nl="Rotterdam centrum" data-en="Rotterdam city centre">Rotterdam centrum</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="action-bar">
+  <button class="action-btn nope" onclick="doNope()">&#10005;<span class="tooltip" data-nl="Niet geschikt" data-en="Not a fit">Niet geschikt</span></button>
+  <button class="action-btn contact-action" onclick="doLike()">&#10004;<span class="tooltip" data-nl="Aannemen!" data-en="Hire!">Aannemen!</span></button>
+<button class="action-btn cv-btn" onclick="document.getElementById('cv-modal').classList.add('show')">&#128196;<span class="tooltip">CV</span></button>
+</div>
+
+<script>
+// Photo carousel (single photo)
+const slides = document.querySelectorAll('.photo-slide');
+const indicatorBar = document.getElementById('indicators');
+let currentPhoto = 0;
+
+slides.forEach((_, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'bar' + (i === 0 ? ' active' : '');
+  indicatorBar.appendChild(bar);
+});
+
+function showPhoto(idx) {
+  if (idx < 0 || idx >= slides.length) return;
+  slides[currentPhoto].classList.remove('active');
+  indicatorBar.children[currentPhoto].classList.remove('active');
+  indicatorBar.children[currentPhoto].classList.add('seen');
+  currentPhoto = idx;
+  slides[currentPhoto].classList.add('active');
+  indicatorBar.children[currentPhoto].classList.add('active');
+}
+
+function nextPhoto() { showPhoto(Math.min(currentPhoto + 1, slides.length - 1)); }
+function prevPhoto() { showPhoto(Math.max(currentPhoto - 1, 0)); }
+
+const photoSection = document.querySelector('.photo-section');
+let touchStartX = 0;
+photoSection.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+photoSection.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(diff) > 40) { diff < 0 ? nextPhoto() : prevPhoto(); }
+});
+
+// Action buttons
+function showStamp(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 600);
+}
+
+function spawnConfetti() {
+  const colors = ['#2ee67a', '#2fc0ff', '#ffc057', '#fd5068', '#fff'];
+  const symbols = ['&#10084;', '&#9733;', '&#127881;', '&#10024;'];
+  for (let i = 0; i < 40; i++) {
+    const span = document.createElement('span');
+    span.className = 'confetti';
+    span.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.top = '-20px';
+    span.style.color = colors[Math.floor(Math.random() * colors.length)];
+    span.style.animation = 'confettiFall ' + (1.5 + Math.random() * 1.5) + 's ease-in forwards';
+    span.style.animationDelay = Math.random() * 0.5 + 's';
+    span.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    document.body.appendChild(span);
+    setTimeout(() => span.remove(), 3000);
+  }
+}
+
+function doNope() {
+  showStamp('nope-stamp');
+  const w = document.querySelector('.tinder-wrapper');
+  w.style.transition = 'transform 0.1s';
+  w.style.transform = 'translateX(-20px) rotate(-2deg)';
+  setTimeout(() => { w.style.transform = 'translateX(10px) rotate(1deg)'; setTimeout(() => { w.style.transform = ''; }, 100); }, 100);
+  setTimeout(() => document.getElementById('nope-modal').classList.add('show'), 800);
+}
+
+function doSuperLike() {
+  showStamp('super-stamp');
+  spawnConfetti();
+  setTimeout(() => document.getElementById('match-modal').classList.add('show'), 800);
+}
+
+function doLike() {
+  showStamp('like-stamp');
+  spawnConfetti();
+  setTimeout(() => document.getElementById('match-modal').classList.add('show'), 800);
+}
+
+// Dark mode
+function toggleDark() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('dark-toggle').textContent = isDark ? '\u263E' : '\u2600';
+}
+
+// Language
+let currentLang = 'nl';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.lang-btn[data-lang="' + lang + '"]').classList.add('active');
+  document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+  indicatorBar.innerHTML = '';
+  slides.forEach((_, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'bar' + (i === currentPhoto ? ' active' : (i < currentPhoto ? ' seen' : ''));
+    indicatorBar.appendChild(bar);
+  });
+}
+
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const lang = params.get('lang');
+  if (lang === 'en' || lang === 'nl') setLang(lang);
+})();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('match-modal').classList.remove('show');
+    document.getElementById('nope-modal').classList.remove('show');
+    document.getElementById('cv-modal').classList.remove('show');
+  }
+  if (e.key === 'ArrowRight') nextPhoto();
+  if (e.key === 'ArrowLeft') prevPhoto();
+});
+
+// Scroll animations
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      scrollObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.scroll-anim').forEach(el => scrollObserver.observe(el));
+
+// Tilt effect on photo section
+const tiltEl = document.querySelector('.photo-section');
+tiltEl.addEventListener('mousemove', e => {
+  const rect = tiltEl.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  tiltEl.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 5) + 'deg)';
+});
+tiltEl.addEventListener('mouseleave', () => { tiltEl.style.transform = ''; });
+
+</script>
+</body>
+</html>
