@@ -622,6 +622,16 @@
 <div class="swipe-stamp like-stamp" id="like-stamp" style="--rot: -25deg" data-nl="AANNEMEN!" data-en="HIRE!">AANNEMEN!</div>
 <div class="swipe-stamp nope-stamp" id="nope-stamp" style="--rot: 25deg" data-nl="NOPE" data-en="NOPE">NOPE</div>
 
+<div class="match-modal" id="cv-modal">
+  <div class="match-text" style="font-size:2rem">&#128196;</div>
+  <p class="match-sub" data-nl="Bekijk mijn CV in de browser of download hem als PDF." data-en="View my CV in the browser or download it as a PDF.">Bekijk mijn CV in de browser of download hem als PDF.</p>
+  <div class="match-buttons">
+    <a href="cv-horeca.html" class="match-btn outline" target="_blank" data-nl="&#128196; Bekijken in browser" data-en="&#128196; View in browser">&#128196; Bekijken in browser</a>
+    <a href="cv-horeca.pdf" class="match-btn gradient" download data-nl="&#11015; PDF downloaden" data-en="&#11015; Download PDF">&#11015; PDF downloaden</a>
+    <button class="match-btn outline" onclick="document.getElementById('cv-modal').classList.remove('show')" data-nl="Sluiten" data-en="Close">Sluiten</button>
+  </div>
+</div>
+
 <div class="match-modal" id="nope-modal">
   <div class="match-text" style="font-size:2rem">&#128075;</div>
   <p class="match-sub" data-nl="Geen probleem, bedankt voor het bekijken!" data-en="No worries, thanks for taking a look!">Geen probleem, bedankt voor het bekijken!</p>
@@ -636,8 +646,6 @@
   <div class="match-buttons">
     <a href="mailto:alekklem@gmail.com" class="match-btn gradient" data-nl="&#128140; Mail sturen" data-en="&#128140; Send email">&#128140; Mail sturen</a>
     <a href="https://wa.me/31637172826" class="match-btn outline" target="_blank" data-nl="&#128241; WhatsApp" data-en="&#128241; WhatsApp">&#128241; WhatsApp</a>
-    <a href="cv-horeca.html" class="match-btn outline" target="_blank" data-nl="&#128196; CV bekijken" data-en="&#128196; View CV">&#128196; CV bekijken</a>
-    <a href="cv-horeca.pdf" class="match-btn outline" download data-nl="&#11015; PDF downloaden" data-en="&#11015; Download PDF">&#11015; PDF downloaden</a>
     <button class="match-btn outline" onclick="document.getElementById('match-modal').classList.remove('show')" data-nl="Verder kijken" data-en="Keep browsing">Verder kijken</button>
   </div>
 </div>
@@ -753,7 +761,7 @@
 <div class="action-bar">
   <button class="action-btn nope" onclick="doNope()">&#10005;<span class="tooltip" data-nl="Niet geschikt" data-en="Not a fit">Niet geschikt</span></button>
   <button class="action-btn contact-action" onclick="doLike()">&#10004;<span class="tooltip" data-nl="Aannemen!" data-en="Hire!">Aannemen!</span></button>
-<a href="cv-horeca.html" class="action-btn cv-btn" target="_blank">&#128196;<span class="tooltip">CV</span></a>
+<button class="action-btn cv-btn" onclick="document.getElementById('cv-modal').classList.add('show')">&#128196;<span class="tooltip">CV</span></button>
 </div>
 
 <script>
@@ -871,6 +879,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     document.getElementById('match-modal').classList.remove('show');
     document.getElementById('nope-modal').classList.remove('show');
+    document.getElementById('cv-modal').classList.remove('show');
   }
   if (e.key === 'ArrowRight') nextPhoto();
   if (e.key === 'ArrowLeft') prevPhoto();
