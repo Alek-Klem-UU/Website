@@ -44,9 +44,24 @@
     --ctrl-text: #999;
   }
 
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    opacity: 0.88;
+    z-index: 0;
+    pointer-events: none;
+    transition: background 0.3s;
+  }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--bg);
+    background-image: url(afbeeldingen/collage_bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--text);
     overflow-x: hidden;
     min-height: 100vh;
