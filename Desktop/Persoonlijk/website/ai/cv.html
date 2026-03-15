@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Alek</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #2d2d2d;
+            background: #f0f0f0;
+            line-height: 1.5;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background: #fff;
+            display: grid;
+            grid-template-columns: 72mm 1fr;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        @media print {
+            body { background: none; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                min-height: 100vh;
+            }
+        }
+
+        /* ── Left sidebar ── */
+        .sidebar {
+            background: #1a2744;
+            color: #e0e6ef;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-container {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .sidebar-content {
+            padding: 20px 22px 30px;
+            flex: 1;
+        }
+
+        .sidebar h2 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #7eb8da;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(126, 184, 218, 0.25);
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .contact-item {
+            font-size: 9.5px;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .contact-icon {
+            width: 14px;
+            text-align: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            margin-top: 0px;
+        }
+
+        .contact-text {
+            word-break: break-all;
+        }
+
+        .skill-item {
+            font-size: 9.5px;
+            margin-bottom: 5px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .skill-item::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #7eb8da;
+            font-weight: 700;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            margin-bottom: 6px;
+        }
+
+        .language-level {
+            color: #7eb8da;
+            font-weight: 500;
+        }
+
+        .hobby-item {
+            font-size: 9.5px;
+            margin-bottom: 5px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .hobby-item::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #7eb8da;
+            font-weight: 700;
+        }
+
+        /* ── Main content ── */
+        .main {
+            padding: 32px 30px 30px 28px;
+        }
+
+        .header {
+            margin-bottom: 6px;
+        }
+
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a2744;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            font-weight: 400;
+            color: #5a7a9b;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 3px;
+            background: #1a2744;
+            margin: 16px 0;
+        }
+
+        .profile-text {
+            font-size: 10px;
+            color: #4a4a4a;
+            line-height: 1.65;
+            margin-bottom: 24px;
+        }
+
+        .section {
+            margin-bottom: 22px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1a2744;
+            margin-bottom: 14px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #1a2744;
+        }
+
+        .entry {
+            margin-bottom: 16px;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .entry::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 6px;
+            height: 6px;
+            background: #7eb8da;
+            border-radius: 50%;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .entry-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #1a2744;
+        }
+
+        .entry-date {
+            font-size: 9px;
+            color: #8a8a8a;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .entry-subtitle {
+            font-size: 9.5px;
+            color: #5a7a9b;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        .entry-details {
+            margin-top: 5px;
+            padding-left: 0px;
+        }
+
+        .entry-details li {
+            font-size: 9.5px;
+            color: #4a4a4a;
+            margin-bottom: 3px;
+            list-style: none;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .entry-details li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: #7eb8da;
+        }
+
+        .soft-skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 20px;
+        }
+
+        .soft-skill {
+            font-size: 9.5px;
+            color: #4a4a4a;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .soft-skill::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: #7eb8da;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="photo-container">
+                <img src="main.JPG" alt="Portrait photo">
+            </div>
+            <div class="sidebar-content">
+
+                <!-- Contact -->
+                <div class="sidebar-section">
+                    <h2>Contact</h2>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9993;</span>
+                        <span class="contact-text">alekklem@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9742;</span>
+                        <span class="contact-text">+31 6 37172826</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">in</span>
+                        <span class="contact-text">linkedin.com/in/alek-klem</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9000;</span>
+                        <span class="contact-text">github.com/Alek-Klem-UU</span>
+                    </div>
+                </div>
+
+                <!-- Personal Details -->
+                <div class="sidebar-section">
+                    <h2>Personal</h2>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9734;</span>
+                        <span class="contact-text">14 April 2004</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">&#9873;</span>
+                        <span class="contact-text">Rotterdam, The Netherlands</span>
+                    </div>
+                </div>
+
+                <!-- Technical Skills -->
+                <div class="sidebar-section">
+                    <h2>Technical Skills</h2>
+                    <div class="skill-item">Python (5+ years)</div>
+                    <div class="skill-item">Data Analysis</div>
+                    <div class="skill-item">Machine Learning</div>
+                    <div class="skill-item">Data Structures</div>
+                </div>
+
+                <!-- Languages -->
+                <div class="sidebar-section">
+                    <h2>Languages</h2>
+                    <div class="language-item">
+                        <span>Dutch</span>
+                        <span class="language-level">Native</span>
+                    </div>
+                    <div class="language-item">
+                        <span>English</span>
+                        <span class="language-level">Fluent</span>
+                    </div>
+                </div>
+
+                <!-- Interests -->
+                <div class="sidebar-section">
+                    <h2>Interests</h2>
+                    <div class="hobby-item">Bouldering</div>
+                    <div class="hobby-item">Drawing</div>
+                    <div class="hobby-item">Music</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <div class="header">
+                <div class="name">Alek Klem</div>
+                <div class="subtitle">Artificial Intelligence Student</div>
+            </div>
+            <div class="divider"></div>
+
+            <!-- Profile -->
+            <p class="profile-text">
+                Driven and analytically minded Artificial Intelligence student at Utrecht University
+                with a strong foundation in physics and mathematics from the Gymnasium and TU Delft.
+                Eager to apply problem-solving skills and a data-driven mindset in a challenging
+                internship environment. Combines technical acumen with strong teamwork and
+                communication skills developed through both academic and professional experience.
+            </p>
+
+            <!-- Education -->
+            <div class="section">
+                <div class="section-title">Education</div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">BSc Artificial Intelligence</span>
+                        <span class="entry-date">Sep 2023 – Present</span>
+                    </div>
+                    <div class="entry-subtitle">Utrecht University</div>
+                    <ul class="entry-details">
+                        <li>Relevant coursework: Machine Learning, Data Structures</li>
+                        <li>Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">BSc Applied Physics</span>
+                        <span class="entry-date">Sep 2022 – Apr 2023</span>
+                    </div>
+                    <div class="entry-subtitle">Delft University of Technology</div>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Gymnasium Diploma</span>
+                        <span class="entry-date">Sep 2016 – Jul 2022</span>
+                    </div>
+                    <div class="entry-subtitle">Erasmiaans Gymnasium, Rotterdam</div>
+                </div>
+            </div>
+
+            <!-- Work Experience -->
+            <div class="section">
+                <div class="section-title">Experience</div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Tutor — Mathematics, Physics &amp; Science</span>
+                        <span class="entry-date">Sep 2021 – Jul 2022</span>
+                    </div>
+                    <div class="entry-subtitle">After's Cool</div>
+                    <ul class="entry-details">
+                        <li>Tutored secondary school students in mathematics, physics, and other STEM subjects</li>
+                        <li>Adapted explanations to individual learning styles and skill levels</li>
+                        <li>Developed patience, clear communication, and structured problem-solving skills</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">All-Round Hospitality Staff</span>
+                        <span class="entry-date">Sep 2024 – Present</span>
+                    </div>
+                    <div class="entry-subtitle">Jordy's Bakery</div>
+                    <ul class="entry-details">
+                        <li>Collaborate effectively within a fast-paced team environment</li>
+                        <li>Maintain professional conduct and quality standards under pressure</li>
+                        <li>Demonstrate flexibility and take ownership of responsibilities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="section">
+                <div class="section-title">Projects</div>
+
+                <div class="entry">
+                    <div class="entry-header">
+                        <span class="entry-title">Social Sycophancy in LLMs (Upcoming BSc Thesis)</span>
+                        <span class="entry-date">2025 – Present</span>
+                    </div>
+                    <div class="entry-subtitle">Utrecht University · github.com/Alek-Klem-UU/SycoUI</div>
+                    <ul class="entry-details">
+                        <li>Preparing research on social sycophancy in Large Language Models across UI and API environments</li>
+                        <li>Built a functional automated web-interaction pipeline for systematic data collection and evaluation, currently optimizing</li>
+                        <li>Tech stack: Python, web automation, LLM APIs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Competencies -->
+            <div class="section">
+                <div class="section-title">Key Competencies</div>
+                <div class="soft-skills-grid">
+                    <div class="soft-skill">Teamwork &amp; collaboration</div>
+                    <div class="soft-skill">Logical reasoning</div>
+                    <div class="soft-skill">Clear communication</div>
+                    <div class="soft-skill">Task delegation</div>
+                    <div class="soft-skill">Proactive attitude</div>
+                    <div class="soft-skill">Sustainability-minded</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
