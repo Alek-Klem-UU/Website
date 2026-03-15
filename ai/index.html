@@ -105,11 +105,12 @@
     position: absolute;
     bottom: -2px; left: 0;
     width: 0; height: 1px;
-    background: var(--dim);
+    background: var(--accent);
+    opacity: 0.6;
     transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
-  .nav-links a:hover { color: var(--dim); }
+  .nav-links a:hover { color: var(--text); }
   .nav-links a:hover::after { width: 100%; }
 
   /* ── Hero ── */
@@ -142,7 +143,7 @@
     font-size: 0.9rem;
     font-weight: 300;
     font-style: italic;
-    color: var(--muted);
+    color: var(--dim);
     margin-bottom: 28px;
     opacity: 0;
     animation: fadeUp 0.6s ease 0.2s forwards;
@@ -204,22 +205,25 @@
     font-style: italic;
     text-decoration: none;
     border-radius: 2px;
-    transition: all 0.25s;
+    transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.18s ease;
     cursor: pointer;
     border: none;
   }
 
+  .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
   .btn-primary {
     background: var(--accent);
-    color: #07090f;
+    color: #110e09;
     font-style: normal;
     font-weight: 500;
   }
 
-  .btn-primary:hover {
-    background: #daa85c;
-    transform: translateY(-1px);
-  }
+  .btn-primary:hover { background: #daa85c; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); background: #c08840; }
 
   .btn-ghost {
     background: transparent;
@@ -227,10 +231,8 @@
     border: 1px solid rgba(255,235,200,0.22);
   }
 
-  .btn-ghost:hover {
-    border-color: rgba(208,152,80,0.5);
-    color: var(--accent);
-  }
+  .btn-ghost:hover { border-color: rgba(208,152,80,0.5); color: var(--accent); }
+  .btn-ghost:active { background: rgba(208,152,80,0.05); }
 
   .hero-scroll {
     position: absolute;
@@ -271,7 +273,6 @@
     font-size: 0.9rem;
     font-style: italic;
     color: var(--muted);
-    opacity: 0.6;
     flex-shrink: 0;
   }
 
@@ -358,7 +359,7 @@
   }
 
   .fact-row:hover::before { width: 2px; }
-  .fact-row:hover { background: rgba(196,147,90,0.02); }
+  .fact-row:hover { background: rgba(208,152,80,0.03); }
 
   .fact-row:last-child { border-bottom: none; }
 
@@ -491,7 +492,7 @@
   }
 
   .exp-card:hover::before { height: 100%; }
-  .exp-card:hover { border-color: rgba(196,147,90,0.1); }
+  .exp-card:hover { border-color: rgba(208,152,80,0.12); }
 
   .exp-period {
     font-family: 'Newsreader', serif;
@@ -553,7 +554,7 @@
     transition: border-color 0.4s;
   }
 
-  .project-featured:hover { border-color: rgba(196,147,90,0.15); }
+  .project-featured:hover { border-color: rgba(208,152,80,0.18); }
 
   .project-info {
     padding: 52px 48px;
@@ -810,6 +811,16 @@
     .contact-links { gap: 20px; }
   }
 
+  /* ── Focus ── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Override for btn which has its own */
+  .btn:focus-visible { outline-offset: 3px; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     #neural-canvas { display: none; }
@@ -822,7 +833,7 @@
 <div id="reading-progress"></div>
 
 <!-- Nav -->
-<nav>
+<nav aria-label="Main navigation">
   <a class="nav-logo" href="#hero">Alek<span>.</span>Klem</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
@@ -836,7 +847,7 @@
 
 <!-- Hero -->
 <section id="hero">
-  <canvas id="neural-canvas"></canvas>
+  <canvas id="neural-canvas" aria-hidden="true"></canvas>
   <div class="hero-content">
     <div class="hero-tag">BSc Artificial Intelligence · Utrecht University</div>
     <h1>Alek<br><em>Klem</em></h1>
@@ -986,12 +997,12 @@
         </p>
         <p class="project-tags">Python · LLM APIs · Web Automation · NLP · AI Safety</p>
       </div>
-      <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" class="btn btn-ghost" style="align-self:flex-start">
+      <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="align-self:flex-start">
         View on GitHub →
       </a>
     </div>
     <div class="project-visual">
-      <canvas id="project-canvas"></canvas>
+      <canvas id="project-canvas" aria-hidden="true"></canvas>
       <div class="project-visual-label">fig. 1 — sycophancy detection pipeline</div>
     </div>
   </div>
@@ -1055,10 +1066,10 @@
       <a href="mailto:alekklem@gmail.com" class="contact-link">
         <span class="icon">✉</span> alekklem@gmail.com
       </a>
-      <a href="https://linkedin.com/in/alek-klem" target="_blank" class="contact-link">
+      <a href="https://linkedin.com/in/alek-klem" target="_blank" rel="noopener noreferrer" class="contact-link">
         <span class="icon">in</span> LinkedIn
       </a>
-      <a href="https://github.com/Alek-Klem-UU" target="_blank" class="contact-link">
+      <a href="https://github.com/Alek-Klem-UU" target="_blank" rel="noopener noreferrer" class="contact-link">
         <span class="icon">⌥</span> GitHub
       </a>
     </div>
@@ -1159,9 +1170,9 @@
 
     const cx = W / 2, cy = H / 2;
     const layers = [
-      { r: 22, color: '#c4935a', nodes: 4 },
-      { r: 52, color: '#a07a4e', nodes: 6 },
-      { r: 82, color: '#a07a4e', nodes: 6 },
+      { r: 22, color: '#d09850', nodes: 4 },
+      { r: 52, color: '#b07c3a', nodes: 6 },
+      { r: 82, color: '#b07c3a', nodes: 6 },
       { r: 112, color: '#8fad82', nodes: 3 },
     ];
 
