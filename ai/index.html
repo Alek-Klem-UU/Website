@@ -3,1345 +3,635 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alek Klem — AI Student & Researcher</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>Klem, A. (2025) — Curriculum Vitae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:        #110e09;
-    --bg2:       #17120a;
-    --bg3:       #1e160e;
-    --border:    rgba(255,235,200,0.09);
-    --text:      #e4d8c2;
-    --muted:     #7a6a54;
-    --dim:       #b09878;
-    --accent:    #d09850;
-    --accent2:   #8fad82;
-    --white:     #f2e8d5;
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Newsreader', Georgia, serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
-    font-size: 16px;
-    line-height: 1.7;
-  }
-
-  /* ── Grain overlay ── */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 9999;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-    opacity: 0.028;
-    mix-blend-mode: overlay;
-  }
-
-  /* ── Reading progress ── */
-  #reading-progress {
-    position: fixed;
-    top: 0; left: 0;
-    height: 1px;
-    width: 0%;
-    background: var(--accent);
-    opacity: 0.45;
-    z-index: 200;
-    transition: width 0.08s linear;
-  }
-
-  /* ── Nav ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 clamp(24px, 5vw, 80px);
-    height: 60px;
-    background: rgba(17,14,9,0.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--white);
-    letter-spacing: -0.02em;
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'Newsreader', serif;
-    font-size: 0.9rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--dim);
-    text-decoration: none;
-    position: relative;
-    transition: color 0.25s;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0;
-    width: 0; height: 1px;
-    background: var(--accent);
-    opacity: 0.6;
-    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  .nav-links a:hover { color: var(--text); }
-  .nav-links a:hover::after { width: 100%; }
-
-  /* ── Hero ── */
-  #hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    overflow: hidden;
-  }
-
-  #neural-canvas {
-    position: absolute;
-    inset: 0;
-    opacity: 0.14;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: clamp(100px, 14vh, 140px) clamp(24px, 8vw, 120px) 80px;
-    max-width: 900px;
-  }
-
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Newsreader', serif;
-    font-size: 0.9rem;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--dim);
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.2s forwards;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 24px; height: 1px;
-    background: var(--muted);
-    opacity: 0.4;
-    flex-shrink: 0;
-  }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(3.2rem, 9vw, 8rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    color: var(--white);
-    margin-bottom: 32px;
-  }
-
-  .h1-word {
-    display: inline-block;
-    opacity: 0;
-    animation: heroWord 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-  }
-
-  h1 em {
-    display: inline-block;
-    font-style: normal;
-    color: var(--accent);
-    font-weight: 700;
-    opacity: 0;
-    animation: heroWord 1s cubic-bezier(0.16, 1, 0.3, 1) 0.52s forwards;
-  }
-
-  @keyframes heroWord {
-    from { opacity: 0; transform: translateY(40px); letter-spacing: 0.06em; }
-    to   { opacity: 1; transform: translateY(0);    letter-spacing: -0.03em; }
-  }
-
-  .hero-desc {
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
-    font-weight: 300;
-    color: var(--dim);
-    max-width: 520px;
-    line-height: 1.85;
-    margin-bottom: 44px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease 0.6s forwards;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.7s ease 0.8s forwards;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 28px;
-    font-family: 'Newsreader', serif;
-    font-size: 0.95rem;
-    font-weight: 400;
-    font-style: italic;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.18s ease;
-    cursor: pointer;
-    border: none;
-  }
-
-  .btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #110e09;
-    font-style: normal;
-    font-weight: 500;
-  }
-
-  .btn-primary:hover { background: #daa85c; transform: translateY(-1px); }
-  .btn-primary:active { transform: translateY(0); background: #c08840; }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--dim);
-    border: 1px solid rgba(255,235,200,0.22);
-  }
-
-  .btn-ghost:hover { border-color: rgba(208,152,80,0.5); color: var(--accent); }
-  .btn-ghost:active { background: rgba(208,152,80,0.05); }
-
-  /* ── Language toggle ── */
-  .lang-toggle {
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(208,152,80,0.45);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-left: 28px;
-    flex-shrink: 0;
-  }
-
-  .lang-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    padding: 5px 11px;
-    background: transparent;
-    color: var(--muted);
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    line-height: 1;
-  }
-
-  .lang-btn.active {
-    background: var(--accent);
-    color: #110e09;
-    font-weight: 700;
-  }
-
-  .lang-btn:hover:not(.active) {
-    background: rgba(208,152,80,0.1);
-    color: var(--dim);
-  }
-
-  .lang-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 36px;
-    left: clamp(24px, 8vw, 120px);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Newsreader', serif;
-    font-size: 0.8rem;
-    font-style: italic;
-    color: var(--muted);
-    opacity: 0;
-    animation: fadeUp 0.7s ease 1.1s forwards;
-    z-index: 2;
-  }
-
-  .scroll-line {
-    width: 32px; height: 1px;
-    background: var(--muted);
-    opacity: 0.4;
-    animation: scrollPulse 2.8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { transform: translateX(0); opacity: 0.4; }
-    50%       { transform: translateX(8px); opacity: 0.2; }
-  }
-
-  /* ── Sections ── */
-  section {
-    padding: clamp(80px, 12vw, 140px) clamp(24px, 8vw, 120px);
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    margin-bottom: 60px;
-  }
-
-  .section-num {
-    font-family: 'Newsreader', serif;
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--muted);
-    flex-shrink: 0;
-  }
-
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--white);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    margin-left: 12px;
-  }
-
-  /* ── About ── */
-  #about { background: var(--bg2); }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .about-text p {
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: var(--dim);
-    line-height: 1.9;
-    margin-bottom: 22px;
-  }
-
-  /* Drop cap on first paragraph */
-  .about-text p:first-child::first-letter {
-    font-family: 'Newsreader', serif;
-    font-size: 3.8rem;
-    font-weight: 400;
-    line-height: 0.78;
-    float: left;
-    margin-right: 6px;
-    margin-top: 6px;
-    color: var(--white);
-  }
-
-  .about-text p strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .about-text p em {
-    color: var(--accent);
-    font-style: italic;
-  }
-
-  .about-facts {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border);
-  }
-
-  .fact-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 13px 18px;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    transition: background 0.2s;
-  }
-
-  .fact-row::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 0;
-    background: var(--accent);
-    opacity: 0.15;
-    transition: width 0.25s ease;
-  }
-
-  .fact-row:hover::before { width: 2px; }
-  .fact-row:hover { background: rgba(208,152,80,0.03); }
-
-  .fact-row:last-child { border-bottom: none; }
-
-  .fact-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .fact-value {
-    font-family: 'Newsreader', serif;
-    font-size: 0.92rem;
-    font-weight: 400;
-    color: var(--text);
-    text-align: right;
-  }
-
-  /* ── Education ── */
-  #education { background: var(--bg); }
-
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    border-left: 1px solid var(--border);
-    padding-left: 44px;
-    margin-left: 8px;
-  }
-
-  .timeline-item {
-    position: relative;
-    padding-bottom: 56px;
-  }
-
-  .timeline-item:last-child { padding-bottom: 0; }
-
-  .timeline-dot {
-    position: absolute;
-    left: -50px;
-    top: 5px;
-    width: 10px; height: 10px;
-    border: 1px solid var(--muted);
-    background: var(--bg);
-    border-radius: 50%;
-    opacity: 0.5;
-    transition: opacity 0.3s, border-color 0.3s, background 0.3s;
-  }
-
-  .timeline-item:hover .timeline-dot {
-    opacity: 1;
-    border-color: var(--accent);
-    background: var(--accent);
-  }
-
-  .timeline-date {
-    font-family: 'Newsreader', serif;
-    font-size: 0.82rem;
-    font-style: italic;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
-  .timeline-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: var(--white);
-    margin-bottom: 3px;
-  }
-
-  .timeline-org {
-    font-family: 'Newsreader', serif;
-    font-size: 0.92rem;
-    font-style: italic;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  .timeline-details {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .timeline-details li {
-    font-size: 0.92rem;
-    color: var(--dim);
-    padding-left: 16px;
-    position: relative;
-    line-height: 1.6;
-  }
-
-  .timeline-details li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--muted);
-    opacity: 0.5;
-  }
-
-  /* ── Experience ── */
-  #experience { background: var(--bg2); }
-
-  .exp-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2px;
-  }
-
-  .exp-card {
-    background: var(--bg3);
-    padding: 36px 32px;
-    border: 1px solid var(--border);
-    transition: border-color 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .exp-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 2px;
-    height: 0;
-    background: var(--accent);
-    opacity: 0.5;
-    transition: height 0.5s ease;
-  }
-
-  .exp-card:hover::before { height: 100%; }
-  .exp-card:hover { border-color: rgba(208,152,80,0.12); }
-
-  .exp-period {
-    font-family: 'Newsreader', serif;
-    font-size: 0.82rem;
-    font-style: italic;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  .exp-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--white);
-    margin-bottom: 4px;
-    line-height: 1.3;
-  }
-
-  .exp-org {
-    font-family: 'Newsreader', serif;
-    font-size: 0.88rem;
-    font-style: italic;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
-
-  .exp-points {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .exp-points li {
-    font-size: 0.9rem;
-    color: var(--dim);
-    padding-left: 14px;
-    position: relative;
-    line-height: 1.6;
-  }
-
-  .exp-points li::before {
-    content: '–';
-    position: absolute;
-    left: 0;
-    color: var(--muted);
-    opacity: 0.5;
-  }
-
-  /* ── Projects ── */
-  #projects { background: var(--bg); }
-
-  .project-featured {
-    border: 1px solid var(--border);
-    background: var(--bg3);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    overflow: hidden;
-    transition: border-color 0.4s;
-  }
-
-  .project-featured:hover { border-color: rgba(208,152,80,0.18); }
-
-  .project-info {
-    padding: 52px 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .project-label {
-    font-family: 'Newsreader', serif;
-    font-size: 0.82rem;
-    font-style: italic;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
-
-  .project-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    color: var(--white);
-    line-height: 1.2;
-    margin-bottom: 18px;
-  }
-
-  .project-desc {
-    font-size: 0.95rem;
-    color: var(--dim);
-    line-height: 1.8;
-    margin-bottom: 28px;
-  }
-
-  .project-tags {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-size: 0.88rem;
-    color: var(--muted);
-    margin-bottom: 32px;
-    letter-spacing: 0.01em;
-    line-height: 1.7;
-  }
-
-  .project-visual {
-    background: var(--bg2);
-    position: relative;
-    overflow: hidden;
-    min-height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #project-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .project-visual-label {
-    position: relative;
-    z-index: 2;
-    font-family: 'Newsreader', serif;
-    font-size: 0.78rem;
-    font-style: italic;
-    color: var(--muted);
-    text-align: center;
-    opacity: 0.5;
-  }
-
-  /* ── Skills ── */
-  #skills { background: var(--bg2); }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 48px;
-  }
-
-  .skill-group h3 {
-    font-family: 'Newsreader', serif;
-    font-size: 0.78rem;
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .skill-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .skill-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 0.92rem;
-    color: var(--dim);
-  }
-
-  .skill-list li em {
-    font-family: 'Newsreader', serif;
-    font-style: italic;
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-
-  .competencies {
-    margin-top: 52px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .comp-tag {
-    font-family: 'Newsreader', serif;
-    font-size: 0.85rem;
-    font-style: italic;
-    color: var(--dim);
-    padding: 7px 16px;
-    border: 1px solid var(--border);
-    cursor: default;
-    transition: color 0.22s, border-color 0.22s;
-  }
-
-  .comp-tag:hover {
-    color: var(--text);
-    border-color: rgba(208,152,80,0.28);
-  }
-
-  /* ── Contact ── */
-  #contact {
-    background: var(--bg);
-    text-align: center;
-  }
-
-  .contact-inner {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .contact-inner h2 {
-    margin-bottom: 16px;
-  }
-
-  .contact-sub {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--dim);
-    margin-bottom: 52px;
-    font-style: italic;
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 32px;
-    margin-bottom: 60px;
-  }
-
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--dim);
-    text-decoration: none;
-    font-family: 'Newsreader', serif;
-    font-size: 0.95rem;
-    font-style: italic;
-    position: relative;
-    transition: color 0.25s;
-    padding-bottom: 2px;
-  }
-
-  .contact-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 1px;
-    background: var(--accent);
-    opacity: 0.6;
-    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  .contact-link:hover { color: var(--accent); }
-  .contact-link:hover::after { width: 100%; }
-
-  .contact-link .icon {
-    font-style: normal;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.75rem;
-    opacity: 0.7;
-  }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 28px clamp(24px, 8vw, 120px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--bg);
-  }
-
-  .footer-name {
-    font-family: 'Newsreader', serif;
-    font-size: 0.88rem;
-    font-style: italic;
-    color: var(--muted);
-  }
-
-  .footer-note {
-    font-family: 'Newsreader', serif;
-    font-size: 0.78rem;
-    font-style: italic;
-    color: var(--muted);
-    opacity: 0.5;
-  }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* Section line draws out after header reveals */
-  .section-line {
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
-  }
-
-  .section-header.visible .section-line {
-    transform: scaleX(1);
-  }
-
-  /* Active nav link */
-  .nav-links a.active { color: var(--text); }
-  .nav-links a.active::after { width: 100%; }
-
-  /* Fact row stagger when about-facts reveals */
-  .about-facts .fact-row {
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-                transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
-                background 0.2s;
-  }
-
-  .about-facts.visible .fact-row              { opacity: 1; transform: none; }
-  .about-facts.visible .fact-row:nth-child(1) { transition-delay: 80ms; }
-  .about-facts.visible .fact-row:nth-child(2) { transition-delay: 140ms; }
-  .about-facts.visible .fact-row:nth-child(3) { transition-delay: 200ms; }
-  .about-facts.visible .fact-row:nth-child(4) { transition-delay: 260ms; }
-  .about-facts.visible .fact-row:nth-child(5) { transition-delay: 320ms; }
-  .about-facts.visible .fact-row:nth-child(6) { transition-delay: 380ms; }
-
-  /* ── Responsive ── */
-  @media (max-width: 860px) {
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .project-featured { grid-template-columns: 1fr; }
-    .project-visual { min-height: 200px; }
-    .nav-links { display: none; }
-  }
-
-  @media (max-width: 600px) {
-    .hero-actions { flex-direction: column; }
-    .hero-actions .btn { justify-content: center; }
-    footer { flex-direction: column; gap: 8px; text-align: center; }
-    .contact-links { gap: 20px; }
-  }
-
-  /* ── Focus ── */
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    border-radius: 1px;
-  }
-
-  /* Override for btn which has its own */
-  .btn:focus-visible { outline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    #neural-canvas { display: none; }
-    #project-canvas { display: none; }
-    .scroll-line { animation: none; }
-  }
+:root {
+  --paper:   oklch(96.8% 0.009 78);
+  --text:    oklch(15%   0.022 55);
+  --muted:   oklch(48%   0.016 70);
+  --accent:  oklch(35%   0.140 22);
+  --rule-h:  oklch(25%   0.020 55);
+  --rule-l:  oklch(80%   0.014 78);
+  --tbl-bg:  oklch(93.5% 0.010 78);
+  --fig-bg:  oklch(94%   0.010 78);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'EB Garamond', 'Palatino Linotype', Georgia, serif;
+  font-size: clamp(1rem, 0.9vw + 0.75rem, 1.08rem);
+  line-height: 1.68;
+  background: var(--paper);
+  color: var(--text);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 72px) clamp(20px, 5vw, 64px) 96px;
+}
+
+/* ── Reading progress ── */
+#progress {
+  position: fixed; top: 0; left: 0;
+  height: 1px; width: 0;
+  background: var(--accent); opacity: 0.55;
+  z-index: 100; transition: width 0.08s linear;
+}
+
+/* ── Lang toggle ── */
+.lang-toggle {
+  position: fixed; top: 18px; right: 18px;
+  display: flex;
+  border: 1px solid var(--rule-l);
+  background: var(--paper);
+  z-index: 50;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.lang-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; font-weight: 400;
+  letter-spacing: 0.06em;
+  padding: 5px 12px;
+  background: transparent; color: var(--muted);
+  border: none; cursor: pointer;
+  transition: background 0.15s, color 0.15s; line-height: 1;
+}
+.lang-btn.active { background: var(--text); color: var(--paper); }
+.lang-btn:hover:not(.active) { background: var(--tbl-bg); color: var(--text); }
+.lang-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* ── Rules ── */
+.rule-heavy { border: none; border-top: 2px solid var(--rule-h); }
+.rule-light  { border: none; border-top: 1px solid var(--rule-l); }
+.rule-section { border: none; border-top: 1px solid var(--rule-l); margin: 44px 0; }
+
+/* ── Masthead ── */
+.journal-line {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem; font-weight: 300; color: var(--muted);
+  letter-spacing: 0.04em; margin-bottom: 10px;
+}
+.paper-title {
+  font-size: clamp(1.7rem, 5vw, 2.6rem); font-weight: 600;
+  font-variant: small-caps; letter-spacing: 0.05em;
+  text-align: center; line-height: 1.15; padding: 26px 0 7px;
+}
+.paper-subtitle {
+  font-size: 0.95rem; font-style: italic;
+  text-align: center; color: var(--muted); padding-bottom: 18px;
+}
+.paper-authors {
+  font-size: 1.05rem; font-weight: 500;
+  text-align: center; padding-bottom: 10px;
+}
+.paper-authors sup { font-size: 0.62rem; color: var(--accent); }
+.affiliations {
+  font-size: 0.85rem; color: var(--muted);
+  text-align: center; line-height: 1.6; padding-bottom: 14px;
+}
+.affiliations sup { font-size: 0.62rem; color: var(--accent); }
+.paper-meta {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 4px 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem; font-weight: 300; color: var(--muted);
+  letter-spacing: 0.03em; padding: 12px 0;
+}
+.status-val {
+  font-style: italic; color: var(--accent);
+  font-family: 'EB Garamond', serif; font-size: 0.8rem;
+}
+
+/* ── Abstract ── */
+.abstract { margin: 24px 0 10px; padding: 0 clamp(8px, 4vw, 40px); }
+.abstract-heading {
+  font-size: 0.88rem; font-weight: 600;
+  font-variant: small-caps; letter-spacing: 0.07em;
+  text-align: center; margin-bottom: 10px;
+}
+.abstract p {
+  font-size: 0.9rem; line-height: 1.72;
+  text-align: justify; hyphens: auto;
+}
+.keywords {
+  padding: 10px clamp(8px, 4vw, 40px) 20px;
+  font-size: 0.82rem; color: var(--muted); line-height: 1.65;
+}
+.keywords strong { color: var(--text); font-weight: 500; }
+
+/* ── TOC ── */
+.toc { padding: 22px 0; }
+.toc-heading {
+  font-size: 0.85rem; font-weight: 600;
+  font-variant: small-caps; letter-spacing: 0.07em; margin-bottom: 12px;
+}
+.toc ol { list-style: none; padding: 0; }
+.toc li { margin-bottom: 3px; }
+.toc a {
+  display: flex; align-items: baseline;
+  text-decoration: none; color: var(--text); font-size: 0.9rem;
+}
+.toc a:hover { color: var(--accent); }
+.toc-num { min-width: 28px; flex-shrink: 0; color: var(--muted); font-size: 0.82rem; }
+.toc-title { flex-shrink: 0; }
+.toc-dots {
+  flex: 1; border-bottom: 1px dotted var(--rule-l);
+  margin: 0 8px; margin-bottom: 4px; min-width: 20px;
+}
+.toc-page {
+  flex-shrink: 0; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 300;
+}
+
+/* ── Sections ── */
+.section-heading {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem); font-weight: 600;
+  font-variant: small-caps; letter-spacing: 0.05em;
+  margin-bottom: 18px; line-height: 1.2;
+}
+.section-num { color: var(--muted); margin-right: 6px; }
+.subsection-heading {
+  font-size: 1rem; font-weight: 500; font-style: italic;
+  margin-top: 22px; margin-bottom: 8px;
+  display: flex; justify-content: space-between;
+  align-items: baseline; flex-wrap: wrap; gap: 4px;
+}
+.sub-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 300; color: var(--muted); font-style: normal;
+}
+.section p { margin-bottom: 12px; text-align: justify; hyphens: auto; }
+.section p:last-child { margin-bottom: 0; }
+sup a { color: var(--accent); text-decoration: none; font-size: 0.72em; }
+sup a:hover { text-decoration: underline; }
+
+/* ── Tables ── */
+.fig { margin: 20px 0; }
+.fig-caption-top {
+  font-size: 0.8rem; font-style: italic;
+  color: var(--muted); margin-bottom: 6px;
+}
+.meta-table, .skills-table {
+  width: 100%; border-collapse: collapse; font-size: 0.88rem;
+}
+.meta-table th, .skills-table th {
+  background: var(--tbl-bg); font-weight: 500;
+  font-variant: small-caps; letter-spacing: 0.04em;
+  padding: 6px 12px; text-align: left;
+  border-top: 1px solid var(--rule-l);
+  border-bottom: 1px solid var(--rule-l); font-size: 0.8rem;
+}
+.meta-table td, .skills-table td {
+  padding: 5px 12px; border-bottom: 1px solid var(--rule-l); vertical-align: top;
+}
+.meta-table tr:last-child td,
+.skills-table tr:last-child td { border-bottom: none; }
+.meta-table a { color: var(--accent); text-decoration: none; }
+.meta-table a:hover { text-decoration: underline; }
+.skill-level { font-style: italic; color: var(--muted); }
+
+/* ── Experience ── */
+.exp-entry { margin-bottom: 22px; }
+.exp-header {
+  display: flex; justify-content: space-between;
+  align-items: baseline; flex-wrap: wrap; gap: 4px; margin-bottom: 3px;
+}
+.exp-role { font-weight: 500; font-style: italic; }
+.exp-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 300; color: var(--muted); flex-shrink: 0;
+}
+.exp-org { font-size: 0.88rem; font-style: italic; color: var(--muted); margin-bottom: 7px; }
+
+/* ── Competency tags ── */
+.comp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.comp-tag {
+  font-size: 0.78rem; font-style: italic; color: var(--muted);
+  border: 1px solid var(--rule-l); padding: 3px 10px;
+}
+
+/* ── Research figure ── */
+.research-fig { margin: 22px 0; border: 1px solid var(--rule-l); background: var(--fig-bg); }
+#project-canvas { display: block; width: 100%; height: 180px; }
+.fig-caption-bottom {
+  font-size: 0.8rem; font-style: italic; color: var(--muted);
+  padding: 8px 12px; border-top: 1px solid var(--rule-l); text-align: center;
+}
+
+/* ── Contact ── */
+.contact-list { list-style: none; margin-top: 14px; }
+.contact-list li { margin-bottom: 7px; }
+.contact-list a { color: var(--accent); text-decoration: none; }
+.contact-list a:hover { text-decoration: underline; }
+.contact-label {
+  font-style: italic; color: var(--muted);
+  min-width: 70px; display: inline-block; font-size: 0.88rem;
+}
+
+/* ── Footnotes ── */
+.footnotes { margin-top: 44px; padding-top: 18px; border-top: 2px solid var(--rule-h); }
+.footnotes-heading {
+  font-size: 0.8rem; font-weight: 600;
+  font-variant: small-caps; letter-spacing: 0.07em;
+  margin-bottom: 12px; color: var(--muted);
+}
+.footnote {
+  font-size: 0.8rem; color: var(--muted);
+  line-height: 1.6; margin-bottom: 7px;
+  padding-left: 22px; position: relative;
+}
+.footnote-num { position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; top: 1px; }
+
+/* ── References ── */
+.references { margin-top: 30px; }
+.references-heading {
+  font-size: 0.95rem; font-weight: 600;
+  font-variant: small-caps; letter-spacing: 0.07em; margin-bottom: 14px;
+}
+.ref-list { list-style: none; padding: 0; }
+.ref-list li {
+  font-size: 0.83rem; color: var(--muted); line-height: 1.6;
+  margin-bottom: 9px; padding-left: 30px; position: relative;
+}
+.ref-num { position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+.ref-list a { color: var(--accent); text-decoration: none; }
+.ref-list a:hover { text-decoration: underline; }
+
+/* ── Footer ── */
+.paper-footer {
+  margin-top: 52px; padding-top: 10px;
+  border-top: 1px solid var(--rule-l);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; font-weight: 300; color: var(--muted);
+  letter-spacing: 0.03em; flex-wrap: wrap; gap: 4px;
+}
+
+a { color: var(--accent); }
+
+@media (max-width: 500px) {
+  .paper-meta { flex-direction: column; align-items: center; gap: 3px; }
+  .exp-header, .subsection-heading { flex-direction: column; }
+  .lang-toggle { top: 10px; right: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  #project-canvas { display: none; }
+}
 </style>
 </head>
 <body>
 
-<div id="reading-progress"></div>
+<div id="progress"></div>
 
-<!-- Nav -->
-<nav aria-label="Main navigation">
-  <a class="nav-logo" href="#hero">Alek<span>.</span>Klem</a>
-  <ul class="nav-links">
-    <li><a href="#about"      data-i18n="nav_about">About</a></li>
-    <li><a href="#education"  data-i18n="nav_education">Education</a></li>
-    <li><a href="#experience" data-i18n="nav_experience">Experience</a></li>
-    <li><a href="#projects"   data-i18n="nav_projects">Projects</a></li>
-    <li><a href="#skills"     data-i18n="nav_skills">Skills</a></li>
-    <li><a href="#contact"    data-i18n="nav_contact">Contact</a></li>
-  </ul>
-  <div class="lang-toggle" role="group" aria-label="Language">
-    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
-    <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
-  </div>
-</nav>
+<div class="lang-toggle" role="group" aria-label="Language">
+  <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+  <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+</div>
 
-<!-- Hero -->
-<section id="hero">
-  <canvas id="neural-canvas" aria-hidden="true"></canvas>
-  <div class="hero-content">
-    <div class="hero-tag" data-i18n="hero_tag">BSc Artificial Intelligence · Utrecht University</div>
-    <h1><span class="h1-word">Alek</span><br><em>Klem</em></h1>
-    <p class="hero-desc" data-i18n="hero_desc">
-      Analytically driven AI student with a foundation in physics and mathematics.
-      Currently researching social sycophancy in Large Language Models.
-    </p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary" data-i18n="btn_research">View Research</a>
-      <a href="#contact" class="btn btn-ghost" data-i18n="btn_contact">Get in Touch</a>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span data-i18n="scroll_text">Scroll to explore</span>
-  </div>
-</section>
+<article>
 
-<!-- About -->
-<section id="about">
-  <div class="section-header reveal">
-    <span class="section-num">I</span>
-    <h2 data-i18n="h2_about">About</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="about-grid">
-    <div class="about-text reveal">
-      <p data-i18n="about_p1">I'm a <strong>21-year-old AI student at Utrecht University</strong>, driven by a genuine curiosity about how intelligent systems think — and where they go wrong. My academic path started in <em>Applied Physics at TU Delft</em> before I pivoted to Artificial Intelligence, bringing an analytical, first-principles mindset to everything I do.</p>
-      <p data-i18n="about_p2">My current research focuses on <strong>social sycophancy in LLMs</strong> — studying how large language models adjust their responses based on perceived social pressure, both in UI and API environments. It sits at the intersection of NLP, HCI, and AI safety.</p>
+  <header>
+    <div class="journal-line">
+      <span data-i18n="journal_name">Personal Profile Repository</span>
+      <span>arXiv:2504.14023 [cs.AI]</span>
     </div>
-    <div class="about-facts reveal">
-      <div class="fact-row">
-        <span class="fact-label" data-i18n="fact_location">Location</span>
-        <span class="fact-value">Rotterdam, NL</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-label" data-i18n="fact_study">Study</span>
-        <span class="fact-value">BSc AI · UU</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-label" data-i18n="fact_born">Born</span>
-        <span class="fact-value">14 April 2004</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-label">GitHub</span>
-        <span class="fact-value">Alek-Klem-UU</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-label" data-i18n="fact_languages">Languages</span>
-        <span class="fact-value">NL · EN</span>
-      </div>
-      <div class="fact-row">
-        <span class="fact-label">Python</span>
-        <span class="fact-value">5+ years</span>
-      </div>
+    <hr class="rule-heavy">
+    <h1 class="paper-title" data-i18n="paper_title">Curriculum Vitae</h1>
+    <p class="paper-subtitle" data-i18n="paper_subtitle">A Structured Self-Report</p>
+    <p class="paper-authors">Alek Klem<sup>1,2</sup></p>
+    <div class="affiliations">
+      <div><sup>1</sup> <span data-i18n="affil1">Department of Artificial Intelligence, Utrecht University, Utrecht, Netherlands</span></div>
+      <div><sup>2</sup> <span data-i18n="affil2">Formerly: Faculty of Applied Sciences, Delft University of Technology</span></div>
     </div>
-  </div>
-</section>
+    <div class="paper-meta">
+      <span data-i18n="received">Received: September 2022</span>
+      <span data-i18n="revised">Last revised: March 2025</span>
+      <span><span data-i18n="status_label">Status:</span> <span class="status-val" data-i18n="status_val">Under review</span></span>
+    </div>
+    <hr class="rule-light">
+  </header>
 
-<!-- Education -->
-<section id="education">
-  <div class="section-header reveal">
-    <span class="section-num">II</span>
-    <h2 data-i18n="h2_education">Education</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">Sep 2023 — Present</div>
-      <div class="timeline-title" data-i18n="edu_title_uu">BSc Artificial Intelligence</div>
-      <div class="timeline-org">Utrecht University</div>
-      <ul class="timeline-details">
-        <li data-i18n="edu_uu_1">Relevant coursework: Machine Learning, Data Structures &amp; Algorithms</li>
-        <li data-i18n="edu_uu_2">Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics</li>
-        <li data-i18n="edu_uu_3">Current thesis: Social Sycophancy in LLMs across UI and API environments</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">Sep 2022 — Apr 2023</div>
-      <div class="timeline-title" data-i18n="edu_title_delft">BSc Applied Physics</div>
-      <div class="timeline-org">Delft University of Technology</div>
-      <ul class="timeline-details">
-        <li data-i18n="edu_delft_1">Strong analytical and mathematical foundation</li>
-        <li data-i18n="edu_delft_2">Transferred to AI to pursue focus on intelligent systems</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">Sep 2016 — Jul 2022</div>
-      <div class="timeline-title">Gymnasium Diploma</div>
-      <div class="timeline-org">Erasmiaans Gymnasium, Rotterdam</div>
-      <ul class="timeline-details">
-        <li data-i18n="edu_gym_1">Classical pre-university education with emphasis on sciences and languages</li>
-      </ul>
-    </div>
-  </div>
-</section>
+  <section class="abstract" aria-label="Abstract">
+    <h2 class="abstract-heading" data-i18n="abstract_heading">Abstract</h2>
+    <p data-i18n="abstract_text">This document presents a structured account of the academic trajectory, research activities, and professional background of the author. Starting from an initial enrollment in Applied Physics at Delft University of Technology (2022), the author subsequently transferred to Artificial Intelligence at Utrecht University (2023), where current work focuses on social sycophancy in large language models — specifically, how model outputs vary across UI and API environments in response to social pressure cues.<sup><a href="#fn3">[3]</a></sup> Preliminary results suggest the author is available for internships and research collaborations. Contact information is provided in §6.</p>
+  </section>
 
-<!-- Experience -->
-<section id="experience">
-  <div class="section-header reveal">
-    <span class="section-num">III</span>
-    <h2 data-i18n="h2_experience">Experience</h2>
-    <div class="section-line"></div>
+  <div class="keywords">
+    <strong data-i18n="keywords_label">Keywords:</strong>
+    <span data-i18n="keywords_text">artificial intelligence · machine learning · sycophancy · NLP · Python · Rotterdam · available</span>
   </div>
-  <div class="exp-grid">
-    <div class="exp-card reveal">
-      <div class="exp-period">Sep 2021 — Jul 2022</div>
-      <div class="exp-title" data-i18n="exp_tutor_title">Tutor — Mathematics, Physics &amp; Science</div>
-      <div class="exp-org">After's Cool</div>
-      <ul class="exp-points">
-        <li data-i18n="exp_tutor_1">Tutored secondary school students in mathematics, physics, and science</li>
-        <li data-i18n="exp_tutor_2">Adapted explanations to different skill levels</li>
-      </ul>
-    </div>
-    <div class="exp-card reveal">
-      <div class="exp-period">Sep 2024 — Present</div>
-      <div class="exp-title" data-i18n="exp_bakery_title">All-Round Hospitality Staff</div>
-      <div class="exp-org">Jordy's Bakery, Rotterdam</div>
-      <ul class="exp-points">
-        <li data-i18n="exp_bakery_1">All-round hospitality work in a busy bakery</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
-<!-- Projects -->
-<section id="projects">
-  <div class="section-header reveal">
-    <span class="section-num">IV</span>
-    <h2 data-i18n="h2_projects">Projects</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="project-featured reveal">
-    <div class="project-info">
-      <div>
-        <div class="project-label">Upcoming BSc Thesis · 2025 — Present</div>
-        <div class="project-title">Social Sycophancy in Large Language Models</div>
-        <p class="project-desc" data-i18n="project_desc">
-          Investigating how LLMs adapt their outputs in response to social pressure cues — comparing behaviour across conversational UI environments and direct API calls. Built a fully automated web-interaction pipeline for systematic data collection and evaluation.
-        </p>
-        <p class="project-tags">Python · LLM APIs · Web Automation · NLP · AI Safety</p>
+  <hr class="rule-light">
+
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-heading" data-i18n="toc_heading">Contents</div>
+    <ol>
+      <li><a href="#s1"><span class="toc-num">1.</span><span class="toc-title" data-i18n="toc_1">Introduction</span><span class="toc-dots"></span><span class="toc-page">1</span></a></li>
+      <li><a href="#s2"><span class="toc-num">2.</span><span class="toc-title" data-i18n="toc_2">Academic Background</span><span class="toc-dots"></span><span class="toc-page">2</span></a></li>
+      <li><a href="#s3"><span class="toc-num">3.</span><span class="toc-title" data-i18n="toc_3">Professional Experience</span><span class="toc-dots"></span><span class="toc-page">3</span></a></li>
+      <li><a href="#s4"><span class="toc-num">4.</span><span class="toc-title" data-i18n="toc_4">Current Research</span><span class="toc-dots"></span><span class="toc-page">4</span></a></li>
+      <li><a href="#s5"><span class="toc-num">5.</span><span class="toc-title" data-i18n="toc_5">Technical Competencies</span><span class="toc-dots"></span><span class="toc-page">5</span></a></li>
+      <li><a href="#s6"><span class="toc-num">6.</span><span class="toc-title" data-i18n="toc_6">Correspondence</span><span class="toc-dots"></span><span class="toc-page">6</span></a></li>
+    </ol>
+  </nav>
+
+  <hr class="rule-heavy" style="margin-bottom: 36px;">
+
+  <!-- §1 -->
+  <section id="s1" class="section">
+    <h2 class="section-heading"><span class="section-num">1.</span><span data-i18n="s1_heading">Introduction</span></h2>
+    <p data-i18n="s1_p1">The author (b. 14 April 2004, Rotterdam, Netherlands) is a third-year BSc student in Artificial Intelligence at Utrecht University. An initial period of study in Applied Physics at TU Delft (2022–2023) provided a foundation in analytical and mathematical reasoning, subsequently informing a transition toward the study of intelligent systems.<sup><a href="#fn1">[1]</a></sup></p>
+    <p data-i18n="s1_p2">Current research centers on <em>social sycophancy</em> in large language models — the tendency of such systems to adjust outputs in accordance with perceived user preferences rather than factual accuracy. This work sits at the intersection of NLP, HCI, and AI safety.</p>
+    <div class="fig" style="margin-top:22px;">
+      <div class="fig-caption-top" data-i18n="t1_caption">Table 1 — Author metadata</div>
+      <table class="meta-table">
+        <thead><tr><th data-i18n="t1_col_field">Field</th><th data-i18n="t1_col_value">Value</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="t1_location">Location</td><td>Rotterdam, NL</td></tr>
+          <tr><td data-i18n="t1_affil">Affiliation</td><td>BSc AI · Utrecht University</td></tr>
+          <tr><td data-i18n="t1_dob">Date of birth</td><td>14 April 2004</td></tr>
+          <tr><td>GitHub</td><td><a href="https://github.com/Alek-Klem-UU" target="_blank" rel="noopener">Alek-Klem-UU</a></td></tr>
+          <tr><td data-i18n="t1_langs">Languages</td><td data-i18n="t1_langs_val">Dutch (native) · English (fluent)</td></tr>
+          <tr><td>Python</td><td data-i18n="t1_python_val">5+ years</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="rule-section">
+
+  <!-- §2 -->
+  <section id="s2" class="section">
+    <h2 class="section-heading"><span class="section-num">2.</span><span data-i18n="s2_heading">Academic Background</span></h2>
+    <h3 class="subsection-heading"><span>2.1 <span data-i18n="s2_1_org">Utrecht University</span></span><span class="sub-period">2023 — present</span></h3>
+    <p data-i18n="s2_1_text">BSc Artificial Intelligence. Relevant coursework: Machine Learning, Data Structures &amp; Algorithms. Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics. Current thesis: Social Sycophancy in LLMs across UI and API environments.</p>
+    <h3 class="subsection-heading"><span>2.2 <span data-i18n="s2_2_org">Delft University of Technology</span></span><span class="sub-period">2022 — 2023</span></h3>
+    <p data-i18n="s2_2_text">BSc Applied Physics.<sup><a href="#fn2">[2]</a></sup> Strong analytical and mathematical foundation acquired through coursework in mechanics, electromagnetism, and mathematical physics. Transferred to AI to pursue focus on intelligent systems.</p>
+    <h3 class="subsection-heading"><span>2.3 <span data-i18n="s2_3_org">Erasmiaans Gymnasium, Rotterdam</span></span><span class="sub-period">2016 — 2022</span></h3>
+    <p data-i18n="s2_3_text">Gymnasium diploma. Classical pre-university education with emphasis on sciences and languages.</p>
+  </section>
+
+  <hr class="rule-section">
+
+  <!-- §3 -->
+  <section id="s3" class="section">
+    <h2 class="section-heading"><span class="section-num">3.</span><span data-i18n="s3_heading">Professional Experience</span></h2>
+    <div class="exp-entry">
+      <div class="exp-header">
+        <span class="exp-role" data-i18n="s3_1_role">Tutor — Mathematics, Physics &amp; Science</span>
+        <span class="exp-period">2021 — 2022</span>
       </div>
-      <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="align-self:flex-start">
-        <span data-i18n="btn_github">View on GitHub →</span>
-      </a>
+      <div class="exp-org" data-i18n="s3_1_org">After's Cool, Rotterdam</div>
+      <p data-i18n="s3_1_text">Tutored secondary school students in mathematics, physics, and science. Adapted explanations to different skill levels.</p>
     </div>
-    <div class="project-visual">
+    <div class="exp-entry">
+      <div class="exp-header">
+        <span class="exp-role" data-i18n="s3_2_role">All-Round Hospitality Staff</span>
+        <span class="exp-period">2024 — present</span>
+      </div>
+      <div class="exp-org" data-i18n="s3_2_org">Jordy's Bakery, Rotterdam</div>
+      <p data-i18n="s3_2_text">All-round hospitality work in a busy bakery.<sup><a href="#fn4">[4]</a></sup></p>
+    </div>
+  </section>
+
+  <hr class="rule-section">
+
+  <!-- §4 -->
+  <section id="s4" class="section">
+    <h2 class="section-heading"><span class="section-num">4.</span><span data-i18n="s4_heading">Current Research</span></h2>
+    <p data-i18n="s4_p1">The author's BSc thesis investigates <em>social sycophancy</em> in large language models — the phenomenon whereby model outputs shift in response to social pressure cues embedded in user prompts, independent of factual merit. This behaviour has significant implications for AI safety, as sycophantic models may reinforce incorrect beliefs and reduce the reliability of AI-assisted decision-making.</p>
+    <p data-i18n="s4_p2">The methodology involves a fully automated web-interaction pipeline capable of submitting structured prompts to both conversational UI environments and direct API endpoints, enabling systematic comparison of model behaviour across interaction modalities. See <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener noreferrer">github.com/Alek-Klem-UU/SycoUI</a>.</p>
+    <div class="research-fig">
       <canvas id="project-canvas" aria-hidden="true"></canvas>
-      <div class="project-visual-label">fig. 1 — sycophancy detection pipeline</div>
+      <div class="fig-caption-bottom" data-i18n="fig1_caption">Figure 1 — Sycophancy detection pipeline (automated web-interaction framework)</div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Skills -->
-<section id="skills">
-  <div class="section-header reveal">
-    <span class="section-num">V</span>
-    <h2 data-i18n="h2_skills">Skills</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="skills-grid reveal">
-    <div class="skill-group">
-      <h3 data-i18n="skills_technical">Technical</h3>
-      <ul class="skill-list">
-        <li><span data-i18n="skill_python">Python</span> <em data-i18n="level_advanced">Advanced</em></li>
-        <li><span data-i18n="skill_ml">Machine Learning</span> <em data-i18n="level_proficient">Proficient</em></li>
-        <li><span data-i18n="skill_data_analysis">Data Analysis</span> <em data-i18n="level_proficient">Proficient</em></li>
-        <li><span data-i18n="skill_data_structures">Data Structures</span> <em data-i18n="level_proficient">Proficient</em></li>
-        <li><span data-i18n="skill_web_automation">Web Automation</span> <em data-i18n="level_proficient">Proficient</em></li>
-      </ul>
-    </div>
-    <div class="skill-group">
-      <h3 data-i18n="skills_math">Mathematics</h3>
-      <ul class="skill-list">
-        <li><span data-i18n="skill_calculus">Calculus</span> <em data-i18n="level_advanced">Advanced</em></li>
-        <li><span data-i18n="skill_linear_algebra">Linear Algebra</span> <em data-i18n="level_advanced">Advanced</em></li>
-        <li><span data-i18n="skill_statistics">Statistics</span> <em data-i18n="level_proficient">Proficient</em></li>
-        <li><span data-i18n="skill_discrete_math">Discrete Mathematics</span> <em data-i18n="level_proficient">Proficient</em></li>
-      </ul>
-    </div>
-    <div class="skill-group">
-      <h3 data-i18n="skills_langs">Languages</h3>
-      <ul class="skill-list">
-        <li><span data-i18n="skill_dutch">Dutch</span> <em data-i18n="level_native">Native</em></li>
-        <li><span data-i18n="skill_english">English</span> <em data-i18n="level_fluent">Fluent</em></li>
-      </ul>
-    </div>
-  </div>
-  <div class="competencies reveal">
-    <span class="comp-tag" data-i18n="comp_teamwork">Teamwork</span>
-    <span class="comp-tag" data-i18n="comp_logical">Logical Reasoning</span>
-    <span class="comp-tag" data-i18n="comp_communication">Clear Communication</span>
-    <span class="comp-tag" data-i18n="comp_delegation">Task Delegation</span>
-    <span class="comp-tag" data-i18n="comp_proactive">Proactive Attitude</span>
-    <span class="comp-tag" data-i18n="comp_sustainability">Sustainability-minded</span>
-    <span class="comp-tag" data-i18n="comp_learner">Fast Learner</span>
-    <span class="comp-tag" data-i18n="comp_firstprinciples">First-principles Thinking</span>
-  </div>
-</section>
+  <hr class="rule-section">
 
-<!-- Contact -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="section-header reveal" style="justify-content:center; text-align:center;">
-      <h2 data-i18n="h2_contact">Get in Touch</h2>
+  <!-- §5 -->
+  <section id="s5" class="section">
+    <h2 class="section-heading"><span class="section-num">5.</span><span data-i18n="s5_heading">Technical Competencies</span></h2>
+    <p data-i18n="s5_intro">A summary of technical proficiencies is provided in Table 2. Levels are self-assessed.</p>
+    <div class="fig" style="margin-top:16px;">
+      <div class="fig-caption-top" data-i18n="t2_caption">Table 2 — Technical proficiencies</div>
+      <table class="skills-table">
+        <thead><tr><th data-i18n="t2_skill">Skill</th><th data-i18n="t2_domain">Domain</th><th data-i18n="t2_level">Level</th></tr></thead>
+        <tbody>
+          <tr><td>Python</td><td data-i18n="domain_technical">Technical</td><td class="skill-level" data-i18n="level_advanced">Advanced</td></tr>
+          <tr><td data-i18n="skill_ml">Machine Learning</td><td data-i18n="domain_technical">Technical</td><td class="skill-level" data-i18n="level_proficient">Proficient</td></tr>
+          <tr><td data-i18n="skill_data_analysis">Data Analysis</td><td data-i18n="domain_technical">Technical</td><td class="skill-level" data-i18n="level_proficient">Proficient</td></tr>
+          <tr><td data-i18n="skill_data_structures">Data Structures</td><td data-i18n="domain_technical">Technical</td><td class="skill-level" data-i18n="level_proficient">Proficient</td></tr>
+          <tr><td data-i18n="skill_web_automation">Web Automation</td><td data-i18n="domain_technical">Technical</td><td class="skill-level" data-i18n="level_proficient">Proficient</td></tr>
+          <tr><td>Calculus</td><td data-i18n="domain_math">Mathematics</td><td class="skill-level" data-i18n="level_advanced">Advanced</td></tr>
+          <tr><td data-i18n="skill_linear_algebra">Linear Algebra</td><td data-i18n="domain_math">Mathematics</td><td class="skill-level" data-i18n="level_advanced">Advanced</td></tr>
+          <tr><td data-i18n="skill_statistics">Statistics</td><td data-i18n="domain_math">Mathematics</td><td class="skill-level" data-i18n="level_proficient">Proficient</td></tr>
+          <tr><td data-i18n="skill_discrete_math">Discrete Mathematics</td><td data-i18n="domain_math">Mathematics</td><td class="skill-level" data-i18n="level_proficient">Proficient</td></tr>
+          <tr><td data-i18n="lang_dutch">Dutch</td><td data-i18n="domain_language">Language</td><td class="skill-level" data-i18n="level_native">Native</td></tr>
+          <tr><td data-i18n="lang_english">English</td><td data-i18n="domain_language">Language</td><td class="skill-level" data-i18n="level_fluent">Fluent</td></tr>
+        </tbody>
+      </table>
     </div>
-    <p class="contact-sub reveal" data-i18n="contact_sub">Open to internships, research collaborations, and interesting conversations.</p>
-    <div class="contact-links reveal">
-      <a href="mailto:alekklem@gmail.com" class="contact-link">
-        <span class="icon">✉</span> alekklem@gmail.com
-      </a>
-      <a href="https://linkedin.com/in/alek-klem" target="_blank" rel="noopener noreferrer" class="contact-link">
-        <span class="icon">in</span> LinkedIn
-      </a>
-      <a href="https://github.com/Alek-Klem-UU" target="_blank" rel="noopener noreferrer" class="contact-link">
-        <span class="icon">⌥</span> GitHub
-      </a>
+    <div class="comp-tags">
+      <span class="comp-tag" data-i18n="comp_teamwork">Teamwork</span>
+      <span class="comp-tag" data-i18n="comp_logical">Logical Reasoning</span>
+      <span class="comp-tag" data-i18n="comp_communication">Clear Communication</span>
+      <span class="comp-tag" data-i18n="comp_delegation">Task Delegation</span>
+      <span class="comp-tag" data-i18n="comp_proactive">Proactive Attitude</span>
+      <span class="comp-tag" data-i18n="comp_sustainability">Sustainability-minded</span>
+      <span class="comp-tag" data-i18n="comp_learner">Fast Learner</span>
+      <span class="comp-tag" data-i18n="comp_firstprinciples">First-principles Thinking</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <span class="footer-name">Alek Klem</span>
-  <span class="footer-note">alekklem.com/ai</span>
-</footer>
+  <hr class="rule-section">
+
+  <!-- §6 -->
+  <section id="s6" class="section">
+    <h2 class="section-heading"><span class="section-num">6.</span><span data-i18n="s6_heading">Correspondence</span></h2>
+    <p data-i18n="s6_text">The author is reachable via the following channels and is open to internships, research collaborations, and interesting conversations.</p>
+    <ul class="contact-list">
+      <li><span class="contact-label" data-i18n="contact_email_label">Email</span> <a href="mailto:alekklem@gmail.com">alekklem@gmail.com</a></li>
+      <li><span class="contact-label">LinkedIn</span> <a href="https://linkedin.com/in/alek-klem" target="_blank" rel="noopener">linkedin.com/in/alek-klem</a></li>
+      <li><span class="contact-label">GitHub</span> <a href="https://github.com/Alek-Klem-UU" target="_blank" rel="noopener">github.com/Alek-Klem-UU</a></li>
+    </ul>
+  </section>
+
+  <hr class="rule-section">
+
+  <section class="footnotes" aria-label="Notes">
+    <div class="footnotes-heading" data-i18n="fn_heading">Notes</div>
+    <div class="footnote" id="fn1"><span class="footnote-num">[1]</span><span data-i18n="fn1_text">Physics provides a useful prior for approaching ML problems — both fields involve optimising for quantities that can never be perfectly measured.</span></div>
+    <div class="footnote" id="fn2"><span class="footnote-num">[2]</span><span data-i18n="fn2_text">At the time of enrollment, TU Delft was ranked among the top technical universities in Europe. This is noted for completeness, not as a personal achievement claim.</span></div>
+    <div class="footnote" id="fn3"><span class="footnote-num">[3]</span><span data-i18n="fn3_text">Defined here as the tendency of a model to tell users what they want to hear. The author acknowledges the structural irony of studying this phenomenon in a document designed to impress prospective employers.</span></div>
+    <div class="footnote" id="fn4"><span class="footnote-num">[4]</span><span data-i18n="fn4_text">See reference [4]. Not peer-reviewed.</span></div>
+  </section>
+
+  <section class="references">
+    <div class="references-heading" data-i18n="ref_heading">References</div>
+    <ol class="ref-list">
+      <li><span class="ref-num">[1]</span><span data-i18n="ref1">A. Klem, "Social Sycophancy in Large Language Models: Behavioural Differences Across UI and API Environments," BSc Thesis, Utrecht University, 2025. <em>In preparation.</em> <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener">github.com/Alek-Klem-UU/SycoUI</a></span></li>
+      <li><span class="ref-num">[2]</span><span data-i18n="ref2">Python Software Foundation, <em>Python Language Reference</em>, version 3.x. [Online]. Available: <a href="https://www.python.org" target="_blank" rel="noopener">python.org</a></span></li>
+      <li><span class="ref-num">[3]</span><span data-i18n="ref3">G. Hinton, D. E. Rumelhart, and R. J. Williams, "Learning representations by back-propagating errors," <em>Nature</em>, vol. 323, pp. 533–536, 1986. Listed to demonstrate awareness of foundational literature.</span></li>
+      <li><span class="ref-num">[4]</span><span data-i18n="ref4">Jordy's Bakery, <em>Staff Handbook</em>. Rotterdam, 2024. Internal document. Not publicly available.</span></li>
+    </ol>
+  </section>
+
+  <footer class="paper-footer">
+    <span>Klem, A. (2025) · Curriculum Vitae · arXiv:2504.14023 [cs.AI]</span>
+    <span>alekklem.com/ai</span>
+  </footer>
+
+</article>
 
 <script>
-// ── i18n ──
 const TRANSLATIONS = {
   en: {
-    nav_about:        'About',
-    nav_education:    'Education',
-    nav_experience:   'Experience',
-    nav_projects:     'Projects',
-    nav_skills:       'Skills',
-    nav_contact:      'Contact',
-
-    hero_tag:         'BSc Artificial Intelligence · Utrecht University',
-    hero_desc:        'Analytically driven AI student with a foundation in physics and mathematics. Currently researching social sycophancy in Large Language Models.',
-    btn_research:     'View Research',
-    btn_contact:      'Get in Touch',
-    btn_github:       'View on GitHub →',
-    scroll_text:      'Scroll to explore',
-
-    h2_about:         'About',
-    h2_education:     'Education',
-    h2_experience:    'Experience',
-    h2_projects:      'Projects',
-    h2_skills:        'Skills',
-    h2_contact:       'Get in Touch',
-
-    about_p1: `I'm a <strong>21-year-old AI student at Utrecht University</strong>, driven by a genuine curiosity about how intelligent systems think — and where they go wrong. My academic path started in <em>Applied Physics at TU Delft</em> before I pivoted to Artificial Intelligence, bringing an analytical, first-principles mindset to everything I do.`,
-    about_p2: `My current research focuses on <strong>social sycophancy in LLMs</strong> — studying how large language models adjust their responses based on perceived social pressure, both in UI and API environments. It sits at the intersection of NLP, HCI, and AI safety.`,
-
-    fact_location:    'Location',
-    fact_study:       'Study',
-    fact_born:        'Born',
-    fact_languages:   'Languages',
-
-    edu_title_uu:    'BSc Artificial Intelligence',
-    edu_title_delft: 'BSc Applied Physics',
-    exp_tutor_title: 'Tutor — Mathematics, Physics &amp; Science',
-    exp_bakery_title:'All-Round Hospitality Staff',
-
-    edu_uu_1:    'Relevant coursework: Machine Learning, Data Structures &amp; Algorithms',
-    edu_uu_2:    'Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics',
-    edu_uu_3:    'Current thesis: Social Sycophancy in LLMs across UI and API environments',
-    edu_delft_1: 'Strong analytical and mathematical foundation',
-    edu_delft_2: 'Transferred to AI to pursue focus on intelligent systems',
-    edu_gym_1:   'Classical pre-university education with emphasis on sciences and languages',
-
-    exp_tutor_1:  'Tutored secondary school students in mathematics, physics, and science',
-    exp_tutor_2:  'Adapted explanations to different skill levels',
-    exp_bakery_1: 'All-round hospitality work in a busy bakery',
-
-    project_desc: 'Investigating how LLMs adapt their outputs in response to social pressure cues — comparing behaviour across conversational UI environments and direct API calls. Built a fully automated web-interaction pipeline for systematic data collection and evaluation.',
-
-    skills_technical: 'Technical',
-    skills_math:      'Mathematics',
-    skills_langs:     'Languages',
-
-    skill_python:          'Python',
-    skill_ml:              'Machine Learning',
-    skill_data_analysis:   'Data Analysis',
-    skill_data_structures: 'Data Structures',
-    skill_web_automation:  'Web Automation',
-    skill_calculus:        'Calculus',
-    skill_linear_algebra:  'Linear Algebra',
-    skill_statistics:      'Statistics',
-    skill_discrete_math:   'Discrete Mathematics',
-    skill_dutch:           'Dutch',
-    skill_english:         'English',
-
-    level_advanced:   'Advanced',
-    level_proficient: 'Proficient',
-    level_native:     'Native',
-    level_fluent:     'Fluent',
-
-    comp_teamwork:        'Teamwork',
-    comp_logical:         'Logical Reasoning',
-    comp_communication:   'Clear Communication',
-    comp_delegation:      'Task Delegation',
-    comp_proactive:       'Proactive Attitude',
-    comp_sustainability:  'Sustainability-minded',
-    comp_learner:         'Fast Learner',
-    comp_firstprinciples: 'First-principles Thinking',
-
-    contact_sub: 'Open to internships, research collaborations, and interesting conversations.',
+    journal_name: 'Personal Profile Repository',
+    paper_title: 'Curriculum Vitae',
+    paper_subtitle: 'A Structured Self-Report',
+    affil1: 'Department of Artificial Intelligence, Utrecht University, Utrecht, Netherlands',
+    affil2: 'Formerly: Faculty of Applied Sciences, Delft University of Technology',
+    received: 'Received: September 2022',
+    revised: 'Last revised: March 2025',
+    status_label: 'Status:',
+    status_val: 'Under review',
+    abstract_heading: 'Abstract',
+    abstract_text: `This document presents a structured account of the academic trajectory, research activities, and professional background of the author. Starting from an initial enrollment in Applied Physics at Delft University of Technology (2022), the author subsequently transferred to Artificial Intelligence at Utrecht University (2023), where current work focuses on social sycophancy in large language models — specifically, how model outputs vary across UI and API environments in response to social pressure cues.<sup><a href="#fn3">[3]</a></sup> Preliminary results suggest the author is available for internships and research collaborations. Contact information is provided in §6.`,
+    keywords_label: 'Keywords:',
+    keywords_text: 'artificial intelligence · machine learning · sycophancy · NLP · Python · Rotterdam · available',
+    toc_heading: 'Contents',
+    toc_1: 'Introduction', toc_2: 'Academic Background', toc_3: 'Professional Experience',
+    toc_4: 'Current Research', toc_5: 'Technical Competencies', toc_6: 'Correspondence',
+    s1_heading: 'Introduction',
+    s1_p1: `The author (b. 14 April 2004, Rotterdam, Netherlands) is a third-year BSc student in Artificial Intelligence at Utrecht University. An initial period of study in Applied Physics at TU Delft (2022–2023) provided a foundation in analytical and mathematical reasoning, subsequently informing a transition toward the study of intelligent systems.<sup><a href="#fn1">[1]</a></sup>`,
+    s1_p2: `Current research centers on <em>social sycophancy</em> in large language models — the tendency of such systems to adjust outputs in accordance with perceived user preferences rather than factual accuracy. This work sits at the intersection of NLP, HCI, and AI safety.`,
+    t1_caption: 'Table 1 — Author metadata',
+    t1_col_field: 'Field', t1_col_value: 'Value',
+    t1_location: 'Location', t1_affil: 'Affiliation', t1_dob: 'Date of birth',
+    t1_langs: 'Languages', t1_langs_val: 'Dutch (native) · English (fluent)', t1_python_val: '5+ years',
+    s2_heading: 'Academic Background',
+    s2_1_org: 'Utrecht University',
+    s2_1_text: 'BSc Artificial Intelligence. Relevant coursework: Machine Learning, Data Structures &amp; Algorithms. Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics. Current thesis: Social Sycophancy in LLMs across UI and API environments.',
+    s2_2_org: 'Delft University of Technology',
+    s2_2_text: `BSc Applied Physics.<sup><a href="#fn2">[2]</a></sup> Strong analytical and mathematical foundation acquired through coursework in mechanics, electromagnetism, and mathematical physics. Transferred to AI to pursue focus on intelligent systems.`,
+    s2_3_org: 'Erasmiaans Gymnasium, Rotterdam',
+    s2_3_text: 'Gymnasium diploma. Classical pre-university education with emphasis on sciences and languages.',
+    s3_heading: 'Professional Experience',
+    s3_1_role: 'Tutor — Mathematics, Physics &amp; Science',
+    s3_1_org: "After's Cool, Rotterdam",
+    s3_1_text: 'Tutored secondary school students in mathematics, physics, and science. Adapted explanations to different skill levels.',
+    s3_2_role: 'All-Round Hospitality Staff',
+    s3_2_org: "Jordy's Bakery, Rotterdam",
+    s3_2_text: `All-round hospitality work in a busy bakery.<sup><a href="#fn4">[4]</a></sup>`,
+    s4_heading: 'Current Research',
+    s4_p1: `The author's BSc thesis investigates <em>social sycophancy</em> in large language models — the phenomenon whereby model outputs shift in response to social pressure cues embedded in user prompts, independent of factual merit. This behaviour has significant implications for AI safety, as sycophantic models may reinforce incorrect beliefs and reduce the reliability of AI-assisted decision-making.`,
+    s4_p2: `The methodology involves a fully automated web-interaction pipeline capable of submitting structured prompts to both conversational UI environments and direct API endpoints, enabling systematic comparison of model behaviour across interaction modalities. See <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener noreferrer">github.com/Alek-Klem-UU/SycoUI</a>.`,
+    fig1_caption: 'Figure 1 — Sycophancy detection pipeline (automated web-interaction framework)',
+    s5_heading: 'Technical Competencies',
+    s5_intro: 'A summary of technical proficiencies is provided in Table 2. Levels are self-assessed.',
+    t2_caption: 'Table 2 — Technical proficiencies',
+    t2_skill: 'Skill', t2_domain: 'Domain', t2_level: 'Level',
+    domain_technical: 'Technical', domain_math: 'Mathematics', domain_language: 'Language',
+    skill_ml: 'Machine Learning', skill_data_analysis: 'Data Analysis',
+    skill_data_structures: 'Data Structures', skill_web_automation: 'Web Automation',
+    skill_linear_algebra: 'Linear Algebra', skill_statistics: 'Statistics',
+    skill_discrete_math: 'Discrete Mathematics',
+    lang_dutch: 'Dutch', lang_english: 'English',
+    level_advanced: 'Advanced', level_proficient: 'Proficient',
+    level_native: 'Native', level_fluent: 'Fluent',
+    comp_teamwork: 'Teamwork', comp_logical: 'Logical Reasoning',
+    comp_communication: 'Clear Communication', comp_delegation: 'Task Delegation',
+    comp_proactive: 'Proactive Attitude', comp_sustainability: 'Sustainability-minded',
+    comp_learner: 'Fast Learner', comp_firstprinciples: 'First-principles Thinking',
+    s6_heading: 'Correspondence',
+    s6_text: 'The author is reachable via the following channels and is open to internships, research collaborations, and interesting conversations.',
+    contact_email_label: 'Email',
+    fn_heading: 'Notes',
+    fn1_text: 'Physics provides a useful prior for approaching ML problems — both fields involve optimising for quantities that can never be perfectly measured.',
+    fn2_text: 'At the time of enrollment, TU Delft was ranked among the top technical universities in Europe. This is noted for completeness, not as a personal achievement claim.',
+    fn3_text: 'Defined here as the tendency of a model to tell users what they want to hear. The author acknowledges the structural irony of studying this phenomenon in a document designed to impress prospective employers.',
+    fn4_text: 'See reference [4]. Not peer-reviewed.',
+    ref_heading: 'References',
+    ref1: `A. Klem, "Social Sycophancy in Large Language Models: Behavioural Differences Across UI and API Environments," BSc Thesis, Utrecht University, 2025. <em>In preparation.</em> <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener">github.com/Alek-Klem-UU/SycoUI</a>`,
+    ref2: `Python Software Foundation, <em>Python Language Reference</em>, version 3.x. [Online]. Available: <a href="https://www.python.org" target="_blank" rel="noopener">python.org</a>`,
+    ref3: `G. Hinton, D. E. Rumelhart, and R. J. Williams, "Learning representations by back-propagating errors," <em>Nature</em>, vol. 323, pp. 533–536, 1986. Listed to demonstrate awareness of foundational literature.`,
+    ref4: `Jordy's Bakery, <em>Staff Handbook</em>. Rotterdam, 2024. Internal document. Not publicly available.`,
   },
-
   nl: {
-    nav_about:        'Over mij',
-    nav_education:    'Opleiding',
-    nav_experience:   'Ervaring',
-    nav_projects:     'Projecten',
-    nav_skills:       'Vaardigheden',
-    nav_contact:      'Contact',
-
-    hero_tag:         'BSc Kunstmatige Intelligentie · Universiteit Utrecht',
-    hero_desc:        'Analytisch ingestelde AI-student met een achtergrond in natuurkunde en wiskunde. Huidig onderzoek: sociale sycofantie in grote taalmodellen.',
-    btn_research:     'Bekijk Onderzoek',
-    btn_contact:      'Neem Contact Op',
-    btn_github:       'Bekijk op GitHub →',
-    scroll_text:      'Scroll om te verkennen',
-
-    h2_about:         'Over mij',
-    h2_education:     'Opleiding',
-    h2_experience:    'Ervaring',
-    h2_projects:      'Projecten',
-    h2_skills:        'Vaardigheden',
-    h2_contact:       'Neem Contact Op',
-
-    about_p1: `Ik ben een <strong>21-jarige AI-student aan de Universiteit Utrecht</strong>, met een oprechte interesse in hoe intelligente systemen werken — en waar ze fout gaan. Mijn academische pad begon met <em>Toegepaste Natuurkunde aan de TU Delft</em>, waarna ik overstapte naar Kunstmatige Intelligentie met een analytische, first-principles benadering.`,
-    about_p2: `Mijn huidige onderzoek richt zich op <strong>sociale sycofantie in taalmodellen</strong> — hoe grote taalmodellen hun antwoorden aanpassen op basis van waargenomen sociale druk, zowel in UI- als API-omgevingen. Het bevindt zich op het snijvlak van NLP, HCI en AI-veiligheid.`,
-
-    fact_location:    'Locatie',
-    fact_study:       'Studie',
-    fact_born:        'Geboren',
-    fact_languages:   'Talen',
-
-    edu_title_uu:    'BSc Kunstmatige Intelligentie',
-    edu_title_delft: 'BSc Technische Natuurkunde',
-    exp_tutor_title: 'Bijlesdocent — Wiskunde, Natuurkunde &amp; Science',
-    exp_bakery_title:'Allround Horecamedewerker',
-
-    edu_uu_1:    'Relevante vakken: Machine Learning, Datastructuren &amp; Algoritmen',
-    edu_uu_2:    'Minor Wiskunde: Calculus, Lineaire Algebra, Programmeren voor Wiskunde',
-    edu_uu_3:    'Huidig scriptieonderzoek: Sociale Sycofantie in taalmodellen via UI en API',
-    edu_delft_1: 'Sterke analytische en wiskundige basis',
-    edu_delft_2: 'Overgestapt naar AI om me te richten op intelligente systemen',
-    edu_gym_1:   'Klassiek VWO-onderwijs met nadruk op exacte vakken en talen',
-
-    exp_tutor_1:  'Bijles gegeven aan middelbare scholieren in wiskunde, natuurkunde en science',
-    exp_tutor_2:  'Uitleg aangepast aan verschillende niveaus',
-    exp_bakery_1: 'Allround horecawerk in een drukke bakkerij',
-
-    project_desc: 'Onderzoek naar hoe taalmodellen hun output aanpassen als reactie op sociale druk — gedrag vergeleken in conversatie-UI-omgevingen en directe API-aanroepen. Volledig geautomatiseerde web-interactiepipeline gebouwd voor systematische dataverzameling en evaluatie.',
-
-    skills_technical: 'Technisch',
-    skills_math:      'Wiskunde',
-    skills_langs:     'Talen',
-
-    skill_python:          'Python',
-    skill_ml:              'Machine Learning',
-    skill_data_analysis:   'Data-analyse',
-    skill_data_structures: 'Datastructuren',
-    skill_web_automation:  'Web Automatisering',
-    skill_calculus:        'Calculus',
-    skill_linear_algebra:  'Lineaire Algebra',
-    skill_statistics:      'Statistiek',
-    skill_discrete_math:   'Discrete Wiskunde',
-    skill_dutch:           'Nederlands',
-    skill_english:         'Engels',
-
-    level_advanced:   'Gevorderd',
-    level_proficient: 'Vaardig',
-    level_native:     'Moedertaal',
-    level_fluent:     'Vloeiend',
-
-    comp_teamwork:        'Teamwork',
-    comp_logical:         'Logisch Redeneren',
-    comp_communication:   'Heldere Communicatie',
-    comp_delegation:      'Taakverdeling',
-    comp_proactive:       'Proactieve Houding',
-    comp_sustainability:  'Duurzaamheidsgericht',
-    comp_learner:         'Snelle Leerder',
-    comp_firstprinciples: 'First-principles Denken',
-
-    contact_sub: 'Open voor stages, onderzoekssamenwerking en interessante gesprekken.',
+    journal_name: 'Persoonlijk Profielarchief',
+    paper_title: 'Curriculum Vitae',
+    paper_subtitle: 'Een Gestructureerd Zelfrapport',
+    affil1: 'Afdeling Kunstmatige Intelligentie, Universiteit Utrecht, Utrecht, Nederland',
+    affil2: 'Voorheen: Faculteit Toegepaste Wetenschappen, Technische Universiteit Delft',
+    received: 'Ontvangen: september 2022',
+    revised: 'Laatste revisie: maart 2025',
+    status_label: 'Status:',
+    status_val: 'In behandeling',
+    abstract_heading: 'Samenvatting',
+    abstract_text: `Dit document geeft een gestructureerde beschrijving van het academische traject, de onderzoeksactiviteiten en de professionele achtergrond van de auteur. Startend met Toegepaste Natuurkunde aan de Technische Universiteit Delft (2022), stapte de auteur over naar Kunstmatige Intelligentie aan de Universiteit Utrecht (2023), waar het huidige werk gericht is op sociale sycofantie in grote taalmodellen — hoe modeloutput varieert over UI- en API-omgevingen in reactie op sociale druk.<sup><a href="#fn3">[3]</a></sup> Voorlopige resultaten suggereren dat de auteur beschikbaar is voor stages en onderzoekssamenwerking. Contactgegevens zijn te vinden in §6.`,
+    keywords_label: 'Sleutelwoorden:',
+    keywords_text: 'kunstmatige intelligentie · machine learning · sycofantie · NLP · Python · Rotterdam · beschikbaar',
+    toc_heading: 'Inhoudsopgave',
+    toc_1: 'Introductie', toc_2: 'Academische Achtergrond', toc_3: 'Werkervaring',
+    toc_4: 'Huidig Onderzoek', toc_5: 'Technische Vaardigheden', toc_6: 'Correspondentie',
+    s1_heading: 'Introductie',
+    s1_p1: `De auteur (geb. 14 april 2004, Rotterdam, Nederland) is een derdejaars BSc-student Kunstmatige Intelligentie aan de Universiteit Utrecht. Een initiële studieperiode Toegepaste Natuurkunde aan de TU Delft (2022–2023) bood een fundament in analytisch en wiskundig redeneren, wat vervolgens de overstap naar de studie van intelligente systemen informeerde.<sup><a href="#fn1">[1]</a></sup>`,
+    s1_p2: `Het huidige onderzoek richt zich op <em>sociale sycofantie</em> in grote taalmodellen — de neiging van zulke systemen om output aan te passen op basis van waargenomen gebruikersvoorkeuren in plaats van feitelijke nauwkeurigheid. Dit werk bevindt zich op het snijvlak van NLP, HCI en AI-veiligheid.`,
+    t1_caption: 'Tabel 1 — Metadata auteur',
+    t1_col_field: 'Veld', t1_col_value: 'Waarde',
+    t1_location: 'Locatie', t1_affil: 'Affiliatie', t1_dob: 'Geboortedatum',
+    t1_langs: 'Talen', t1_langs_val: 'Nederlands (moedertaal) · Engels (vloeiend)', t1_python_val: '5+ jaar',
+    s2_heading: 'Academische Achtergrond',
+    s2_1_org: 'Universiteit Utrecht',
+    s2_1_text: 'BSc Kunstmatige Intelligentie. Relevante vakken: Machine Learning, Datastructuren &amp; Algoritmen. Minor Wiskunde: Calculus, Lineaire Algebra, Programmeren voor Wiskunde. Huidig scriptieonderzoek: Sociale Sycofantie in taalmodellen via UI en API.',
+    s2_2_org: 'Technische Universiteit Delft',
+    s2_2_text: `BSc Technische Natuurkunde.<sup><a href="#fn2">[2]</a></sup> Sterke analytische en wiskundige basis opgedaan via vakken in mechanica, elektromagnetisme en wiskundige fysica. Overgestapt naar AI om me te richten op intelligente systemen.`,
+    s2_3_org: 'Erasmiaans Gymnasium, Rotterdam',
+    s2_3_text: 'Gymnasiumdiploma. Klassiek VWO-onderwijs met nadruk op exacte vakken en talen.',
+    s3_heading: 'Werkervaring',
+    s3_1_role: 'Bijlesdocent — Wiskunde, Natuurkunde &amp; Science',
+    s3_1_org: "After's Cool, Rotterdam",
+    s3_1_text: 'Bijles gegeven aan middelbare scholieren in wiskunde, natuurkunde en science. Uitleg aangepast aan verschillende niveaus.',
+    s3_2_role: 'Allround Horecamedewerker',
+    s3_2_org: "Jordy's Bakery, Rotterdam",
+    s3_2_text: `Allround horecawerk in een drukke bakkerij.<sup><a href="#fn4">[4]</a></sup>`,
+    s4_heading: 'Huidig Onderzoek',
+    s4_p1: `Het BSc-scriptieonderzoek van de auteur onderzoekt <em>sociale sycofantie</em> in grote taalmodellen — het fenomeen waarbij modeloutput verschuift als reactie op sociale druk in gebruikersprompts, onafhankelijk van feitelijke merites. Dit gedrag heeft significante implicaties voor AI-veiligheid, aangezien sycofante modellen onjuiste overtuigingen kunnen versterken.`,
+    s4_p2: `De methodologie omvat een volledig geautomatiseerde web-interactiepipeline die gestructureerde prompts indient bij zowel conversationele UI-omgevingen als directe API-eindpunten, wat systematische vergelijking van modelgedrag mogelijk maakt. Zie <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener noreferrer">github.com/Alek-Klem-UU/SycoUI</a>.`,
+    fig1_caption: 'Figuur 1 — Sycofantiedetectiepipeline (geautomatiseerd web-interactieraamwerk)',
+    s5_heading: 'Technische Vaardigheden',
+    s5_intro: 'Een overzicht van technische vaardigheden is te vinden in Tabel 2. Niveaus zijn zelfbeoordeeld.',
+    t2_caption: 'Tabel 2 — Technische vaardigheden',
+    t2_skill: 'Vaardigheid', t2_domain: 'Domein', t2_level: 'Niveau',
+    domain_technical: 'Technisch', domain_math: 'Wiskunde', domain_language: 'Taal',
+    skill_ml: 'Machine Learning', skill_data_analysis: 'Data-analyse',
+    skill_data_structures: 'Datastructuren', skill_web_automation: 'Web Automatisering',
+    skill_linear_algebra: 'Lineaire Algebra', skill_statistics: 'Statistiek',
+    skill_discrete_math: 'Discrete Wiskunde',
+    lang_dutch: 'Nederlands', lang_english: 'Engels',
+    level_advanced: 'Gevorderd', level_proficient: 'Vaardig',
+    level_native: 'Moedertaal', level_fluent: 'Vloeiend',
+    comp_teamwork: 'Teamwork', comp_logical: 'Logisch Redeneren',
+    comp_communication: 'Heldere Communicatie', comp_delegation: 'Taakverdeling',
+    comp_proactive: 'Proactieve Houding', comp_sustainability: 'Duurzaamheidsgericht',
+    comp_learner: 'Snelle Leerder', comp_firstprinciples: 'First-principles Denken',
+    s6_heading: 'Correspondentie',
+    s6_text: 'De auteur is bereikbaar via onderstaande kanalen en staat open voor stages, onderzoekssamenwerking en interessante gesprekken.',
+    contact_email_label: 'E-mail',
+    fn_heading: 'Noten',
+    fn1_text: 'Natuurkunde biedt een nuttige prior voor het benaderen van ML-problemen — beide vakgebieden betreffen het optimaliseren voor grootheden die nooit perfect gemeten kunnen worden.',
+    fn2_text: 'Ten tijde van de inschrijving stond de TU Delft in de top van Europese technische universiteiten. Dit wordt vermeld voor volledigheid, niet als persoonlijke prestatieclaim.',
+    fn3_text: 'Hier gedefinieerd als de neiging van een model om gebruikers te vertellen wat ze willen horen. De auteur erkent de structurele ironie van het bestuderen van dit fenomeen in een document bedoeld om potentiële werkgevers te imponeren.',
+    fn4_text: 'Zie referentie [4]. Niet peer-reviewed.',
+    ref_heading: 'Referenties',
+    ref1: `A. Klem, "Sociale Sycofantie in Grote Taalmodellen: Gedragsverschillen over UI- en API-omgevingen," BSc Scriptie, Universiteit Utrecht, 2025. <em>In voorbereiding.</em> <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener">github.com/Alek-Klem-UU/SycoUI</a>`,
+    ref2: `Python Software Foundation, <em>Python Language Reference</em>, versie 3.x. [Online]. Beschikbaar: <a href="https://www.python.org" target="_blank" rel="noopener">python.org</a>`,
+    ref3: `G. Hinton, D. E. Rumelhart, en R. J. Williams, "Learning representations by back-propagating errors," <em>Nature</em>, vol. 323, pp. 533–536, 1986. Vermeld als blijk van bekendheid met de fundamentele literatuur.`,
+    ref4: `Jordy's Bakery, <em>Personeelshandboek</em>. Rotterdam, 2024. Intern document. Niet openbaar beschikbaar.`,
   },
 };
 
@@ -1359,7 +649,6 @@ function setLanguage(lang) {
   localStorage.setItem('lang', lang);
 }
 
-// Init language
 (function() {
   const saved = localStorage.getItem('lang') || 'en';
   setLanguage(saved);
@@ -1368,165 +657,56 @@ function setLanguage(lang) {
   });
 })();
 
-// ── Reading progress ──
-(function() {
-  const bar = document.getElementById('reading-progress');
-  function update() {
-    const scrolled = window.scrollY;
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
-  }
-  window.addEventListener('scroll', update, { passive: true });
-})();
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width =
+    (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+}, { passive: true });
 
-// ── Neural network canvas (hero) — no mouse interaction ──
-(function() {
-  const canvas = document.getElementById('neural-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, nodes;
-
-  function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  }
-
-  function initNodes() {
-    nodes = Array.from({ length: 32 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: (Math.random() - 0.5) * 0.18,
-      r: Math.random() * 1.2 + 0.8,
-    }));
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 140) {
-          ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = `rgba(196,147,90,${(1 - dist/140) * 0.14})`;
-          ctx.lineWidth = 0.4;
-          ctx.stroke();
-        }
-      }
-    }
-
-    nodes.forEach(n => {
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(196,147,90,0.3)';
-      ctx.fill();
-
-      n.x += n.vx;
-      n.y += n.vy;
-      if (n.x < 0 || n.x > W) n.vx *= -1;
-      if (n.y < 0 || n.y > H) n.vy *= -1;
-    });
-
-    requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('resize', () => { resize(); initNodes(); });
-  resize(); initNodes(); draw();
-})();
-
-// ── Project canvas ──
 (function() {
   const canvas = document.getElementById('project-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let W, H, t = 0;
-
-  function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  }
-
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
   function draw() {
     ctx.clearRect(0, 0, W, H);
     t += 0.003;
-
     const cx = W / 2, cy = H / 2;
     const layers = [
-      { r: 22, color: '#d09850', nodes: 4 },
-      { r: 52, color: '#b07c3a', nodes: 6 },
-      { r: 82, color: '#b07c3a', nodes: 6 },
-      { r: 112, color: '#8fad82', nodes: 3 },
+      { r: 18, nodes: 3 }, { r: 44, nodes: 5 },
+      { r: 70, nodes: 5 }, { r: 94, nodes: 4 },
     ];
-
     for (let li = 0; li < layers.length - 1; li++) {
       const l1 = layers[li], l2 = layers[li + 1];
       for (let i = 0; i < l1.nodes; i++) {
         for (let j = 0; j < l2.nodes; j++) {
-          const a1 = (i / l1.nodes) * Math.PI * 2 + t * (li % 2 === 0 ? 0.25 : -0.25);
-          const a2 = (j / l2.nodes) * Math.PI * 2 + t * (li % 2 === 0 ? -0.18 : 0.18);
+          const a1 = (i / l1.nodes) * Math.PI * 2 + t * 0.3;
+          const a2 = (j / l2.nodes) * Math.PI * 2 - t * 0.2;
           ctx.beginPath();
           ctx.moveTo(cx + Math.cos(a1) * l1.r, cy + Math.sin(a1) * l1.r);
           ctx.lineTo(cx + Math.cos(a2) * l2.r, cy + Math.sin(a2) * l2.r);
-          ctx.strokeStyle = `rgba(196,147,90,0.04)`;
-          ctx.lineWidth = 0.6;
+          ctx.strokeStyle = 'rgba(90,30,15,0.07)';
+          ctx.lineWidth = 0.8;
           ctx.stroke();
         }
       }
     }
-
     layers.forEach((layer, li) => {
       for (let i = 0; i < layer.nodes; i++) {
-        const angle = (i / layer.nodes) * Math.PI * 2 + t * (li % 2 === 0 ? 0.25 : -0.25);
+        const angle = (i / layer.nodes) * Math.PI * 2 + t * (li % 2 === 0 ? 0.3 : -0.2);
         const x = cx + Math.cos(angle) * layer.r;
         const y = cy + Math.sin(angle) * layer.r;
         ctx.beginPath();
         ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = layer.color;
-        ctx.globalAlpha = 0.5;
+        ctx.fillStyle = 'rgba(120,40,20,0.5)';
         ctx.fill();
-        ctx.globalAlpha = 1;
       }
     });
-
     requestAnimationFrame(draw);
   }
-
   window.addEventListener('resize', resize);
   resize(); draw();
-})();
-
-// ── Scroll reveal ──
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 80);
-      revealObserver.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ── Active nav on scroll ──
-(function() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  const activeObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const a = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-        if (a) a.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-30% 0px -65% 0px' });
-
-  sections.forEach(s => activeObserver.observe(s));
 })();
 </script>
 </body>
