@@ -246,6 +246,47 @@
   .btn-ghost:hover { border-color: rgba(208,152,80,0.5); color: var(--accent); }
   .btn-ghost:active { background: rgba(208,152,80,0.05); }
 
+  /* ── Language toggle ── */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(208,152,80,0.45);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-left: 28px;
+    flex-shrink: 0;
+  }
+
+  .lang-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    padding: 5px 11px;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1;
+  }
+
+  .lang-btn.active {
+    background: var(--accent);
+    color: #110e09;
+    font-weight: 700;
+  }
+
+  .lang-btn:hover:not(.active) {
+    background: rgba(208,152,80,0.1);
+    color: var(--dim);
+  }
+
+  .lang-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
   .hero-scroll {
     position: absolute;
     bottom: 36px;
@@ -893,13 +934,17 @@
 <nav aria-label="Main navigation">
   <a class="nav-logo" href="#hero">Alek<span>.</span>Klem</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about"      data-i18n="nav_about">About</a></li>
+    <li><a href="#education"  data-i18n="nav_education">Education</a></li>
+    <li><a href="#experience" data-i18n="nav_experience">Experience</a></li>
+    <li><a href="#projects"   data-i18n="nav_projects">Projects</a></li>
+    <li><a href="#skills"     data-i18n="nav_skills">Skills</a></li>
+    <li><a href="#contact"    data-i18n="nav_contact">Contact</a></li>
   </ul>
+  <div class="lang-toggle" role="group" aria-label="Language">
+    <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -908,18 +953,18 @@
   <div class="hero-content">
     <div class="hero-tag">BSc Artificial Intelligence · Utrecht University</div>
     <h1><span class="h1-word">Alek</span><br><em>Klem</em></h1>
-    <p class="hero-desc">
+    <p class="hero-desc" data-i18n="hero_desc">
       Analytically driven AI student with a foundation in physics and mathematics.
       Currently researching social sycophancy in Large Language Models.
     </p>
     <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View Research</a>
-      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      <a href="#projects" class="btn btn-primary" data-i18n="btn_research">View Research</a>
+      <a href="#contact" class="btn btn-ghost" data-i18n="btn_contact">Get in Touch</a>
     </div>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
-    Scroll to explore
+    <span data-i18n="scroll_text">Scroll to explore</span>
   </div>
 </section>
 
@@ -927,25 +972,25 @@
 <section id="about">
   <div class="section-header reveal">
     <span class="section-num">I</span>
-    <h2>About</h2>
+    <h2 data-i18n="h2_about">About</h2>
     <div class="section-line"></div>
   </div>
   <div class="about-grid">
     <div class="about-text reveal">
-      <p>I'm a <strong>21-year-old AI student at Utrecht University</strong>, driven by a genuine curiosity about how intelligent systems think — and where they go wrong. My academic path started in <em>Applied Physics at TU Delft</em> before I pivoted to Artificial Intelligence, bringing an analytical, first-principles mindset to everything I do.</p>
-      <p>My current research focuses on <strong>social sycophancy in LLMs</strong> — studying how large language models adjust their responses based on perceived social pressure, both in UI and API environments. It sits at the intersection of NLP, HCI, and AI safety.</p>
+      <p data-i18n="about_p1">I'm a <strong>21-year-old AI student at Utrecht University</strong>, driven by a genuine curiosity about how intelligent systems think — and where they go wrong. My academic path started in <em>Applied Physics at TU Delft</em> before I pivoted to Artificial Intelligence, bringing an analytical, first-principles mindset to everything I do.</p>
+      <p data-i18n="about_p2">My current research focuses on <strong>social sycophancy in LLMs</strong> — studying how large language models adjust their responses based on perceived social pressure, both in UI and API environments. It sits at the intersection of NLP, HCI, and AI safety.</p>
     </div>
     <div class="about-facts reveal">
       <div class="fact-row">
-        <span class="fact-label">Location</span>
+        <span class="fact-label" data-i18n="fact_location">Location</span>
         <span class="fact-value">Rotterdam, NL</span>
       </div>
       <div class="fact-row">
-        <span class="fact-label">Study</span>
+        <span class="fact-label" data-i18n="fact_study">Study</span>
         <span class="fact-value">BSc AI · UU</span>
       </div>
       <div class="fact-row">
-        <span class="fact-label">Born</span>
+        <span class="fact-label" data-i18n="fact_born">Born</span>
         <span class="fact-value">14 April 2004</span>
       </div>
       <div class="fact-row">
@@ -953,7 +998,7 @@
         <span class="fact-value">Alek-Klem-UU</span>
       </div>
       <div class="fact-row">
-        <span class="fact-label">Languages</span>
+        <span class="fact-label" data-i18n="fact_languages">Languages</span>
         <span class="fact-value">NL · EN</span>
       </div>
       <div class="fact-row">
@@ -968,7 +1013,7 @@
 <section id="education">
   <div class="section-header reveal">
     <span class="section-num">II</span>
-    <h2>Education</h2>
+    <h2 data-i18n="h2_education">Education</h2>
     <div class="section-line"></div>
   </div>
   <div class="timeline">
@@ -978,9 +1023,9 @@
       <div class="timeline-title">BSc Artificial Intelligence</div>
       <div class="timeline-org">Utrecht University</div>
       <ul class="timeline-details">
-        <li>Relevant coursework: Machine Learning, Data Structures &amp; Algorithms</li>
-        <li>Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics</li>
-        <li>Current thesis: Social Sycophancy in LLMs across UI and API environments</li>
+        <li data-i18n="edu_uu_1">Relevant coursework: Machine Learning, Data Structures &amp; Algorithms</li>
+        <li data-i18n="edu_uu_2">Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics</li>
+        <li data-i18n="edu_uu_3">Current thesis: Social Sycophancy in LLMs across UI and API environments</li>
       </ul>
     </div>
     <div class="timeline-item reveal">
@@ -989,8 +1034,8 @@
       <div class="timeline-title">BSc Applied Physics</div>
       <div class="timeline-org">Delft University of Technology</div>
       <ul class="timeline-details">
-        <li>Strong analytical and mathematical foundation</li>
-        <li>Transferred to AI to pursue focus on intelligent systems</li>
+        <li data-i18n="edu_delft_1">Strong analytical and mathematical foundation</li>
+        <li data-i18n="edu_delft_2">Transferred to AI to pursue focus on intelligent systems</li>
       </ul>
     </div>
     <div class="timeline-item reveal">
@@ -999,7 +1044,7 @@
       <div class="timeline-title">Gymnasium Diploma</div>
       <div class="timeline-org">Erasmiaans Gymnasium, Rotterdam</div>
       <ul class="timeline-details">
-        <li>Classical pre-university education with emphasis on sciences and languages</li>
+        <li data-i18n="edu_gym_1">Classical pre-university education with emphasis on sciences and languages</li>
       </ul>
     </div>
   </div>
@@ -1009,7 +1054,7 @@
 <section id="experience">
   <div class="section-header reveal">
     <span class="section-num">III</span>
-    <h2>Experience</h2>
+    <h2 data-i18n="h2_experience">Experience</h2>
     <div class="section-line"></div>
   </div>
   <div class="exp-grid">
@@ -1018,8 +1063,8 @@
       <div class="exp-title">Tutor — Mathematics, Physics &amp; Science</div>
       <div class="exp-org">After's Cool</div>
       <ul class="exp-points">
-        <li>Tutored secondary school students in mathematics, physics, and science</li>
-        <li>Adapted explanations to different skill levels</li>
+        <li data-i18n="exp_tutor_1">Tutored secondary school students in mathematics, physics, and science</li>
+        <li data-i18n="exp_tutor_2">Adapted explanations to different skill levels</li>
       </ul>
     </div>
     <div class="exp-card reveal">
@@ -1027,7 +1072,7 @@
       <div class="exp-title">All-Round Hospitality Staff</div>
       <div class="exp-org">Jordy's Bakery, Rotterdam</div>
       <ul class="exp-points">
-        <li>All-round hospitality work in a busy bakery</li>
+        <li data-i18n="exp_bakery_1">All-round hospitality work in a busy bakery</li>
       </ul>
     </div>
   </div>
@@ -1037,7 +1082,7 @@
 <section id="projects">
   <div class="section-header reveal">
     <span class="section-num">IV</span>
-    <h2>Projects</h2>
+    <h2 data-i18n="h2_projects">Projects</h2>
     <div class="section-line"></div>
   </div>
   <div class="project-featured reveal">
@@ -1045,7 +1090,7 @@
       <div>
         <div class="project-label">Upcoming BSc Thesis · 2025 — Present</div>
         <div class="project-title">Social Sycophancy in Large Language Models</div>
-        <p class="project-desc">
+        <p class="project-desc" data-i18n="project_desc">
           Investigating how LLMs adapt their outputs in response to social pressure cues — comparing behaviour across conversational UI environments and direct API calls. Built a fully automated web-interaction pipeline for systematic data collection and evaluation.
         </p>
         <p class="project-tags">Python · LLM APIs · Web Automation · NLP · AI Safety</p>
@@ -1065,46 +1110,46 @@
 <section id="skills">
   <div class="section-header reveal">
     <span class="section-num">V</span>
-    <h2>Skills</h2>
+    <h2 data-i18n="h2_skills">Skills</h2>
     <div class="section-line"></div>
   </div>
   <div class="skills-grid reveal">
     <div class="skill-group">
-      <h3>Technical</h3>
+      <h3 data-i18n="skills_technical">Technical</h3>
       <ul class="skill-list">
-        <li>Python <em>Advanced</em></li>
-        <li>Machine Learning <em>Proficient</em></li>
-        <li>Data Analysis <em>Proficient</em></li>
-        <li>Data Structures <em>Proficient</em></li>
-        <li>Web Automation <em>Proficient</em></li>
+        <li><span data-i18n="skill_python">Python</span> <em data-i18n="level_advanced">Advanced</em></li>
+        <li><span data-i18n="skill_ml">Machine Learning</span> <em data-i18n="level_proficient">Proficient</em></li>
+        <li><span data-i18n="skill_data_analysis">Data Analysis</span> <em data-i18n="level_proficient">Proficient</em></li>
+        <li><span data-i18n="skill_data_structures">Data Structures</span> <em data-i18n="level_proficient">Proficient</em></li>
+        <li><span data-i18n="skill_web_automation">Web Automation</span> <em data-i18n="level_proficient">Proficient</em></li>
       </ul>
     </div>
     <div class="skill-group">
-      <h3>Mathematics</h3>
+      <h3 data-i18n="skills_math">Mathematics</h3>
       <ul class="skill-list">
-        <li>Calculus <em>Advanced</em></li>
-        <li>Linear Algebra <em>Advanced</em></li>
-        <li>Statistics <em>Proficient</em></li>
-        <li>Discrete Mathematics <em>Proficient</em></li>
+        <li><span data-i18n="skill_calculus">Calculus</span> <em data-i18n="level_advanced">Advanced</em></li>
+        <li><span data-i18n="skill_linear_algebra">Linear Algebra</span> <em data-i18n="level_advanced">Advanced</em></li>
+        <li><span data-i18n="skill_statistics">Statistics</span> <em data-i18n="level_proficient">Proficient</em></li>
+        <li><span data-i18n="skill_discrete_math">Discrete Mathematics</span> <em data-i18n="level_proficient">Proficient</em></li>
       </ul>
     </div>
     <div class="skill-group">
-      <h3>Languages</h3>
+      <h3 data-i18n="skills_langs">Languages</h3>
       <ul class="skill-list">
-        <li>Dutch <em>Native</em></li>
-        <li>English <em>Fluent</em></li>
+        <li><span data-i18n="skill_dutch">Dutch</span> <em data-i18n="level_native">Native</em></li>
+        <li><span data-i18n="skill_english">English</span> <em data-i18n="level_fluent">Fluent</em></li>
       </ul>
     </div>
   </div>
   <div class="competencies reveal">
-    <span class="comp-tag">Teamwork</span>
-    <span class="comp-tag">Logical Reasoning</span>
-    <span class="comp-tag">Clear Communication</span>
-    <span class="comp-tag">Task Delegation</span>
-    <span class="comp-tag">Proactive Attitude</span>
-    <span class="comp-tag">Sustainability-minded</span>
-    <span class="comp-tag">Fast Learner</span>
-    <span class="comp-tag">First-principles Thinking</span>
+    <span class="comp-tag" data-i18n="comp_teamwork">Teamwork</span>
+    <span class="comp-tag" data-i18n="comp_logical">Logical Reasoning</span>
+    <span class="comp-tag" data-i18n="comp_communication">Clear Communication</span>
+    <span class="comp-tag" data-i18n="comp_delegation">Task Delegation</span>
+    <span class="comp-tag" data-i18n="comp_proactive">Proactive Attitude</span>
+    <span class="comp-tag" data-i18n="comp_sustainability">Sustainability-minded</span>
+    <span class="comp-tag" data-i18n="comp_learner">Fast Learner</span>
+    <span class="comp-tag" data-i18n="comp_firstprinciples">First-principles Thinking</span>
   </div>
 </section>
 
@@ -1112,9 +1157,9 @@
 <section id="contact">
   <div class="contact-inner">
     <div class="section-header reveal" style="justify-content:center; text-align:center;">
-      <h2>Get in Touch</h2>
+      <h2 data-i18n="h2_contact">Get in Touch</h2>
     </div>
-    <p class="contact-sub reveal">Open to internships, research collaborations, and interesting conversations.</p>
+    <p class="contact-sub reveal" data-i18n="contact_sub">Open to internships, research collaborations, and interesting conversations.</p>
     <div class="contact-links reveal">
       <a href="mailto:alekklem@gmail.com" class="contact-link">
         <span class="icon">✉</span> alekklem@gmail.com
@@ -1135,6 +1180,180 @@
 </footer>
 
 <script>
+// ── i18n ──
+const TRANSLATIONS = {
+  en: {
+    nav_about:        'About',
+    nav_education:    'Education',
+    nav_experience:   'Experience',
+    nav_projects:     'Projects',
+    nav_skills:       'Skills',
+    nav_contact:      'Contact',
+
+    hero_desc:        'Analytically driven AI student with a foundation in physics and mathematics. Currently researching social sycophancy in Large Language Models.',
+    btn_research:     'View Research',
+    btn_contact:      'Get in Touch',
+    scroll_text:      'Scroll to explore',
+
+    h2_about:         'About',
+    h2_education:     'Education',
+    h2_experience:    'Experience',
+    h2_projects:      'Projects',
+    h2_skills:        'Skills',
+    h2_contact:       'Get in Touch',
+
+    about_p1: `I'm a <strong>21-year-old AI student at Utrecht University</strong>, driven by a genuine curiosity about how intelligent systems think — and where they go wrong. My academic path started in <em>Applied Physics at TU Delft</em> before I pivoted to Artificial Intelligence, bringing an analytical, first-principles mindset to everything I do.`,
+    about_p2: `My current research focuses on <strong>social sycophancy in LLMs</strong> — studying how large language models adjust their responses based on perceived social pressure, both in UI and API environments. It sits at the intersection of NLP, HCI, and AI safety.`,
+
+    fact_location:    'Location',
+    fact_study:       'Study',
+    fact_born:        'Born',
+    fact_languages:   'Languages',
+
+    edu_uu_1:    'Relevant coursework: Machine Learning, Data Structures &amp; Algorithms',
+    edu_uu_2:    'Minor in Mathematics: Calculus, Linear Algebra, Programming for Mathematics',
+    edu_uu_3:    'Current thesis: Social Sycophancy in LLMs across UI and API environments',
+    edu_delft_1: 'Strong analytical and mathematical foundation',
+    edu_delft_2: 'Transferred to AI to pursue focus on intelligent systems',
+    edu_gym_1:   'Classical pre-university education with emphasis on sciences and languages',
+
+    exp_tutor_1:  'Tutored secondary school students in mathematics, physics, and science',
+    exp_tutor_2:  'Adapted explanations to different skill levels',
+    exp_bakery_1: 'All-round hospitality work in a busy bakery',
+
+    project_desc: 'Investigating how LLMs adapt their outputs in response to social pressure cues — comparing behaviour across conversational UI environments and direct API calls. Built a fully automated web-interaction pipeline for systematic data collection and evaluation.',
+
+    skills_technical: 'Technical',
+    skills_math:      'Mathematics',
+    skills_langs:     'Languages',
+
+    skill_python:          'Python',
+    skill_ml:              'Machine Learning',
+    skill_data_analysis:   'Data Analysis',
+    skill_data_structures: 'Data Structures',
+    skill_web_automation:  'Web Automation',
+    skill_calculus:        'Calculus',
+    skill_linear_algebra:  'Linear Algebra',
+    skill_statistics:      'Statistics',
+    skill_discrete_math:   'Discrete Mathematics',
+    skill_dutch:           'Dutch',
+    skill_english:         'English',
+
+    level_advanced:   'Advanced',
+    level_proficient: 'Proficient',
+    level_native:     'Native',
+    level_fluent:     'Fluent',
+
+    comp_teamwork:        'Teamwork',
+    comp_logical:         'Logical Reasoning',
+    comp_communication:   'Clear Communication',
+    comp_delegation:      'Task Delegation',
+    comp_proactive:       'Proactive Attitude',
+    comp_sustainability:  'Sustainability-minded',
+    comp_learner:         'Fast Learner',
+    comp_firstprinciples: 'First-principles Thinking',
+
+    contact_sub: 'Open to internships, research collaborations, and interesting conversations.',
+  },
+
+  nl: {
+    nav_about:        'Over mij',
+    nav_education:    'Opleiding',
+    nav_experience:   'Ervaring',
+    nav_projects:     'Projecten',
+    nav_skills:       'Vaardigheden',
+    nav_contact:      'Contact',
+
+    hero_desc:        'Analytisch ingestelde AI-student met een achtergrond in natuurkunde en wiskunde. Huidig onderzoek: sociale sycofantie in grote taalmodellen.',
+    btn_research:     'Bekijk Onderzoek',
+    btn_contact:      'Neem Contact Op',
+    scroll_text:      'Scroll om te verkennen',
+
+    h2_about:         'Over mij',
+    h2_education:     'Opleiding',
+    h2_experience:    'Ervaring',
+    h2_projects:      'Projecten',
+    h2_skills:        'Vaardigheden',
+    h2_contact:       'Neem Contact Op',
+
+    about_p1: `Ik ben een <strong>21-jarige AI-student aan de Universiteit Utrecht</strong>, met een oprechte interesse in hoe intelligente systemen werken — en waar ze fout gaan. Mijn academische pad begon met <em>Toegepaste Natuurkunde aan de TU Delft</em>, waarna ik overstapte naar Kunstmatige Intelligentie met een analytische, first-principles benadering.`,
+    about_p2: `Mijn huidige onderzoek richt zich op <strong>sociale sycofantie in taalmodellen</strong> — hoe grote taalmodellen hun antwoorden aanpassen op basis van waargenomen sociale druk, zowel in UI- als API-omgevingen. Het bevindt zich op het snijvlak van NLP, HCI en AI-veiligheid.`,
+
+    fact_location:    'Locatie',
+    fact_study:       'Studie',
+    fact_born:        'Geboren',
+    fact_languages:   'Talen',
+
+    edu_uu_1:    'Relevante vakken: Machine Learning, Datastructuren &amp; Algoritmen',
+    edu_uu_2:    'Minor Wiskunde: Calculus, Lineaire Algebra, Programmeren voor Wiskunde',
+    edu_uu_3:    'Huidig scriptieonderzoek: Sociale Sycofantie in taalmodellen via UI en API',
+    edu_delft_1: 'Sterke analytische en wiskundige basis',
+    edu_delft_2: 'Overgestapt naar AI om me te richten op intelligente systemen',
+    edu_gym_1:   'Klassiek VWO-onderwijs met nadruk op exacte vakken en talen',
+
+    exp_tutor_1:  'Bijles gegeven aan middelbare scholieren in wiskunde, natuurkunde en science',
+    exp_tutor_2:  'Uitleg aangepast aan verschillende niveaus',
+    exp_bakery_1: 'Allround horecawerk in een drukke bakkerij',
+
+    project_desc: 'Onderzoek naar hoe taalmodellen hun output aanpassen als reactie op sociale druk — gedrag vergeleken in conversatie-UI-omgevingen en directe API-aanroepen. Volledig geautomatiseerde web-interactiepipeline gebouwd voor systematische dataverzameling en evaluatie.',
+
+    skills_technical: 'Technisch',
+    skills_math:      'Wiskunde',
+    skills_langs:     'Talen',
+
+    skill_python:          'Python',
+    skill_ml:              'Machine Learning',
+    skill_data_analysis:   'Data-analyse',
+    skill_data_structures: 'Datastructuren',
+    skill_web_automation:  'Web Automatisering',
+    skill_calculus:        'Calculus',
+    skill_linear_algebra:  'Lineaire Algebra',
+    skill_statistics:      'Statistiek',
+    skill_discrete_math:   'Discrete Wiskunde',
+    skill_dutch:           'Nederlands',
+    skill_english:         'Engels',
+
+    level_advanced:   'Gevorderd',
+    level_proficient: 'Vaardig',
+    level_native:     'Moedertaal',
+    level_fluent:     'Vloeiend',
+
+    comp_teamwork:        'Teamwork',
+    comp_logical:         'Logisch Redeneren',
+    comp_communication:   'Heldere Communicatie',
+    comp_delegation:      'Taakverdeling',
+    comp_proactive:       'Proactieve Houding',
+    comp_sustainability:  'Duurzaamheidsgericht',
+    comp_learner:         'Snelle Leerder',
+    comp_firstprinciples: 'First-principles Denken',
+
+    contact_sub: 'Open voor stages, onderzoekssamenwerking en interessante gesprekken.',
+  },
+};
+
+function setLanguage(lang) {
+  const t = TRANSLATIONS[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+    btn.setAttribute('aria-pressed', btn.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang;
+  localStorage.setItem('lang', lang);
+}
+
+// Init language
+(function() {
+  const saved = localStorage.getItem('lang') || 'en';
+  setLanguage(saved);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+  });
+})();
+
 // ── Reading progress ──
 (function() {
   const bar = document.getElementById('reading-progress');
