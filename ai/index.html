@@ -165,14 +165,26 @@
     letter-spacing: -0.03em;
     color: var(--white);
     margin-bottom: 32px;
+  }
+
+  .h1-word {
+    display: inline-block;
     opacity: 0;
-    animation: fadeUp 0.7s ease 0.4s forwards;
+    animation: heroWord 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
   }
 
   h1 em {
+    display: inline-block;
     font-style: normal;
     color: var(--accent);
     font-weight: 700;
+    opacity: 0;
+    animation: heroWord 1s cubic-bezier(0.16, 1, 0.3, 1) 0.52s forwards;
+  }
+
+  @keyframes heroWord {
+    from { opacity: 0; transform: translateY(40px); letter-spacing: 0.06em; }
+    to   { opacity: 1; transform: translateY(0);    letter-spacing: -0.03em; }
   }
 
   .hero-desc {
@@ -254,6 +266,12 @@
     width: 32px; height: 1px;
     background: var(--muted);
     opacity: 0.4;
+    animation: scrollPulse 2.8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { transform: translateX(0); opacity: 0.4; }
+    50%       { transform: translateX(8px); opacity: 0.2; }
   }
 
   /* ── Sections ── */
@@ -781,20 +799,53 @@
 
   /* ── Animations ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   .reveal {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.85s ease, transform 0.85s ease;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.visible {
     opacity: 1;
     transform: none;
   }
+
+  /* Section line draws out after header reveals */
+  .section-line {
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+  }
+
+  .section-header.visible .section-line {
+    transform: scaleX(1);
+  }
+
+  /* Active nav link */
+  .nav-links a.active { color: var(--text); }
+  .nav-links a.active::after { width: 100%; }
+
+  /* Fact row stagger when about-facts reveals */
+  .about-facts .fact-row {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                background 0.2s;
+  }
+
+  .about-facts.visible .fact-row              { opacity: 1; transform: none; }
+  .about-facts.visible .fact-row:nth-child(1) { transition-delay: 80ms; }
+  .about-facts.visible .fact-row:nth-child(2) { transition-delay: 140ms; }
+  .about-facts.visible .fact-row:nth-child(3) { transition-delay: 200ms; }
+  .about-facts.visible .fact-row:nth-child(4) { transition-delay: 260ms; }
+  .about-facts.visible .fact-row:nth-child(5) { transition-delay: 320ms; }
+  .about-facts.visible .fact-row:nth-child(6) { transition-delay: 380ms; }
 
   /* ── Responsive ── */
   @media (max-width: 860px) {
@@ -822,9 +873,14 @@
   .btn:focus-visible { outline-offset: 3px; }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
     #neural-canvas { display: none; }
     #project-canvas { display: none; }
+    .scroll-line { animation: none; }
   }
 </style>
 </head>
@@ -850,7 +906,7 @@
   <canvas id="neural-canvas" aria-hidden="true"></canvas>
   <div class="hero-content">
     <div class="hero-tag">BSc Artificial Intelligence · Utrecht University</div>
-    <h1>Alek<br><em>Klem</em></h1>
+    <h1><span class="h1-word">Alek</span><br><em>Klem</em></h1>
     <p class="hero-desc">
       Analytically driven AI student with a foundation in physics and mathematics.
       Currently researching social sycophancy in Large Language Models.
@@ -1224,6 +1280,24 @@ const revealObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── Active nav on scroll ──
+(function() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const activeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => activeObserver.observe(s));
+})();
 </script>
 </body>
 </html>
