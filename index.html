@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alek Klem</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'RetroByte';
+      src: url('root_resources/RetroByte.ttf') format('truetype');
+    }
+  </style>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; overflow: hidden; background: #060605; }
@@ -14,6 +17,7 @@
     #morpheus-canvas {
       position: fixed; inset: 0; width: 100%; height: 100%;
       z-index: 1; pointer-events: none;
+      filter: contrast(1.25) brightness(0.92);
     }
 
     /* CRT scanlines */
@@ -21,68 +25,56 @@
       position: fixed; inset: 0; z-index: 5; pointer-events: none;
       background: repeating-linear-gradient(
         0deg, transparent, transparent 3px,
-        rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px
+        rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
       );
     }
 
-    /* ── Hand buttons ─────────────────────────────── */
+    /* CRT vignette — darkens edges, keeps centre sharp */
+    .vignette {
+      position: fixed; inset: 0; z-index: 4; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 50%,
+        transparent 40%,
+        rgba(0,0,0,0.55) 100%
+      );
+    }
+
+    /* ── Hand buttons — transparent click targets only ─── */
     .hand-btn {
       position: fixed;
       z-index: 20;
       border-radius: 0;
       cursor: pointer;
       text-decoration: none;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      background: transparent;
+      pointer-events: none;
       /* size set by JS */
     }
 
-    #btn-left  { background: radial-gradient(ellipse at 50% 92%, rgba(255,20,20,0.85) 0%, rgba(220,0,0,0.38) 38%, transparent 70%); }
-    #btn-right { background: radial-gradient(ellipse at 50% 92%, rgba(0,210,255,0.85) 0%, rgba(0,140,230,0.38) 38%, transparent 70%); }
-
-    #btn-left:hover  { background: radial-gradient(ellipse at 50% 92%, rgba(255,30,30,1.00) 0%, rgba(230,0,0,0.55) 38%, transparent 72%); }
-    #btn-right:hover { background: radial-gradient(ellipse at 50% 92%, rgba(0,230,255,1.00) 0%, rgba(0,170,255,0.55) 38%, transparent 72%); }
-
-    /* ── Corner labels ────────────────────────────── */
+    /* ── Side labels ─────────────────────────────── */
     .corner-label {
       position: fixed;
-      top: 1.8rem;
+      bottom: 50%;
       z-index: 20;
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1.4rem, 3vw, 3.2rem);
+      font-family: 'RetroByte', monospace;
+      font-size: clamp(2.8rem, 5.5vw, 8rem);
       text-decoration: none;
       image-rendering: pixelated;
-      transition: opacity 0.25s ease;
-      opacity: 0.72;
+      transition: opacity 0.08s steps(2);
+      opacity: 0;
       pointer-events: none;
+      line-height: 1;
+      letter-spacing: -0.02em;
     }
-    .corner-label:hover { opacity: 1; }
-    .corner-label--left  { left: 1.8rem;  color: #ff1414; text-shadow: 0 0 12px rgba(255,20,20,0.8), 0 0 28px rgba(255,0,0,0.5); }
-    .corner-label--right { right: 1.8rem; color: #00d2ff; text-shadow: 0 0 12px rgba(0,210,255,0.8), 0 0 28px rgba(0,180,255,0.5); }
+    .corner-label--left  { left: 2.4rem;  color: #c8c5bc; }
+    .corner-label--right { right: 4.5rem; color: #c8c5bc; }
 
-    /* ── Name ─────────────────────────────────────── */
-    .name {
-      position: fixed;
-      bottom: 1.6rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 20;
-      pointer-events: none;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: clamp(0.42rem, 0.58vw, 0.66rem);
-      letter-spacing: 0.52em;
-      text-transform: uppercase;
-      color: rgba(0, 195, 55, 0.28);
-      white-space: nowrap;
-    }
 
     #chosen-msg {
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       z-index: 30;
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'RetroByte', monospace;
       font-size: clamp(0.7rem, 1.4vw, 1.3rem);
       text-align: center;
       line-height: 2.2;
@@ -109,47 +101,132 @@
 <div id="chosen-msg"></div>
 <div id="blackout"></div>
 <canvas id="morpheus-canvas"></canvas>
+<div class="vignette"></div>
 <div class="scanlines"></div>
 
 <a href="/horeca" id="btn-left"  class="hand-btn"></a>
 <a href="/ai"     id="btn-right" class="hand-btn"></a>
 
 <a href="/horeca" class="corner-label corner-label--left">horeca</a>
-<a href="/ai"     class="corner-label corner-label--right">research</a>
+<a href="/ai"     class="corner-label corner-label--right">tech</a>
 
-<span class="name">Alek&thinsp;Klem</span>
 
 <script>
 const morphCanvas = document.getElementById('morpheus-canvas');
 const mCtx = morphCanvas.getContext('2d');
 
 // ── Hand positions as fraction of displayed image ───────
-// Tune these if the glow drifts off the actual palms.
 const HAND_L = { x: 0.295, y: 0.79 };
 const HAND_R = { x: 0.720, y: 0.79 };
 
 // ── Pixelation ──────────────────────────────────────────
-// Lower PIXEL_COLS = chunkier pixels
 const PIXEL_COLS = 72;
+const FRAME_DIR   = 'root_resources/opening_hands_animation/';
+const FRAME_COUNT = 15;
 
 let pixelatedCache  = null;
-let srcNaturalRatio = 0.833; // h/w, updated on image load
+let pixelatedFrames = new Array(FRAME_COUNT).fill(null);
+let currentFrame    = 0;
+let srcNaturalRatio = 0.833;
 
-function buildPixelatedCache(img) {
-  srcNaturalRatio = img.height / img.width;
-  const w = PIXEL_COLS;
-  const h = Math.round(w * srcNaturalRatio);
-  const off = document.createElement('canvas');
-  off.width = w; off.height = h;
-  off.getContext('2d').drawImage(img, 0, 0, w, h);
-  pixelatedCache = off;
-  positionHandBtns();
+function buildFrameCache(img, idx) {
+  if (idx === 0) {
+    srcNaturalRatio = img.height / img.width;
+    buildConeCaches();
+    positionHandBtns();
+  }
+  // Store raw image — already pixel art, no downscale needed
+  pixelatedFrames[idx] = img;
+  if (idx === 0) {
+    pixelatedCache = img;
+    startEntranceAnimation();
+  }
 }
 
-const morphImg = new Image();
-morphImg.onload  = () => buildPixelatedCache(morphImg);
-morphImg.onerror = () => console.warn('morpheus.jpg not found');
-morphImg.src = 'morpheus.jpg';
+for (let i = 0; i < FRAME_COUNT; i++) {
+  const img = new Image();
+  const idx = i;
+  img.onload  = () => buildFrameCache(img, idx);
+  img.onerror = () => console.warn(`Frame ${idx + 1} not found`);
+  img.src = `${FRAME_DIR}frame_${String(i + 1).padStart(2, '0')}.png`;
+}
+
+// ── Smiling animation ─────────────────────────────────────
+const SMILE_DIR         = 'root_resources/smiling_animation/';
+const SMILE_FRAME_COUNT = 6;
+const SMILE_DURATION    = 500; // ms for full forward/reverse sweep
+
+let smileFrames    = new Array(SMILE_FRAME_COUNT).fill(null);
+let smileProgress  = 0;   // 0 = neutral, 1 = full smile
+let smileDirection = 0;   // 1 = forward, -1 = reverse, 0 = stopped
+let smileLocked    = false;
+let smileAnimId    = null;
+let smileLastTime  = null;
+
+for (let i = 0; i < SMILE_FRAME_COUNT; i++) {
+  const img = new Image();
+  const idx = i;
+  img.onload  = () => { smileFrames[idx] = img; };
+  img.onerror = () => console.warn(`Smile frame ${idx + 1} not found`);
+  img.src = `${SMILE_DIR}frame_${String(i + 1).padStart(2, '0')}.png`;
+}
+
+function tickSmile(now) {
+  if (smileLastTime !== null) {
+    const dt    = now - smileLastTime;
+    const delta = dt / SMILE_DURATION;
+    smileProgress += smileDirection * delta;
+    if (smileProgress >= 1) { smileProgress = 1; smileDirection = 0; }
+    if (smileProgress <= 0) { smileProgress = 0; smileDirection = 0; }
+  }
+  smileLastTime = now;
+  if (smileDirection !== 0) smileAnimId = requestAnimationFrame(tickSmile);
+  else smileAnimId = null;
+}
+
+function startSmile() {
+  if (smileLocked) return;
+  smileDirection = 1;
+  smileLastTime  = null;
+  if (smileAnimId) cancelAnimationFrame(smileAnimId);
+  smileAnimId = requestAnimationFrame(tickSmile);
+}
+
+function reverseSmile() {
+  if (smileLocked) return;
+  smileDirection = -1;
+  smileLastTime  = null;
+  if (smileAnimId) cancelAnimationFrame(smileAnimId);
+  smileAnimId = requestAnimationFrame(tickSmile);
+}
+
+function lockSmile() {
+  smileLocked    = true;
+  smileDirection = 0;
+  smileProgress  = 1;
+  if (smileAnimId) cancelAnimationFrame(smileAnimId);
+  smileAnimId = null;
+}
+
+function resetSmile() {
+  smileLocked    = false;
+  smileDirection = 0;
+  smileProgress  = 0;
+  smileLastTime  = null;
+  if (smileAnimId) cancelAnimationFrame(smileAnimId);
+  smileAnimId = null;
+}
+
+function getCurrentDisplayFrame() {
+  if (smileProgress > 0 && smileFrames[0]) {
+    const idx = Math.min(
+      Math.round(smileProgress * (SMILE_FRAME_COUNT - 1)),
+      SMILE_FRAME_COUNT - 1
+    );
+    return smileFrames[idx] || pixelatedCache;
+  }
+  return pixelatedCache;
+}
 
 // ── Layout helper ────────────────────────────────────────
 function getDisplayRect() {
@@ -188,38 +265,138 @@ function resize() {
   positionHandBtns();
 }
 
-
-// ── Exit animation state ──────────────────────────────────
+// ── Animation state ───────────────────────────────────────
 let sinkProgress = 0; // 0 = normal, 1 = fully below viewport
+let riseProgress = 1; // 1 = fully below (entrance), 0 = normal
+
+// ── Pixelated cone caches ────────────────────────────────
+// Low-res canvases scaled up with nearest-neighbour = pixel art look
+const CONE_PX_W = 8, CONE_PX_H = 22;
+let coneCacheL = null, coneCacheR = null;
+let coneOpacity = 0;
+let hoverLeft = false, hoverRight = false;
+
+// Cone jitter — tiny random integer offsets updated at ~8fps
+let coneJitterL = { x: 0, y: 0 };
+let coneJitterR = { x: 0, y: 0 };
+let lastJitterTime = 0;
+const JITTER_INTERVAL = 220; // ms between jitter updates
+
+function updateJitter(t) {
+  if (t - lastJitterTime < JITTER_INTERVAL) return;
+  lastJitterTime = t;
+  const pick = () => (Math.floor(Math.random() * 5) - 2); // -2 to +2
+  coneJitterL = { x: pick(), y: pick() };
+  coneJitterR = { x: pick(), y: pick() };
+}
+
+function buildConeCaches() {
+  function make(r, g, b) {
+    const c = document.createElement('canvas');
+    c.width = CONE_PX_W; c.height = CONE_PX_H;
+    const ctx = c.getContext('2d');
+    const cx = CONE_PX_W / 2;
+
+    // Linear gradient: bright at base (bottom), fades to transparent at tip (top)
+    const grad = ctx.createLinearGradient(0, CONE_PX_H, 0, 0);
+    grad.addColorStop(0,   `rgba(${r},${g},${b},0.5)`);
+    grad.addColorStop(0.45,`rgba(${r},${g},${b},0.25)`);
+    grad.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+    ctx.fillStyle = grad;
+
+    // Tapered cone: tip at top, rounded bottom corners.
+    const rad = 4;
+    ctx.beginPath();
+    ctx.moveTo(cx, 0);
+    ctx.lineTo(CONE_PX_W, CONE_PX_H - rad);
+    ctx.arcTo(CONE_PX_W, CONE_PX_H, CONE_PX_W - rad, CONE_PX_H, rad);
+    ctx.lineTo(rad, CONE_PX_H);
+    ctx.arcTo(0, CONE_PX_H, 0, CONE_PX_H - rad, rad);
+    ctx.closePath();
+    ctx.fill();
+    return c;
+  }
+  coneCacheL = make(255, 20, 20);
+  coneCacheR = make(0, 210, 255);
+}
+
+function drawCones(sinkY) {
+  if (coneOpacity <= 0 || !coneCacheL) return;
+  const { dx, dy, displayW, displayH } = getDisplayRect();
+  const size  = Math.max(56, Math.round(displayW * 0.13));
+  const coneH = Math.round(size * 2.4);
+
+  mCtx.imageSmoothingEnabled = false;
+
+  mCtx.globalAlpha = coneOpacity * (hoverLeft ? 1.0 : 0.82);
+  mCtx.drawImage(coneCacheL,
+    Math.round(dx + HAND_L.x * displayW - size / 2) + coneJitterL.x,
+    Math.round(dy + HAND_L.y * displayH - coneH) + sinkY + coneJitterL.y,
+    size, coneH);
+
+  mCtx.globalAlpha = coneOpacity * (hoverRight ? 1.0 : 0.82);
+  mCtx.drawImage(coneCacheR,
+    Math.round(dx + HAND_R.x * displayW - size / 2) + coneJitterR.x,
+    Math.round(dy + HAND_R.y * displayH - coneH) + sinkY + coneJitterR.y,
+    size, coneH);
+
+  mCtx.imageSmoothingEnabled = true;
+  mCtx.globalAlpha = 1;
+}
+
+// Hover listeners — also drive corner label visibility
+const labelLeft  = document.querySelector('.corner-label--left');
+const labelRight = document.querySelector('.corner-label--right');
+
+document.getElementById('btn-left').addEventListener('mouseenter', () => {
+  hoverLeft = true;
+  labelLeft.style.transition = 'opacity 0.4s ease';
+  labelLeft.style.opacity = '1';
+  startSmile();
+});
+document.getElementById('btn-left').addEventListener('mouseleave', () => {
+  hoverLeft = false;
+  labelLeft.style.transition = 'opacity 0.4s ease';
+  labelLeft.style.opacity = '0';
+  reverseSmile();
+});
+document.getElementById('btn-right').addEventListener('mouseenter', () => {
+  hoverRight = true;
+  labelRight.style.transition = 'opacity 0.4s ease';
+  labelRight.style.opacity = '1';
+  startSmile();
+});
+document.getElementById('btn-right').addEventListener('mouseleave', () => {
+  hoverRight = false;
+  labelRight.style.transition = 'opacity 0.4s ease';
+  labelRight.style.opacity = '0';
+  reverseSmile();
+});
 
 // ── Draw ─────────────────────────────────────────────────
 function drawMorpheus(t) {
   const W = morphCanvas.width, H = morphCanvas.height;
   mCtx.clearRect(0, 0, W, H);
 
-  // Atmospheric glow
-  const cx = W / 2, cy = H / 2;
-  const glow = mCtx.createRadialGradient(cx, cy * 0.88, 0, cx, cy, Math.min(W, H) * 0.60);
-  glow.addColorStop(0,   'rgba(0, 22, 5, 0.18)');
-  glow.addColorStop(0.7, 'rgba(0, 8,  2, 0.07)');
-  glow.addColorStop(1,   'rgba(0, 0,  0, 0)');
-  mCtx.fillStyle = glow;
-  mCtx.fillRect(0, 0, W, H);
-
-  if (!pixelatedCache) return;
+  const frame = getCurrentDisplayFrame();
+  if (!frame) return;
 
   const { dx, dy, displayW, displayH } = getDisplayRect();
   const breathe = Math.round(Math.sin(t * 0.00052) * 2.5);
-  const base    = 0.62 + Math.sin(t * 0.00065) * 0.07;
+  const base    = 0.85 + Math.sin(t * 0.00065) * 0.05;
 
-  // Sink downward — slide off the bottom of the viewport
-  const sinkY = Math.round((H - dy + 20) * sinkProgress);
+  // Sink/rise — slide relative to bottom of viewport
+  const combinedProgress = sinkProgress + riseProgress;
+  const sinkY = Math.round((H - dy + 20) * combinedProgress);
 
   mCtx.globalAlpha = base;
   mCtx.imageSmoothingEnabled = false;
-  mCtx.drawImage(pixelatedCache, dx, dy + breathe + sinkY, displayW, displayH);
+  mCtx.drawImage(frame, dx, dy + breathe + sinkY, displayW, displayH);
   mCtx.imageSmoothingEnabled = true;
   mCtx.globalAlpha = 1;
+
+  updateJitter(t);
+  drawCones(sinkY + breathe);
 }
 
 function loop(t) {
@@ -227,30 +404,92 @@ function loop(t) {
   requestAnimationFrame(loop);
 }
 
+// ── Opening-hands frame animation ────────────────────────
+function playOpeningAnimation() {
+  const totalDuration = 3000;
+  const start = performance.now();
+  function step(now) {
+    const elapsed = now - start;
+    const idx = Math.min(Math.floor(elapsed / totalDuration * FRAME_COUNT), FRAME_COUNT - 1);
+    if (pixelatedFrames[idx]) {
+      currentFrame   = idx;
+      pixelatedCache = pixelatedFrames[idx];
+    }
+    if (elapsed < totalDuration) {
+      requestAnimationFrame(step);
+    } else {
+      currentFrame   = FRAME_COUNT - 1;
+      pixelatedCache = pixelatedFrames[FRAME_COUNT - 1] || pixelatedCache;
+      animateConeIn();
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Neon flicker cone entrance ────────────────────────────
+function animateConeIn() {
+  const duration = 2000;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    if (p < 0.65) {
+      // Flicker phase: random on/off with rising probability
+      coneOpacity = Math.random() < p * 1.5 ? p * 0.9 : 0;
+    } else {
+      // Settle: smoothly ramp to 1
+      const settle = (p - 0.65) / 0.35;
+      coneOpacity = 0.55 + settle * 0.45;
+    }
+    if (p < 1) {
+      requestAnimationFrame(step);
+    } else {
+      coneOpacity = 1;
+      document.getElementById('btn-left').style.pointerEvents  = 'auto';
+      document.getElementById('btn-right').style.pointerEvents = 'auto';
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Entrance animation ────────────────────────────────────
+function startEntranceAnimation() {
+  const duration = 3200;
+  const start = performance.now();
+  function riseStep(now) {
+    const p = Math.min((now - start) / duration, 1);
+    riseProgress = (1 - p) * (1 - p); // ease-out: pops up fast, settles gently
+    if (p < 1) {
+      requestAnimationFrame(riseStep);
+    } else {
+      riseProgress = 0;
+      // Opening hands animation, then neon flicker for cones
+      playOpeningAnimation();
+    }
+  }
+  requestAnimationFrame(riseStep);
+}
+
 // ── Exit animation ────────────────────────────────────────
 function startExitAnimation(url) {
-  // Prepare chosen message (shown after sink)
-  const isHoreca = url.includes('horeca');
-  const color    = isHoreca ? '#ff1414' : '#00d2ff';
-  const shadow   = isHoreca ? 'rgba(255,20,20,0.7)' : 'rgba(0,210,255,0.7)';
-  const dest     = isHoreca ? 'HORECA' : 'RESEARCH';
-  const msg = document.getElementById('chosen-msg');
-  msg.innerHTML = `YOU HAVE CHOSEN<br>${dest}`;
-  msg.style.color = color;
-  msg.style.textShadow = `0 0 14px ${shadow}, 0 0 32px ${shadow}`;
+  document.getElementById('btn-left').style.pointerEvents  = 'none';
+  document.getElementById('btn-right').style.pointerEvents = 'none';
+  // Phase 1: fade out cones (canvas) + labels
+  const fadeStart = performance.now();
+  const fadeDur = 1600;
+  function coneFadeStep(now) {
+    const p = Math.min((now - fadeStart) / fadeDur, 1);
+    coneOpacity = 1 - p;
+    if (p < 1) requestAnimationFrame(coneFadeStep);
+    else coneOpacity = 0;
+  }
+  requestAnimationFrame(coneFadeStep);
 
-  // Phase 1: fade cones + labels (~800ms)
-  ['btn-left', 'btn-right'].forEach(id => {
-    const el = document.getElementById(id);
-    el.style.transition = 'opacity 1.6s ease';
-    el.style.opacity = '0';
-  });
-  document.querySelectorAll('.corner-label, .name').forEach(el => {
+  document.querySelectorAll('.corner-label').forEach(el => {
     el.style.transition = 'opacity 1.6s ease';
     el.style.opacity = '0';
   });
 
-  // Phase 2: shrink image from bottom (~2000ms, ease-in)
+  // Phase 2: sink image below viewport (~2000ms, ease-in)
   setTimeout(() => {
     const duration = 2000;
     const start = performance.now();
@@ -259,55 +498,47 @@ function startExitAnimation(url) {
       sinkProgress = p * p; // ease-in
       if (p < 1) { requestAnimationFrame(shrinkStep); }
       else {
-        // Phase 3: show "YOU HAVE CHOSEN" then reveal destination
-        msg.innerHTML = `YOU HAVE CHOSEN<br><span id="dest-line" style="opacity:0;transition:opacity 0.5s ease">${dest}</span>`;
-        msg.style.transition = 'opacity 0.4s ease';
-        msg.style.opacity = '1';
-        setTimeout(() => {
-          document.getElementById('dest-line').style.opacity = '1';
-        }, 1200);
-        setTimeout(() => {
-          msg.style.transition = 'opacity 0.4s ease';
-          msg.style.opacity = '0';
-          setTimeout(() => {
-            const blackout = document.getElementById('blackout');
-            blackout.style.opacity = '1';
-            setTimeout(() => { window.location.href = url; }, 350);
-          }, 500);
-        }, 3500);
+        // Phase 3: blackout and navigate
+        const blackout = document.getElementById('blackout');
+        blackout.style.opacity = '1';
+        setTimeout(() => { window.location.href = url; }, 350);
       }
     }
     requestAnimationFrame(shrinkStep);
   }, 1800);
 }
 
-document.getElementById('btn-left').addEventListener('click',  e => { e.preventDefault(); startExitAnimation(e.currentTarget.href); });
-document.getElementById('btn-right').addEventListener('click', e => { e.preventDefault(); startExitAnimation(e.currentTarget.href); });
+document.getElementById('btn-left').addEventListener('click',  e => { e.preventDefault(); lockSmile(); startExitAnimation(e.currentTarget.href); });
+document.getElementById('btn-right').addEventListener('click', e => { e.preventDefault(); lockSmile(); startExitAnimation(e.currentTarget.href); });
 
 function resetState() {
   sinkProgress = 0;
+  riseProgress = 0;
+  coneOpacity  = 1;
+  currentFrame   = FRAME_COUNT - 1;
+  pixelatedCache = pixelatedFrames[FRAME_COUNT - 1] || pixelatedCache;
+  resetSmile();
+  document.getElementById('btn-left').style.pointerEvents  = 'auto';
+  document.getElementById('btn-right').style.pointerEvents = 'auto';
   const msg = document.getElementById('chosen-msg');
   msg.style.transition = 'none'; msg.style.opacity = '0';
   const blackout = document.getElementById('blackout');
   blackout.style.transition = 'none';
   blackout.style.opacity = '1';
-  ['btn-left', 'btn-right'].forEach(id => {
-    const el = document.getElementById(id);
+  document.querySelectorAll('.corner-label').forEach(el => {
     el.style.transition = 'none';
-    el.style.opacity = '1';
+    el.style.opacity = '0';
   });
-  document.querySelectorAll('.corner-label, .name').forEach(el => {
-    el.style.transition = 'none';
-    el.style.opacity = '';
-  });
-  // Fade out the blackout overlay (small delay so opacity:1 is painted first)
+  // Fade out the blackout overlay
   setTimeout(() => {
     blackout.style.transition = 'opacity 0.6s ease';
     blackout.style.opacity = '0';
   }, 50);
 }
 
-window.addEventListener('pageshow', resetState);
+// Only reset on back-navigation (persisted = restored from bfcache).
+// Fresh loads: CSS opacity:0 + entrance animation handle everything.
+window.addEventListener('pageshow', e => { if (e.persisted) resetState(); });
 
 resize();
 window.addEventListener('resize', resize);
