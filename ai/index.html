@@ -50,11 +50,11 @@ body {
 
 /* ── CV download button ── */
 .cv-download {
-  position: fixed; top: 50px; right: 18px;
+  position: fixed; top: 52px; right: 18px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem; font-weight: 400;
+  font-size: 0.72rem; font-weight: 400;
   letter-spacing: 0.06em;
-  padding: 6px 14px;
+  padding: 8px 16px;
   background: var(--accent); color: var(--paper);
   border: 1px solid var(--accent);
   cursor: pointer; text-decoration: none;
@@ -68,9 +68,9 @@ body {
 .cv-download:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .lang-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem; font-weight: 400;
+  font-size: 0.72rem; font-weight: 400;
   letter-spacing: 0.06em;
-  padding: 5px 12px;
+  padding: 7px 14px;
   background: transparent; color: var(--muted);
   border: none; cursor: pointer;
   transition: background 0.15s, color 0.15s; line-height: 1;
@@ -121,6 +121,17 @@ body {
   font-style: italic; color: var(--accent);
   font-family: 'EB Garamond', serif; font-size: 0.8rem;
 }
+
+/* ── Masthead contact ── */
+.paper-contact {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; font-weight: 300;
+  color: var(--muted); letter-spacing: 0.03em;
+  padding: 4px 0 14px;
+}
+.paper-contact a { color: var(--accent); text-decoration: none; }
+.paper-contact a:hover { text-decoration: underline; }
 
 /* ── Abstract ── */
 .abstract { margin: 24px 0 10px; padding: 0 clamp(8px, 4vw, 40px); }
@@ -318,7 +329,6 @@ a { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  #project-canvas { display: none; }
 }
 </style>
 </head>
@@ -346,6 +356,11 @@ a { color: var(--accent); }
     <div class="affiliations">
       <div><sup>1</sup> <span data-i18n="affil1">Department of Artificial Intelligence, Utrecht University, Utrecht, Netherlands</span></div>
       <div><sup>2</sup> <span data-i18n="affil2">Formerly: Faculty of Applied Sciences, Delft University of Technology</span></div>
+    </div>
+    <div class="paper-contact">
+      <a href="mailto:alekklem@gmail.com">alekklem@gmail.com</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/Alek-Klem-UU" target="_blank" rel="noopener">github.com/Alek-Klem-UU</a>
     </div>
     <div class="paper-meta">
       <span data-i18n="received">Received: September 2022</span>
@@ -386,6 +401,7 @@ a { color: var(--accent); }
     <h2 class="section-heading"><span class="section-num">1.</span><span data-i18n="s1_heading">Introduction</span></h2>
     <p data-i18n="s1_p1">Third-year BSc student in Artificial Intelligence at Utrecht University, with a prior year in Applied Physics at TU Delft (2022–2023).<sup><a href="#fn1">[1]</a></sup></p>
     <p data-i18n="s1_p2">Current research focuses on <em>social sycophancy</em> in large language models — how outputs shift in response to perceived user preferences rather than factual accuracy. This sits at the intersection of NLP, HCI, and AI safety.</p>
+    <p data-i18n="s1_p3">Unlike prior work that probes sycophancy through isolated prompt–response pairs, this study compares model behaviour across deployment contexts: a consumer web interface versus a direct API endpoint. The central hypothesis is that web interfaces introduce latent presentation effects — system-prompt modifications, interface framing — that systematically amplify sycophantic tendencies absent at the API level.</p>
     <div class="fig" style="margin-top:22px;">
       <div class="fig-caption-top" data-i18n="t1_caption">Table 1 — Author metadata</div>
       <table class="meta-table">
@@ -458,7 +474,59 @@ a { color: var(--accent); }
     <p data-i18n="s4_p1">BSc thesis: <em>social sycophancy</em> in large language models — how model outputs shift in response to social pressure cues, independent of factual merit. Relevant to AI safety, as sycophantic models may reinforce incorrect beliefs.</p>
     <p data-i18n="s4_p2">Methodology: fully automated web-interaction pipeline comparing model behaviour across UI and API environments. See <a href="https://github.com/Alek-Klem-UU/SycoUI" target="_blank" rel="noopener noreferrer">github.com/Alek-Klem-UU/SycoUI</a>.</p>
     <div class="research-fig">
-      <canvas id="project-canvas" aria-hidden="true"></canvas>
+      <svg viewBox="0 0 580 182" xmlns="http://www.w3.org/2000/svg"
+           style="width:100%;height:auto;display:block;padding:20px 16px 12px"
+           role="img" aria-label="Sycophancy detection pipeline diagram">
+        <defs>
+          <marker id="pd-arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,1 L5,3 L0,5 Z" style="fill:oklch(62% 0.012 70)"/>
+          </marker>
+        </defs>
+        <!-- Shared prompt -->
+        <rect x="210" y="8" width="160" height="26" rx="1"
+              style="fill:oklch(93.5% 0.010 78);stroke:oklch(76% 0.013 78);stroke-width:0.8"/>
+        <text x="290" y="25" text-anchor="middle"
+              style="font-family:'JetBrains Mono',monospace;font-size:10px;fill:oklch(22% 0.022 55)">prompt p</text>
+        <!-- Split lines -->
+        <line x1="258" y1="34" x2="140" y2="62" marker-end="url(#pd-arr)"
+              style="stroke:oklch(62% 0.012 70);stroke-width:0.8"/>
+        <line x1="322" y1="34" x2="440" y2="62" marker-end="url(#pd-arr)"
+              style="stroke:oklch(62% 0.012 70);stroke-width:0.8"/>
+        <!-- Web UI box -->
+        <rect x="56" y="62" width="168" height="26" rx="1"
+              style="fill:oklch(93.5% 0.010 78);stroke:oklch(76% 0.013 78);stroke-width:0.8"/>
+        <text x="140" y="79" text-anchor="middle"
+              style="font-family:'JetBrains Mono',monospace;font-size:10px;fill:oklch(22% 0.022 55)">web UI session</text>
+        <!-- API box -->
+        <rect x="356" y="62" width="168" height="26" rx="1"
+              style="fill:oklch(93.5% 0.010 78);stroke:oklch(76% 0.013 78);stroke-width:0.8"/>
+        <text x="440" y="79" text-anchor="middle"
+              style="font-family:'JetBrains Mono',monospace;font-size:10px;fill:oklch(22% 0.022 55)">API call</text>
+        <!-- Down arrows -->
+        <line x1="140" y1="88" x2="140" y2="108" marker-end="url(#pd-arr)"
+              style="stroke:oklch(62% 0.012 70);stroke-width:0.8"/>
+        <line x1="440" y1="88" x2="440" y2="108" marker-end="url(#pd-arr)"
+              style="stroke:oklch(62% 0.012 70);stroke-width:0.8"/>
+        <!-- Response boxes -->
+        <rect x="56" y="108" width="168" height="26" rx="1"
+              style="fill:oklch(93.5% 0.010 78);stroke:oklch(76% 0.013 78);stroke-width:0.8"/>
+        <text x="140" y="125" text-anchor="middle"
+              style="font-family:'JetBrains Mono',monospace;font-size:10px;fill:oklch(48% 0.016 70)">response r_ui</text>
+        <rect x="356" y="108" width="168" height="26" rx="1"
+              style="fill:oklch(93.5% 0.010 78);stroke:oklch(76% 0.013 78);stroke-width:0.8"/>
+        <text x="440" y="125" text-anchor="middle"
+              style="font-family:'JetBrains Mono',monospace;font-size:10px;fill:oklch(48% 0.016 70)">response r_api</text>
+        <!-- Converge lines -->
+        <line x1="224" y1="134" x2="272" y2="152" marker-end="url(#pd-arr)"
+              style="stroke:oklch(62% 0.012 70);stroke-width:0.8"/>
+        <line x1="356" y1="134" x2="308" y2="152" marker-end="url(#pd-arr)"
+              style="stroke:oklch(62% 0.012 70);stroke-width:0.8"/>
+        <!-- Delta box (accent-tinted) -->
+        <rect x="190" y="154" width="200" height="22" rx="1"
+              style="fill:oklch(91% 0.018 22);stroke:oklch(52% 0.110 22);stroke-width:0.8"/>
+        <text x="290" y="169" text-anchor="middle"
+              style="font-family:'JetBrains Mono',monospace;font-size:9px;fill:oklch(30% 0.130 22)">&#916;(r_ui, r_api) &#8594; sycophancy score</text>
+      </svg>
       <div class="fig-caption-bottom" data-i18n="fig1_caption">Figure 1 — Sycophancy detection pipeline (automated web-interaction framework)</div>
     </div>
   </section>
@@ -556,6 +624,7 @@ const TRANSLATIONS = {
     s1_heading: 'Introduction',
     s1_p1: `Third-year BSc student in Artificial Intelligence at Utrecht University, with a prior year in Applied Physics at TU Delft (2022–2023).<sup><a href="#fn1">[1]</a></sup>`,
     s1_p2: `Current research focuses on <em>social sycophancy</em> in large language models — how outputs shift in response to perceived user preferences rather than factual accuracy. This sits at the intersection of NLP, HCI, and AI safety.`,
+    s1_p3: `Unlike prior work that probes sycophancy through isolated prompt–response pairs, this study compares model behaviour across deployment contexts: a consumer web interface versus a direct API endpoint. The central hypothesis is that web interfaces introduce latent presentation effects — system-prompt modifications, interface framing — that systematically amplify sycophantic tendencies absent at the API level.`,
     t1_caption: 'Table 1 — Author metadata',
     t1_col_field: 'Field', t1_col_value: 'Value',
     t1_location: 'Location', t1_affil: 'Affiliation', t1_dob: 'Date of birth',
@@ -634,6 +703,7 @@ const TRANSLATIONS = {
     s1_heading: 'Introductie',
     s1_p1: `Derdejaars BSc-student Kunstmatige Intelligentie aan de Universiteit Utrecht, met een eerder jaar Toegepaste Natuurkunde aan de TU Delft (2022–2023).<sup><a href="#fn1">[1]</a></sup>`,
     s1_p2: `Het huidige onderzoek richt zich op <em>sociale sycofantie</em> in grote taalmodellen — hoe output verschuift in reactie op waargenomen gebruikersvoorkeuren in plaats van feitelijke nauwkeurigheid. Dit bevindt zich op het snijvlak van NLP, HCI en AI-veiligheid.`,
+    s1_p3: `In tegenstelling tot eerder onderzoek dat sycofantie meet via geïsoleerde prompt–responseparen, vergelijkt deze studie modelgedrag over deploymentomgevingen: een consumentenwebinterface versus een directe API-aanroep. De centrale hypothese is dat webinterfaces latente presentatie-effecten introduceren — systeempromptaanpassingen, interfaceframing — die sycofante neigingen systematisch versterken ten opzichte van API-basisgedrag.`,
     t1_caption: 'Tabel 1 — Metadata auteur',
     t1_col_field: 'Veld', t1_col_value: 'Waarde',
     t1_location: 'Locatie', t1_affil: 'Affiliatie', t1_dob: 'Geboortedatum',
@@ -721,59 +791,6 @@ window.addEventListener('scroll', () => {
   document.getElementById('progress').style.width =
     (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
 }, { passive: true });
-
-(function() {
-  const canvas = document.getElementById('project-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, t = 0, visible = false, raf;
-  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-  function draw() {
-    if (!visible) return;
-    ctx.clearRect(0, 0, W, H);
-    t += 0.003;
-    const cx = W / 2, cy = H / 2;
-    const layers = [
-      { r: 18, nodes: 3 }, { r: 44, nodes: 5 },
-      { r: 70, nodes: 5 }, { r: 94, nodes: 4 },
-    ];
-    for (let li = 0; li < layers.length - 1; li++) {
-      const l1 = layers[li], l2 = layers[li + 1];
-      for (let i = 0; i < l1.nodes; i++) {
-        for (let j = 0; j < l2.nodes; j++) {
-          const a1 = (i / l1.nodes) * Math.PI * 2 + t * 0.3;
-          const a2 = (j / l2.nodes) * Math.PI * 2 - t * 0.2;
-          ctx.beginPath();
-          ctx.moveTo(cx + Math.cos(a1) * l1.r, cy + Math.sin(a1) * l1.r);
-          ctx.lineTo(cx + Math.cos(a2) * l2.r, cy + Math.sin(a2) * l2.r);
-          ctx.strokeStyle = 'rgba(90,30,15,0.07)';
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-      }
-    }
-    layers.forEach((layer, li) => {
-      for (let i = 0; i < layer.nodes; i++) {
-        const angle = (i / layer.nodes) * Math.PI * 2 + t * (li % 2 === 0 ? 0.3 : -0.2);
-        const x = cx + Math.cos(angle) * layer.r;
-        const y = cy + Math.sin(angle) * layer.r;
-        ctx.beginPath();
-        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(120,40,20,0.5)';
-        ctx.fill();
-      }
-    });
-    raf = requestAnimationFrame(draw);
-  }
-  const observer = new IntersectionObserver(entries => {
-    visible = entries[0].isIntersecting;
-    if (visible) { raf = requestAnimationFrame(draw); }
-    else { cancelAnimationFrame(raf); }
-  }, { threshold: 0 });
-  observer.observe(canvas);
-  window.addEventListener('resize', resize);
-  resize();
-})();
 </script>
 </body>
 </html>
