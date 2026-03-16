@@ -227,7 +227,7 @@
     transition: background 0.3s, border-color 0.3s, color 0.3s;
   }
 
-  .essential-pill .pill-icon { font-size: 0.95rem; }
+  .essential-pill .pill-icon { display: none; }
 
   .passions-section, .looking-for-section, .experience-section {
     padding: 20px 0;
@@ -284,8 +284,10 @@
   }
 
   .lf-icon {
-    font-size: 1.1rem;
     flex-shrink: 0;
+    color: var(--accent);
+    font-size: 1rem;
+    line-height: 1.5;
     margin-top: 1px;
   }
 
@@ -614,17 +616,15 @@
 <div class="swipe-stamp nope-stamp" id="nope-stamp" style="--rot: 25deg" data-nl="NOPE" data-en="NOPE">NOPE</div>
 
 <div class="match-modal" id="cv-modal">
-  <div class="match-text" style="font-size:2rem">&#128196;</div>
   <p class="match-sub" data-nl="Bekijk mijn CV in de browser of download hem als PDF." data-en="View my CV in the browser or download it as a PDF.">Bekijk mijn CV in de browser of download hem als PDF.</p>
   <div class="match-buttons">
-    <a href="cv-horeca.html" class="match-btn outline" target="_blank" data-nl="&#128196; Bekijken in browser" data-en="&#128196; View in browser">&#128196; Bekijken in browser</a>
-    <a href="cv-horeca.pdf" class="match-btn gradient" download data-nl="&#11015; PDF downloaden" data-en="&#11015; Download PDF">&#11015; PDF downloaden</a>
+    <a href="cv-horeca.html" class="match-btn outline" target="_blank" data-nl="Bekijken in browser" data-en="View in browser">Bekijken in browser</a>
+    <a href="cv-horeca.pdf" class="match-btn gradient" download data-nl="PDF downloaden" data-en="Download PDF">PDF downloaden</a>
     <button class="match-btn outline" onclick="document.getElementById('cv-modal').classList.remove('show')" data-nl="Sluiten" data-en="Close">Sluiten</button>
   </div>
 </div>
 
 <div class="match-modal" id="nope-modal">
-  <div class="match-text" style="font-size:2rem">&#128075;</div>
   <p class="match-sub" data-nl="Geen probleem, bedankt voor het bekijken!" data-en="No worries, thanks for taking a look!">Geen probleem, bedankt voor het bekijken!</p>
   <div class="match-buttons">
     <button class="match-btn outline" onclick="document.getElementById('nope-modal').classList.remove('show')" data-nl="Sluiten" data-en="Close">Sluiten</button>
@@ -632,11 +632,11 @@
 </div>
 
 <div class="match-modal" id="match-modal">
-  <div class="match-text" data-nl="&#127881; Super!" data-en="&#127881; Great!">&#127881; Super!</div>
+  <div class="match-text" data-nl="Super!" data-en="Great!">Super!</div>
   <p class="match-sub" data-nl="Neem gerust contact op, ik reageer snel!" data-en="Feel free to reach out, I'll respond quickly!">Neem gerust contact op, ik reageer snel!</p>
   <div class="match-buttons">
-    <a href="mailto:alekklem@gmail.com" class="match-btn gradient" data-nl="&#128140; Mail sturen" data-en="&#128140; Send email">&#128140; Mail sturen</a>
-    <a href="https://wa.me/31637172826" class="match-btn outline" target="_blank" data-nl="&#128241; WhatsApp" data-en="&#128241; WhatsApp">&#128241; WhatsApp</a>
+    <a href="mailto:alekklem@gmail.com" class="match-btn gradient" data-nl="Mail sturen" data-en="Send email">Mail sturen</a>
+    <a href="https://wa.me/31637172826" class="match-btn outline" target="_blank" data-nl="WhatsApp" data-en="WhatsApp">WhatsApp</a>
     <button class="match-btn outline" onclick="document.getElementById('match-modal').classList.remove('show')" data-nl="Verder kijken" data-en="Keep browsing">Verder kijken</button>
   </div>
 </div>
@@ -740,10 +740,10 @@
     <div class="looking-for-section scroll-anim">
       <h3 data-nl="Op zoek naar" data-en="Looking for">Op zoek naar</h3>
       <ul class="looking-for-list">
-        <li><span class="lf-icon">&#127867;</span> <span data-nl="Een gezellige bar, caf&eacute; of restaurant" data-en="A fun bar, caf&eacute; or restaurant">Een gezellige bar, caf&eacute; of restaurant</span></li>
-        <li><span class="lf-icon">&#128101;</span> <span data-nl="Een fijn team om mee samen te werken" data-en="A great team to work with">Een fijn team om mee samen te werken</span></li>
-        <li><span class="lf-icon">&#127757;</span> <span data-nl="Avonden en/of weekenden (flexibel)" data-en="Evenings and/or weekends (flexible)">Avonden en/of weekenden (flexibel)</span></li>
-        <li><span class="lf-icon">&#128205;</span> <span data-nl="Rotterdam centrum" data-en="Rotterdam city centre">Rotterdam centrum</span></li>
+        <li><span class="lf-icon">&bull;</span> <span data-nl="Een gezellige bar, caf&eacute; of restaurant" data-en="A fun bar, caf&eacute; or restaurant">Een gezellige bar, caf&eacute; of restaurant</span></li>
+        <li><span class="lf-icon">&bull;</span> <span data-nl="Een fijn team om mee samen te werken" data-en="A great team to work with">Een fijn team om mee samen te werken</span></li>
+        <li><span class="lf-icon">&bull;</span> <span data-nl="Avonden en/of weekenden (flexibel)" data-en="Evenings and/or weekends (flexible)">Avonden en/of weekenden (flexibel)</span></li>
+        <li><span class="lf-icon">&bull;</span> <span data-nl="Rotterdam centrum" data-en="Rotterdam city centre">Rotterdam centrum</span></li>
       </ul>
     </div>
   </div>
@@ -752,7 +752,7 @@
 <div class="action-bar">
   <button class="action-btn nope" onclick="doNope()">&#10005;<span class="tooltip" data-nl="Niet geschikt" data-en="Not a fit">Niet geschikt</span></button>
   <button class="action-btn contact-action" onclick="doLike()">&#10004;<span class="tooltip" data-nl="Aannemen!" data-en="Hire!">Aannemen!</span></button>
-<button class="action-btn cv-btn" onclick="document.getElementById('cv-modal').classList.add('show')">&#128196;<span class="tooltip">CV</span></button>
+<button class="action-btn cv-btn" onclick="document.getElementById('cv-modal').classList.add('show')" style="font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:1px;">CV<span class="tooltip">CV</span></button>
 </div>
 
 <script>
