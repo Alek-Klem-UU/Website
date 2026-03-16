@@ -741,6 +741,11 @@ function setLanguage(lang) {
   });
   document.documentElement.lang = lang;
   localStorage.setItem('lang', lang);
+  const cvLink = document.querySelector('.cv-download');
+  if (cvLink) {
+    cvLink.href = lang === 'nl' ? 'cv-nl.pdf' : 'cv.pdf';
+    cvLink.download = lang === 'nl' ? 'Alek_Klem_CV_NL.pdf' : 'Alek_Klem_CV.pdf';
+  }
 }
 
 (function() {
