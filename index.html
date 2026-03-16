@@ -80,7 +80,7 @@
     #blackout {
       position: fixed; inset: 0; background: #000;
       z-index: 100; opacity: 0; pointer-events: none;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.3s ease;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -237,7 +237,7 @@ function startExitAnimation(url) {
       else {
         const blackout = document.getElementById('blackout');
         blackout.style.opacity = '1';
-        setTimeout(() => { window.location.href = url; }, 900);
+        setTimeout(() => { window.location.href = url; }, 350);
       }
     }
     requestAnimationFrame(shrinkStep);
@@ -246,6 +246,29 @@ function startExitAnimation(url) {
 
 document.getElementById('btn-left').addEventListener('click',  e => { e.preventDefault(); startExitAnimation(e.currentTarget.href); });
 document.getElementById('btn-right').addEventListener('click', e => { e.preventDefault(); startExitAnimation(e.currentTarget.href); });
+
+function resetState() {
+  shrinkFactor = 1;
+  const blackout = document.getElementById('blackout');
+  blackout.style.transition = 'none';
+  blackout.style.opacity = '1';
+  ['btn-left', 'btn-right'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.transition = 'none';
+    el.style.opacity = '1';
+  });
+  document.querySelectorAll('.corner-label, .name').forEach(el => {
+    el.style.transition = 'none';
+    el.style.opacity = '';
+  });
+  // Fade out the blackout overlay (small delay so opacity:1 is painted first)
+  setTimeout(() => {
+    blackout.style.transition = 'opacity 0.6s ease';
+    blackout.style.opacity = '0';
+  }, 50);
+}
+
+window.addEventListener('pageshow', resetState);
 
 resize();
 window.addEventListener('resize', resize);
