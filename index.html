@@ -77,6 +77,22 @@
       white-space: nowrap;
     }
 
+    #chosen-msg {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.7rem, 1.4vw, 1.3rem);
+      text-align: center;
+      line-height: 2.2;
+      letter-spacing: 0.15em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      white-space: nowrap;
+    }
+
     #blackout {
       position: fixed; inset: 0; background: #000;
       z-index: 100; opacity: 0; pointer-events: none;
@@ -90,6 +106,7 @@
 </head>
 <body>
 
+<div id="chosen-msg"></div>
 <div id="blackout"></div>
 <canvas id="morpheus-canvas"></canvas>
 <div class="scanlines"></div>
@@ -173,7 +190,7 @@ function resize() {
 
 
 // ── Exit animation state ──────────────────────────────────
-let shrinkFactor = 1; // 1 = full, 0 = gone
+let sinkProgress = 0; // 0 = normal, 1 = fully below viewport
 
 // ── Draw ─────────────────────────────────────────────────
 function drawMorpheus(t) {
@@ -195,15 +212,12 @@ function drawMorpheus(t) {
   const breathe = Math.round(Math.sin(t * 0.00052) * 2.5);
   const base    = 0.62 + Math.sin(t * 0.00065) * 0.07;
 
-  // Shrink anchored to bottom
-  const curW = Math.round(displayW * shrinkFactor);
-  const curH = Math.round(displayH * shrinkFactor);
-  const curX = Math.round((W - curW) / 2);
-  const curY = (dy + displayH) - curH; // bottom stays fixed
+  // Sink downward — slide off the bottom of the viewport
+  const sinkY = Math.round((H - dy + 20) * sinkProgress);
 
   mCtx.globalAlpha = base;
   mCtx.imageSmoothingEnabled = false;
-  mCtx.drawImage(pixelatedCache, curX, curY + breathe, curW, curH);
+  mCtx.drawImage(pixelatedCache, dx, dy + breathe + sinkY, displayW, displayH);
   mCtx.imageSmoothingEnabled = true;
   mCtx.globalAlpha = 1;
 }
@@ -215,6 +229,16 @@ function loop(t) {
 
 // ── Exit animation ────────────────────────────────────────
 function startExitAnimation(url) {
+  // Prepare chosen message (shown after sink)
+  const isHoreca = url.includes('horeca');
+  const color    = isHoreca ? '#ff1414' : '#00d2ff';
+  const shadow   = isHoreca ? 'rgba(255,20,20,0.7)' : 'rgba(0,210,255,0.7)';
+  const dest     = isHoreca ? 'HORECA' : 'RESEARCH';
+  const msg = document.getElementById('chosen-msg');
+  msg.innerHTML = `YOU HAVE CHOSEN<br>${dest}`;
+  msg.style.color = color;
+  msg.style.textShadow = `0 0 14px ${shadow}, 0 0 32px ${shadow}`;
+
   // Phase 1: fade cones + labels (~800ms)
   ['btn-left', 'btn-right'].forEach(id => {
     const el = document.getElementById(id);
@@ -232,12 +256,25 @@ function startExitAnimation(url) {
     const start = performance.now();
     function shrinkStep(now) {
       const p = Math.min((now - start) / duration, 1);
-      shrinkFactor = 1 - (p * p); // ease-in
+      sinkProgress = p * p; // ease-in
       if (p < 1) { requestAnimationFrame(shrinkStep); }
       else {
-        const blackout = document.getElementById('blackout');
-        blackout.style.opacity = '1';
-        setTimeout(() => { window.location.href = url; }, 350);
+        // Phase 3: show "YOU HAVE CHOSEN" then reveal destination
+        msg.innerHTML = `YOU HAVE CHOSEN<br><span id="dest-line" style="opacity:0;transition:opacity 0.5s ease">${dest}</span>`;
+        msg.style.transition = 'opacity 0.4s ease';
+        msg.style.opacity = '1';
+        setTimeout(() => {
+          document.getElementById('dest-line').style.opacity = '1';
+        }, 1200);
+        setTimeout(() => {
+          msg.style.transition = 'opacity 0.4s ease';
+          msg.style.opacity = '0';
+          setTimeout(() => {
+            const blackout = document.getElementById('blackout');
+            blackout.style.opacity = '1';
+            setTimeout(() => { window.location.href = url; }, 350);
+          }, 500);
+        }, 3500);
       }
     }
     requestAnimationFrame(shrinkStep);
@@ -248,7 +285,9 @@ document.getElementById('btn-left').addEventListener('click',  e => { e.preventD
 document.getElementById('btn-right').addEventListener('click', e => { e.preventDefault(); startExitAnimation(e.currentTarget.href); });
 
 function resetState() {
-  shrinkFactor = 1;
+  sinkProgress = 0;
+  const msg = document.getElementById('chosen-msg');
+  msg.style.transition = 'none'; msg.style.opacity = '0';
   const blackout = document.getElementById('blackout');
   blackout.style.transition = 'none';
   blackout.style.opacity = '1';
